@@ -30,6 +30,16 @@ export default function ContactSection() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
+  const [copiedKey, setCopiedKey] = useState(null);
+
+  const handleCopy = (text, key) => {
+    if (navigator?.clipboard) {
+      navigator.clipboard.writeText(text);
+      setCopiedKey(key);
+      setTimeout(() => setCopiedKey(null), 2000);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -41,12 +51,21 @@ export default function ContactSection() {
         subject: formData.subject,
         message: formData.message,
       });
+
+      // Persist to server API
+      await fetch("/api/messages", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+        }),
+      }).catch((err) => console.warn("Server persist warning:", err));
     } catch (err) {
       console.error(err);
     }
-
-    // Simulate fast API response
-    await new Promise((resolve) => setTimeout(resolve, 800));
 
     setIsSubmitting(false);
     setIsSubmitted(true);
@@ -100,7 +119,7 @@ export default function ContactSection() {
     {
       name: "GitHub",
       icon: <SiGithub />,
-      url: "https://github.com/yourusername",
+      url: "https://github.com/ga5e8je99",
       color: "hover:bg-gray-800 hover:border-gray-800 text-gray-300",
     },
     {
@@ -183,8 +202,14 @@ export default function ContactSection() {
 
               <div className="space-y-4">
                 {contactInfo.map((info, index) => (
-                  <a key={index} href={info.link} className="group block">
-                    <div className="flex items-center gap-4 p-4 bg-linear-to-b from-gray-900/30 to-transparent border border-gray-800 rounded-xl hover:border-teal-500/50 transition-all duration-300">
+                  <div
+                    key={index}
+                    className="flex items-center justify-between p-4 bg-linear-to-b from-gray-900/30 to-transparent border border-gray-800 rounded-xl hover:border-teal-500/50 transition-all duration-300"
+                  >
+                    <a
+                      href={info.link}
+                      className="flex items-center gap-4 group flex-1"
+                    >
                       <div
                         className={`p-3 rounded-lg bg-linear-to-r ${info.color} group-hover:scale-110 transition-transform duration-300`}
                       >
@@ -194,12 +219,21 @@ export default function ContactSection() {
                         <div className="text-gray-400 text-sm">
                           {info.title}
                         </div>
-                        <div className="text-white font-medium">
+                        <div className="text-white font-medium group-hover:text-teal-300 transition-colors">
                           {info.value}
                         </div>
                       </div>
-                    </div>
-                  </a>
+                    </a>
+                    {info.title !== "Location" && (
+                      <button
+                        type="button"
+                        onClick={() => handleCopy(info.value, info.title)}
+                        className="px-3 py-1.5 text-xs font-mono rounded-lg bg-gray-800 text-gray-300 hover:bg-teal-500/20 hover:text-teal-300 border border-gray-700 transition-all shrink-0 ml-3"
+                      >
+                        {copiedKey === info.title ? "Copied!" : "Copy"}
+                      </button>
+                    )}
+                  </div>
                 ))}
               </div>
             </motion.div>

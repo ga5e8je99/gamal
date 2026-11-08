@@ -27,14 +27,14 @@ export default function Hero() {
               </div>
               
               <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold text-white leading-tight">
-                <span className="block">{firstName}</span>
-                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-teal-400 via-cyan-400 to-blue-500">
+                <span>{firstName}</span>{" "}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 via-cyan-400 to-blue-500">
                   {lastName}
                 </span>
               </h1>
               
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-gray-300 mt-4">
-                {profile.roleTitle || "Web Developer & Ui/Ux Designer"}
+                {profile.roleTitle || "Full-Stack Web Developer"}
               </h2>
             </div>
 
@@ -62,7 +62,7 @@ export default function Hero() {
             <div className="pt-8">
               <p className="text-gray-500 text-sm font-mono mb-4">TECH I WORK WITH</p>
               <div className="flex flex-wrap gap-3">
-                {['React', 'Next.js', 'Tailwind', 'MongoDB', 'Node.js', 'TypeScript'].map((tech) => (
+                {['React', 'Next.js', 'Node.js', 'Tailwind CSS', 'MongoDB', 'JavaScript'].map((tech) => (
                   <span 
                     key={tech}
                     className="px-4 py-2 bg-gray-800/50 backdrop-blur-sm rounded-full text-gray-300 text-sm border border-gray-700 hover:border-teal-500/50 hover:text-teal-300 transition-all duration-300"
@@ -84,10 +84,10 @@ export default function Hero() {
               <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-gray-800/50 shadow-2xl group">
                 <Image
                   src={'/gamalImage.webp'}
-                  alt={`${fullName} - Web Developer`}
+                  alt={`${fullName} - Full-Stack Web Developer`}
                   fill
                   className="object-cover group-hover:scale-110 transition-transform duration-700"
-                  sizes="(max-width: 768px) 100vw, 50vw"
+                  sizes="(max-width: 640px) 256px, (max-width: 1024px) 320px, 384px"
                   priority
                 />
                 
@@ -102,7 +102,7 @@ export default function Hero() {
               {/* Status Indicator */}
               <div className="absolute -bottom-2 -right-2 sm:bottom-4 sm:right-4 bg-gray-900/90 backdrop-blur-sm px-4 py-2 rounded-full border border-gray-700 flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full bg-teal-400 animate-pulse"></div>
-                <span className="text-teal-300 text-sm font-mono">Available for Full Stack Projects</span>
+                <span className="text-teal-300 text-sm font-mono">Available for Full-Stack Projects</span>
               </div>
             </div>
           </div>

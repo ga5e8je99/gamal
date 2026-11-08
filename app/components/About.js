@@ -8,6 +8,9 @@ import {
   FiStar,
   FiTool,
   FiCheckCircle,
+  FiZap,
+  FiShield,
+  FiMessageSquare,
 } from "react-icons/fi";
 import {
   SiReact,
@@ -35,63 +38,44 @@ import { useSiteData } from "@/lib/useSiteData";
 
 export default function AboutMe() {
   const { profile } = useSiteData();
-  const skills = [
-    {
-      name: "React/Next.js",
-      icon: <SiReact />,
-      level: 95,
-      color: "from-cyan-500 to-blue-500",
-    },
-    {
-      name: "TypeScript",
-      icon: <SiTypescript />,
-      level: 90,
-      color: "from-blue-500 to-indigo-500",
-    },
-    {
-      name: "JavaScript",
-      icon: <SiJavascript />,
-      level: 92,
-      color: "from-yellow-500 to-amber-500",
-    },
-    
 
+  const engineeringPillars = [
     {
-      name: "Tailwind CSS",
-      icon: <SiTailwindcss />,
-      level: 94,
-      color: "from-teal-500 to-cyan-500",
+      title: "Clean, Scalable Architecture",
+      description: "Building production-grade Next.js & React apps with modular structure, reusability, and maintainable state.",
+      icon: <FiCode className="text-teal-400" />,
+      tag: "Code Quality"
     },
     {
-      name: "Bootstrap",
-      icon: <SiBootstrap />,
-      level: 90,
-      color: "from-purple-500 to-pink-500",
+      title: "Performance & Core Web Vitals",
+      description: "Optimizing bundle size, asset loading, SSR/SSG rendering, and responsive layouts for blazing-fast experiences.",
+      icon: <FiZap className="text-amber-400" />,
+      tag: "Speed"
     },
     {
-      name: "Material-UI",
-      icon: <SiMui />,
-      level: 95,
-      color: "from-blue-600 to-indigo-600",
-    },
-    {
-      name: "HTML5/CSS3",
-      icon: <SiHtml5 />,
-      level: 96,
-      color: "from-orange-500 to-red-500",
-    },
-    {
-      name: "Node.js",
-      icon: <SiNodedotjs />,
-      level: 85,
-      color: "from-green-400 to-emerald-400",
-    },
+      title: "Secure & Resilient APIs",
+      description: "Developing robust Node.js/Express REST APIs with JWT auth, structured database models, and rate protection.",
+      icon: <FiShield className="text-blue-400" />,
+      tag: "Backend"
+    }
+  ];
 
+  const testimonials = [
     {
-      name: "MongoDB",
-      icon: <SiMongodb />,
-      level: 80,
-      color: "from-green-600 to-emerald-600",
+      quote:
+        "Gamal delivered our e-commerce platform ahead of schedule. The Next.js SSR and performance optimization were top-notch!",
+      author: "Tarek Mansour",
+      role: "Engineering Manager",
+      company: "RetailTech",
+      rating: 5,
+    },
+    {
+      quote:
+        "Incredible attention to UI/UX detail and clean code structure. Turned our complex Figma design into a flawless, responsive React web app.",
+      author: "Mariam Khalil",
+      role: "Lead UX Designer",
+      company: "Studio Craft",
+      rating: 5,
     },
   ];
 
@@ -149,8 +133,7 @@ export default function AboutMe() {
             </span>
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto">
-            Passionate developer bridging the gap between web and virtual
-            reality
+            Passionate Full-Stack Developer creating scalable web applications and engaging digital experiences
           </p>
         </motion.div>
 
@@ -168,11 +151,11 @@ export default function AboutMe() {
               <div className="relative w-64 h-64 md:w-80 md:h-80 mx-auto rounded-2xl overflow-hidden border-4 border-gray-800 shadow-2xl">
                 <Image
                   src="/profile.webp"
-                  alt="Gamal Ahmed - Web & VR Developer"
+                  alt="Gamal Ahmed - Full-Stack Web Developer"
                   fill
                   className="object-cover group-hover:scale-110 transition-transform duration-700"
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  priority
+                  sizes="(max-width: 640px) 256px, (max-width: 1024px) 320px, 384px"
+                  loading="lazy"
                 />
                 {/* Overlay Gradient */}
                 <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent"></div>
@@ -267,7 +250,7 @@ export default function AboutMe() {
                 </div>
                 <div className="flex items-center gap-3">
                   <FiCheckCircle className="text-green-500" />
-                  <span className="text-gray-300">hybrid Work Options</span>
+                  <span className="text-gray-300">Hybrid Work Options</span>
                 </div>
               </div>
             </motion.div>
@@ -281,47 +264,86 @@ export default function AboutMe() {
             variants={staggerContainer}
             className="space-y-12"
           >
-            {/* Skills Section */}
+            {/* Core Engineering Pillars */}
             <motion.div
               variants={fadeInUp}
-              className="bg-linear-to-b from-gray-900/50 to-transparent border border-gray-800 rounded-2xl p-6"
+              className="bg-linear-to-b from-gray-900/60 to-gray-950/80 border border-gray-800 rounded-2xl p-6"
             >
-              <div className="flex items-center gap-3 mb-8">
-                <div className="p-3 rounded-xl bg-linear-to-r from-green-500 to-emerald-600">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="p-3 rounded-xl bg-linear-to-r from-teal-500 to-emerald-600">
                   <FiCode className="text-white text-2xl" />
                 </div>
                 <div>
                   <h3 className="text-2xl font-bold text-white">
-                    Technical Skills
+                    Engineering Pillars
                   </h3>
-                  <p className="text-gray-400 text-sm">My core competencies</p>
+                  <p className="text-gray-400 text-sm">How I architect & deliver value</p>
                 </div>
               </div>
 
-              <div className="space-y-6">
-                {skills.map((skill, index) => (
-                  <div key={index} className="group">
-                    <div className="flex items-center justify-between mb-2">
-                      <div className="flex items-center gap-3">
-                        <div className="text-xl text-gray-400 group-hover:text-white transition-colors">
-                          {skill.icon}
-                        </div>
-                        <span className="text-gray-300 group-hover:text-white transition-colors font-medium">
-                          {skill.name}
-                        </span>
+              <div className="space-y-4">
+                {engineeringPillars.map((pillar, idx) => (
+                  <div
+                    key={idx}
+                    className="p-4 rounded-xl bg-gray-900/40 border border-gray-800/80 hover:border-teal-500/40 transition-all"
+                  >
+                    <div className="flex items-center justify-between mb-1.5">
+                      <div className="flex items-center gap-2.5">
+                        <span className="text-lg">{pillar.icon}</span>
+                        <h4 className="text-white font-semibold text-sm">
+                          {pillar.title}
+                        </h4>
                       </div>
-                      <span className="text-green-400 text-sm font-mono">
-                        {skill.level}%
+                      <span className="px-2 py-0.5 rounded-full text-[11px] font-mono bg-teal-500/10 text-teal-300 border border-teal-500/20">
+                        {pillar.tag}
                       </span>
                     </div>
-                    <div className="h-2 bg-gray-800 rounded-full overflow-hidden">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        whileInView={{ width: `${skill.level}%` }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 1, delay: index * 0.1 }}
-                        className={`h-full rounded-full bg-linear-to-r ${skill.color}`}
-                      />
+                    <p className="text-gray-400 text-xs leading-relaxed">
+                      {pillar.description}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Client Testimonials */}
+            <motion.div
+              variants={fadeInUp}
+              className="bg-linear-to-b from-gray-900/60 to-gray-950/80 border border-gray-800 rounded-2xl p-6"
+            >
+              <div className="flex items-center gap-3 mb-6">
+                <div className="p-3 rounded-xl bg-linear-to-r from-cyan-500 to-blue-600">
+                  <FiMessageSquare className="text-white text-2xl" />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-bold text-white">
+                    Client Recommendations
+                  </h3>
+                  <p className="text-gray-400 text-sm">What collaborators say</p>
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                {testimonials.map((item, idx) => (
+                  <div
+                    key={idx}
+                    className="p-4 rounded-xl bg-gray-900/40 border border-gray-800/80 space-y-2.5"
+                  >
+                    <div className="flex items-center gap-1 text-amber-400 text-xs">
+                      {[...Array(item.rating)].map((_, rIdx) => (
+                        <FiStar key={rIdx} className="fill-amber-400" />
+                      ))}
+                    </div>
+                    <p className="text-gray-300 text-xs italic leading-relaxed">
+                      &ldquo;{item.quote}&rdquo;
+                    </p>
+                    <div className="flex items-center justify-between text-xs pt-1 border-t border-gray-800/50">
+                      <span className="font-semibold text-white">
+                        {item.author}
+                      </span>
+                      <span className="text-gray-400 font-mono text-[11px]">
+                        {item.role} • {item.company}
+                      </span>
                     </div>
                   </div>
                 ))}

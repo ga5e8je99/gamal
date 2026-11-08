@@ -1,158 +1,128 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { 
   FiCode, 
   FiLayers, 
-  FiSmartphone, 
-  FiGlobe,
-  FiShield,
+  FiServer,
   FiZap,
   FiCheckCircle,
   FiTrendingUp,
-  FiUsers,
-  FiMessageSquare
+  FiDatabase,
+  FiMessageSquare,
+  FiCalendar
 } from "react-icons/fi";
 import { 
   SiReact, 
   SiNextdotjs, 
-  SiThreedotjs, 
   SiFigma,
-  SiAdobexd,
-  SiAndroid,
-  SiIos,
-  SiWebgl,
-  SiUnity
+  SiNodedotjs,
+  SiMongodb,
+  SiTailwindcss,
+  SiJsonwebtokens
 } from "react-icons/si";
+import Picker from "./Picker";
+import Link from "next/link";
 
 export default function Services() {
+  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
+
   const services = [
     {
       id: 1,
-      title: "Web Development",
+      title: "Full-Stack Web Development",
       icon: <FiCode />,
-      color: "from-blue-500 to-cyan-500",
-      description: "Modern, responsive web applications built with cutting-edge technologies for optimal performance and user experience.",
+      color: "from-teal-500 to-cyan-500",
+      description: "Modern, responsive, and high-performance web applications built with Next.js, React, and Tailwind CSS for seamless user experience.",
       features: [
-        "Custom React & Next.js Applications",
-        "Progressive Web Apps (PWA)",
-        "Real-time Applications",
-        "E-commerce Solutions",
-        "API Integration & Development",
-        "Performance Optimization"
+        "Custom Next.js & React Applications",
+        "Server-Side Rendering (SSR) & Static Generation",
+        "Responsive & Mobile-First Interface",
+        "Fast Performance & Core Web Vitals Optimization",
+        "Clean, Maintainable Component Architecture",
+        "Seamless Third-Party API Integrations"
       ],
       technologies: [
-        { name: "React/Next.js", icon: <SiReact /> },
-        { name: "TypeScript", icon: <FiCode /> },
-        { name: "Node.js", icon: <FiCode /> },
-        { name: "MongoDB", icon: <FiCode /> }
+        { name: "React", icon: <SiReact /> },
+        { name: "Next.js", icon: <SiNextdotjs /> },
+        { name: "Tailwind CSS", icon: <SiTailwindcss /> },
+        { name: "Node.js", icon: <SiNodedotjs /> }
       ],
       process: [
-        { step: "Discovery & Planning", description: "Requirements analysis" },
-        { step: "UI/UX Design", description: "Wireframing & prototyping" },
-        { step: "Development", description: "Agile development cycle" },
-        { step: "Testing & Deployment", description: "Quality assurance" }
+        { step: "Discovery & Planning", description: "Architecture and feature breakdown" },
+        { step: "UI Implementation", description: "Pixel-perfect frontend development" },
+        { step: "Full-Stack Integration", description: "API and state management linking" },
+        { step: "Testing & Deployment", description: "Cross-browser testing & Vercel launch" }
       ],
       pricing: {
-        basic: "$1,500+",
-        standard: "$3,500+",
-        premium: "$7,500+"
+        basic: "$500",
+        standard: "$1,200",
+        premium: "$2,500"
       }
     },
     {
       id: 2,
-      title: "UI/UX Design",
-      icon: <FiLayers />,
-      color: "from-purple-500 to-pink-500",
-      description: "User-centered designs that combine aesthetics with functionality to create intuitive and engaging digital experiences.",
+      title: "RESTful API & Database Architecture",
+      icon: <FiServer />,
+      color: "from-emerald-500 to-teal-500",
+      description: "Scalable backend services, RESTful endpoints, and database models designed with Node.js, Express, and MongoDB.",
       features: [
-        "User Research & Analysis",
-        "Wireframing & Prototyping",
-        "Interactive Mockups",
-        "Design Systems",
-        "User Testing",
-        "Accessibility Compliance"
+        "RESTful API Design & Endpoints",
+        "MongoDB Schema Design & Validation",
+        "JWT Authentication & Route Protection",
+        "CRUD Operations & Aggregation Queries",
+        "Error Handling & Input Sanitization",
+        "Serverless Route Handlers in Next.js"
       ],
       technologies: [
-        { name: "Figma", icon: <SiFigma /> },
-        { name: "Adobe XD", icon: <SiAdobexd /> },
-        { name: "Prototyping", icon: <FiLayers /> },
-        { name: "User Testing", icon: <FiUsers /> }
+        { name: "Node.js", icon: <SiNodedotjs /> },
+        { name: "MongoDB", icon: <SiMongodb /> },
+        { name: "JWT Auth", icon: <SiJsonwebtokens /> },
+        { name: "Next.js API", icon: <SiNextdotjs /> }
       ],
       process: [
-        { step: "Research", description: "User personas & journey mapping" },
-        { step: "Wireframing", description: "Low-fidelity prototypes" },
-        { step: "Design", description: "High-fidelity mockups" },
-        { step: "Testing", description: "User feedback & iteration" }
+        { step: "Data Modeling", description: "Entities, relations, and schemas" },
+        { step: "API Development", description: "Clean controllers and validation middleware" },
+        { step: "Security & Auth", description: "JWT tokens and access control" },
+        { step: "Deployment", description: "Cloud database setup and API testing" }
       ],
       pricing: {
-        basic: "$800+",
-        standard: "$1,800+",
-        premium: "$3,500+"
+        basic: "$400",
+        standard: "$950",
+        premium: "$1,800"
       }
     },
     {
       id: 3,
-      title: "App Development",
-      icon: <FiSmartphone />,
-      color: "from-green-500 to-emerald-500",
-      description: "Cross-platform mobile applications built with React Native for consistent performance across iOS and Android.",
+      title: "UI/UX Design to Pixel-Perfect Code",
+      icon: <FiLayers />,
+      color: "from-cyan-500 to-blue-500",
+      description: "Translating wireframes and Figma designs into clean, responsive, and accessible code with interactive animations.",
       features: [
-        "React Native Applications",
-        "iOS & Android Development",
-        "App Store Optimization",
-        "Push Notifications",
-        "Offline Functionality",
-        "Third-party Integrations"
+        "Figma to React / Tailwind Conversion",
+        "Design Systems & Reusable Components",
+        "Interactive Animations (Framer Motion)",
+        "Mobile-First Responsive Layouts",
+        "Accessibility (a11y) & SEO Standards",
+        "Dark / Light Mode Architecture"
       ],
       technologies: [
-        { name: "React Native", icon: <SiReact /> },
-        { name: "iOS", icon: <SiIos /> },
-        { name: "Android", icon: <SiAndroid /> },
-        { name: "Firebase", icon: <FiCode /> }
+        { name: "Figma", icon: <SiFigma /> },
+        { name: "Tailwind CSS", icon: <SiTailwindcss /> },
+        { name: "React", icon: <SiReact /> },
+        { name: "Framer Motion", icon: <FiLayers /> }
       ],
       process: [
-        { step: "Strategy", description: "Market research & planning" },
-        { step: "Design", description: "Mobile-first design approach" },
-        { step: "Development", description: "Agile mobile development" },
-        { step: "Launch", description: "Store deployment & maintenance" }
+        { step: "Design Audit", description: "Tokens, spacing, and typography review" },
+        { step: "Component System", description: "Modular UI components in React" },
+        { step: "Responsive Polish", description: "Multi-device layout testing" },
+        { step: "Handoff & Delivery", description: "Clean, documented code release" }
       ],
       pricing: {
-        basic: "$2,500+",
-        standard: "$5,000+",
-        premium: "$10,000+"
-      }
-    },
-    {
-      id: 4,
-      title: "VR Development",
-      icon: <FiGlobe />,
-      color: "from-orange-500 to-red-500",
-      description: "Immersive virtual reality experiences and 3D web applications that push the boundaries of digital interaction.",
-      features: [
-        "3D Web Applications",
-        "VR/AR Experiences",
-        "Interactive 3D Models",
-        "Real-time Rendering",
-        "Spatial Audio",
-        "Multi-user VR Spaces"
-      ],
-      technologies: [
-        { name: "Three.js", icon: <SiThreedotjs /> },
-        { name: "WebGL", icon: <SiWebgl /> },
-        { name: "Unity", icon: <SiUnity /> },
-        { name: "Blender", icon: <FiCode /> }
-      ],
-      process: [
-        { step: "Concept", description: "VR/AR strategy planning" },
-        { step: "3D Modeling", description: "Asset creation & optimization" },
-        { step: "Development", description: "Immersive experience building" },
-        { step: "Testing", description: "Performance & UX testing" }
-      ],
-      pricing: {
-        basic: "$3,000+",
-        standard: "$7,000+",
-        premium: "$15,000+"
+        basic: "$350",
+        standard: "$800",
+        premium: "$1,500"
       }
     }
   ];
@@ -161,26 +131,26 @@ export default function Services() {
     {
       title: "Performance Optimization",
       icon: <FiZap />,
-      description: "Speed up your website with advanced optimization techniques",
-      features: ["Core Web Vitals", "Lighthouse Score", "Caching Strategies"]
+      description: "Speed up your website with bundle splitting, image optimization, and caching.",
+      features: ["Core Web Vitals", "Lighthouse 90+", "Asset Compression"]
     },
     {
-      title: "Security Auditing",
-      icon: <FiShield />,
-      description: "Comprehensive security assessment and protection implementation",
-      features: ["Vulnerability Testing", "SSL Implementation", "Data Protection"]
-    },
-    {
-      title: "SEO Optimization",
+      title: "Technical SEO & Schema",
       icon: <FiTrendingUp />,
-      description: "Improve search engine rankings and organic traffic",
-      features: ["Technical SEO", "Content Strategy", "Analytics Setup"]
+      description: "Structured JSON-LD schema, dynamic sitemaps, and OpenGraph social cards.",
+      features: ["JSON-LD Person/Org", "Dynamic Sitemaps", "Metadata & Social Tags"]
     },
     {
-      title: "Maintenance & Support",
+      title: "Database Modeling",
+      icon: <FiDatabase />,
+      description: "Structured MongoDB schemas, Mongoose models, and indexing for fast queries.",
+      features: ["Mongoose Schemas", "Indexing", "Validation Middleware"]
+    },
+    {
+      title: "Maintenance & Deployment",
       icon: <FiCheckCircle />,
-      description: "Ongoing support and maintenance for your digital products",
-      features: ["Regular Updates", "Bug Fixes", "Technical Support"]
+      description: "Automated Git deployment to Vercel/Netlify with ongoing code updates.",
+      features: ["Vercel CI/CD", "Environment Config", "Post-launch Support"]
     }
   ];
 
@@ -211,15 +181,15 @@ export default function Services() {
           className="text-center mb-16"
         >
           <div className="inline-flex items-center gap-3 mb-4">
-            <div className="w-12 h-0.5 bg-linear-to-r from-transparent via-indigo-500 to-transparent"></div>
-            <span className="text-indigo-400 font-mono text-sm tracking-wider">MY SERVICES</span>
-            <div className="w-12 h-0.5 bg-linear-to-r from-transparent via-indigo-500 to-transparent"></div>
+            <div className="w-12 h-0.5 bg-gradient-to-r from-transparent via-teal-500 to-transparent"></div>
+            <span className="text-teal-400 font-mono text-sm tracking-wider">MY SERVICES</span>
+            <div className="w-12 h-0.5 bg-gradient-to-r from-transparent via-teal-500 to-transparent"></div>
           </div>
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            Services I <span className="text-transparent bg-clip-text bg-linear-to-r from-indigo-400 to-purple-500">Offer</span>
+            Services & <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 via-cyan-400 to-blue-500">Solutions</span>
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto">
-            Comprehensive digital solutions tailored to your business needs and goals
+            Practical, end-to-end full-stack web solutions focused on speed, clean architecture, and modern UI/UX.
           </p>
         </motion.div>
 
@@ -229,89 +199,70 @@ export default function Services() {
           whileInView="animate"
           viewport={{ once: true }}
           variants={staggerContainer}
-          className="grid md:grid-cols-2 gap-8 mb-16"
+          className="grid lg:grid-cols-3 gap-8 mb-20"
         >
           {services.map((service) => (
             <motion.div
               key={service.id}
               variants={fadeInUp}
-              whileHover={{ y: -10 }}
-              className="group relative bg-linear-to-b from-gray-900/50 to-transparent border border-gray-800 rounded-2xl overflow-hidden hover:border-indigo-500/50 transition-all duration-300"
+              whileHover={{ y: -8 }}
+              className="bg-gradient-to-b from-gray-900/70 to-gray-950/90 border border-gray-800 rounded-2xl p-7 hover:border-teal-500/50 transition-all duration-300 flex flex-col justify-between"
             >
-              {/* Service Header */}
-              <div className="p-6 border-b border-gray-800">
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex items-center gap-4">
-                    <div className={`p-3 rounded-xl bg-linear-to-r ${service.color} group-hover:scale-110 transition-transform duration-300`}>
-                      {service.icon}
-                    </div>
-                    <div>
-                      <h3 className="text-2xl font-bold text-white">{service.title}</h3>
-                      <p className="text-gray-400 text-sm">Starting from {service.pricing.basic}</p>
-                    </div>
+              <div>
+                {/* Service Header */}
+                <div className="flex items-center gap-4 mb-6">
+                  <div className={`p-3.5 rounded-xl bg-gradient-to-r ${service.color} text-white text-2xl shadow-lg`}>
+                    {service.icon}
                   </div>
-                </div>
-                <p className="text-gray-300">{service.description}</p>
-              </div>
-
-              {/* Service Content */}
-              <div className="p-6">
-                {/* Features */}
-                <div className="mb-6">
-                  <h4 className="text-white font-semibold mb-3 flex items-center gap-2">
-                    <FiCheckCircle className="text-green-500" />
-                    Key Features
-                  </h4>
-                  <ul className="space-y-2">
-                    {service.features.map((feature, idx) => (
-                      <li key={idx} className="flex items-center gap-2 text-gray-300 text-sm">
-                        <div className="w-1.5 h-1.5 rounded-full bg-indigo-500"></div>
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
+                  <h3 className="text-xl font-bold text-white leading-tight">
+                    {service.title}
+                  </h3>
                 </div>
 
-                {/* Technologies */}
-                <div className="mb-6">
-                  <h4 className="text-white font-semibold mb-3">Technologies</h4>
+                <p className="text-gray-400 text-sm mb-6 leading-relaxed">
+                  {service.description}
+                </p>
+
+                {/* Features List */}
+                <div className="mb-6 space-y-2.5">
+                  <h4 className="text-xs font-mono text-gray-500 uppercase tracking-wider">What&apos;s Included</h4>
+                  {service.features.map((feature, idx) => (
+                    <div key={idx} className="flex items-start gap-2.5 text-xs text-gray-300">
+                      <FiCheckCircle className="text-teal-400 mt-0.5 shrink-0" />
+                      <span>{feature}</span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Tech Stack */}
+                <div className="mb-6 pt-4 border-t border-gray-800/80">
                   <div className="flex flex-wrap gap-2">
                     {service.technologies.map((tech, idx) => (
-                      <div
+                      <span
                         key={idx}
-                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gray-800/50 text-gray-300 text-sm border border-gray-700"
+                        className="px-2.5 py-1 rounded-lg bg-gray-900 text-gray-300 text-xs flex items-center gap-1.5 border border-gray-800"
                       >
-                        <span className="text-sm">{tech.icon}</span>
+                        {tech.icon}
                         <span>{tech.name}</span>
-                      </div>
+                      </span>
                     ))}
                   </div>
                 </div>
+              </div>
 
-                {/* Process */}
-                <div className="mb-6">
-                  <h4 className="text-white font-semibold mb-3">Development Process</h4>
-                  <div className="grid grid-cols-2 gap-3">
-                    {service.process.map((step, idx) => (
-                      <div key={idx} className="bg-gray-800/30 rounded-lg p-3">
-                        <div className="text-indigo-400 text-xs font-semibold mb-1">Step {idx + 1}</div>
-                        <div className="text-white text-sm font-medium">{step.step}</div>
-                        <div className="text-gray-500 text-xs">{step.description}</div>
-                      </div>
-                    ))}
-                  </div>
+              {/* Pricing & CTA */}
+              <div className="pt-5 border-t border-gray-800/80 flex items-center justify-between mt-auto">
+                <div>
+                  <div className="text-gray-500 text-xs font-mono">Starting at</div>
+                  <div className="text-2xl font-bold text-teal-400">{service.pricing.basic}</div>
                 </div>
-
-                {/* Pricing & CTA */}
-                <div className="flex items-center justify-between pt-4 border-t border-gray-800">
-                  <div>
-                    <div className="text-gray-400 text-sm mb-1">Starting at</div>
-                    <div className="text-2xl font-bold text-white">{service.pricing.basic}</div>
-                  </div>
-                  <button className="px-6 py-2 bg-linear-to-r from-indigo-600 to-purple-600 text-white font-medium rounded-lg hover:from-indigo-700 hover:to-purple-700 transition-all duration-300">
-                    Get Quote
-                  </button>
-                </div>
+                <button
+                  type="button"
+                  onClick={() => setIsCalendarOpen(true)}
+                  className="px-5 py-2.5 bg-gradient-to-r from-teal-500 to-cyan-600 text-white text-xs font-semibold rounded-xl hover:from-teal-600 hover:to-cyan-700 transition-all shadow-md shadow-teal-500/20"
+                >
+                  Book Call
+                </button>
               </div>
             </motion.div>
           ))}
@@ -326,10 +277,10 @@ export default function Services() {
           className="mb-16"
         >
           <motion.div variants={fadeInUp} className="text-center mb-10">
-            <h3 className="text-3xl font-bold text-white mb-3">
-              Additional <span className="text-transparent bg-clip-text bg-linear-to-r from-blue-400 to-cyan-500">Services</span>
+            <h3 className="text-2xl font-bold text-white mb-2">
+              Specialized <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-cyan-400">Add-ons</span>
             </h3>
-            <p className="text-gray-400">Specialized solutions for specific needs</p>
+            <p className="text-gray-400 text-sm">Targeted engineering support for specific project needs</p>
           </motion.div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -337,18 +288,18 @@ export default function Services() {
               <motion.div
                 key={index}
                 variants={fadeInUp}
-                whileHover={{ scale: 1.05 }}
-                className="group bg-linear-to-b from-gray-900/30 to-transparent border border-gray-800 rounded-xl p-6 text-center hover:border-blue-500/30 transition-all duration-300"
+                whileHover={{ scale: 1.02 }}
+                className="group bg-gradient-to-b from-gray-900/40 to-gray-950/60 border border-gray-800 rounded-xl p-5 hover:border-teal-500/30 transition-all duration-300"
               >
-                <div className="inline-flex p-3 rounded-xl bg-gray-800/50 group-hover:bg-linear-to-r group-hover:from-blue-500 group-hover:to-cyan-500 transition-all duration-300 mb-4">
+                <div className="inline-flex p-3 rounded-xl bg-gray-800/60 text-teal-400 mb-3 text-xl group-hover:bg-teal-500/10 group-hover:text-teal-300 transition-colors">
                   {service.icon}
                 </div>
-                <h4 className="text-white font-bold mb-2">{service.title}</h4>
-                <p className="text-gray-400 text-sm mb-4">{service.description}</p>
+                <h4 className="text-white font-bold text-base mb-1.5">{service.title}</h4>
+                <p className="text-gray-400 text-xs mb-3 leading-relaxed">{service.description}</p>
                 <div className="space-y-1">
                   {service.features.map((feature, idx) => (
-                    <div key={idx} className="text-gray-500 text-xs">
-                      {feature}
+                    <div key={idx} className="text-gray-500 text-[11px] font-mono">
+                      • {feature}
                     </div>
                   ))}
                 </div>
@@ -366,63 +317,56 @@ export default function Services() {
           className="mb-16"
         >
           <motion.div variants={fadeInUp} className="text-center mb-10">
-            <h3 className="text-3xl font-bold text-white mb-3">
-              How I <span className="text-transparent bg-clip-text bg-linear-to-r from-green-400 to-emerald-500">Work</span>
+            <h3 className="text-2xl font-bold text-white mb-2">
+              How I <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-emerald-400">Work</span>
             </h3>
-            <p className="text-gray-400">A structured process for successful project delivery</p>
+            <p className="text-gray-400 text-sm">A structured, transparent process from kickoff to production</p>
           </motion.div>
 
-          <div className="relative">
-            {/* Timeline Line */}
-            <div className="absolute left-0 right-0 top-1/2 h-0.5 bg-linear-to-r from-transparent via-gray-800 to-transparent hidden md:block"></div>
-
-            <div className="grid md:grid-cols-4 gap-8">
-              {[
-                {
-                  step: "01",
-                  title: "Discovery",
-                  description: "Understanding your requirements and goals",
-                  icon: <FiMessageSquare />
-                },
-                {
-                  step: "02",
-                  title: "Planning",
-                  description: "Creating detailed project roadmap and timeline",
-                  icon: <FiLayers />
-                },
-                {
-                  step: "03",
-                  title: "Development",
-                  description: "Building with agile methodologies and regular updates",
-                  icon: <FiCode />
-                },
-                {
-                  step: "04",
-                  title: "Delivery",
-                  description: "Testing, deployment, and ongoing support",
-                  icon: <FiCheckCircle />
-                }
-              ].map((step, index) => (
-                <motion.div
-                  key={index}
-                  variants={fadeInUp}
-                  className="relative text-center"
-                >
-                  <div className="relative z-10 inline-flex flex-col items-center">
-                    <div className="w-16 h-16 rounded-full bg-linear-to-r from-green-500 to-emerald-600 flex items-center justify-center mb-4">
-                      {step.icon}
-                    </div>
-                    <div className="text-2xl font-bold text-white mb-2">{step.step}</div>
-                    <h4 className="text-xl font-bold text-white mb-2">{step.title}</h4>
-                    <p className="text-gray-400 text-sm">{step.description}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
+          <div className="grid md:grid-cols-4 gap-6">
+            {[
+              {
+                step: "01",
+                title: "Discovery",
+                description: "Understanding requirements, user stories, and technical scope.",
+                icon: <FiMessageSquare />
+              },
+              {
+                step: "02",
+                title: "Planning & Architecture",
+                description: "Creating wireframes, tech stack selection, and database models.",
+                icon: <FiLayers />
+              },
+              {
+                step: "03",
+                title: "Agile Development",
+                description: "Iterative sprints with clean code, testing, and continuous feedback.",
+                icon: <FiCode />
+              },
+              {
+                step: "04",
+                title: "Launch & Support",
+                description: "Production deployment on Vercel, performance checks, and handoff.",
+                icon: <FiCheckCircle />
+              }
+            ].map((step, index) => (
+              <motion.div
+                key={index}
+                variants={fadeInUp}
+                className="bg-gray-900/30 border border-gray-800 rounded-xl p-6 text-center hover:border-teal-500/30 transition-all"
+              >
+                <div className="w-12 h-12 mx-auto rounded-full bg-teal-500/10 text-teal-400 border border-teal-500/30 flex items-center justify-center mb-3 text-lg">
+                  {step.icon}
+                </div>
+                <div className="text-teal-400 font-mono text-xs font-bold mb-1">STEP {step.step}</div>
+                <h4 className="text-white font-bold text-base mb-1.5">{step.title}</h4>
+                <p className="text-gray-400 text-xs leading-relaxed">{step.description}</p>
+              </motion.div>
+            ))}
           </div>
         </motion.div>
 
-        {/* CTA Section */}
+        {/* CTA Section with Direct Booking Explanation */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
@@ -430,27 +374,41 @@ export default function Services() {
           transition={{ delay: 0.3 }}
           className="text-center"
         >
-          <div className="relative overflow-hidden rounded-2xl border border-gray-800 bg-linear-to-r from-gray-900/50 to-gray-900/30 p-12">
-            <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-indigo-500 via-purple-500 to-pink-500"></div>
-            <div className="relative z-10">
-              <h3 className="text-3xl font-bold text-white mb-4">
-                Ready to Transform Your Digital Presence?
+          <div className="relative overflow-hidden rounded-2xl border border-gray-800 bg-gradient-to-r from-gray-900/60 via-gray-950/80 to-gray-900/60 p-8 sm:p-12">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-teal-400 via-cyan-400 to-blue-500"></div>
+            <div className="relative z-10 max-w-2xl mx-auto">
+              <h3 className="text-2xl sm:text-3xl font-bold text-white mb-3">
+                Have a Project in Mind?
               </h3>
-              <p className="text-gray-400 mb-8 max-w-2xl mx-auto">
-                Let&apos;s discuss your project and create a custom solution that drives results
+              <p className="text-gray-400 text-sm mb-6 leading-relaxed">
+                Book a free 20-minute consultation. We&apos;ll discuss your product requirements, ideal tech stack, timeline, and actionable budget options.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <button className="px-8 py-3 bg-linear-to-r from-indigo-600 to-purple-600 text-white font-medium rounded-lg hover:from-indigo-700 hover:to-purple-700 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl hover:shadow-indigo-500/25">
-                  Start a Project
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <button
+                  type="button"
+                  onClick={() => setIsCalendarOpen(true)}
+                  className="w-full sm:w-auto px-8 py-3 bg-gradient-to-r from-teal-500 to-cyan-600 text-white font-medium rounded-xl hover:from-teal-600 hover:to-cyan-700 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl hover:shadow-teal-500/25 flex items-center justify-center gap-2"
+                >
+                  <FiCalendar />
+                  <span>Schedule Free Consultation</span>
                 </button>
-                <button className="px-8 py-3 border-2 border-gray-700 text-gray-300 font-medium rounded-lg hover:border-indigo-500 hover:text-indigo-400 transition-all duration-300">
-                  Schedule a Call
-                </button>
+                <Link
+                  href="#contact"
+                  className="w-full sm:w-auto px-8 py-3 border border-gray-700 text-gray-300 font-medium rounded-xl hover:border-teal-500 hover:text-teal-300 transition-all duration-300 text-center"
+                >
+                  Send a Message
+                </Link>
               </div>
+              <p className="text-[11px] text-gray-500 mt-4 font-mono">
+                No commitments • Google Meet or WhatsApp call
+              </p>
             </div>
           </div>
         </motion.div>
       </div>
+
+      {/* Calendar Booking Modal */}
+      <Picker openProp={isCalendarOpen} onClose={() => setIsCalendarOpen(false)} />
     </section>
   );
 }

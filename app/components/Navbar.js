@@ -128,25 +128,21 @@ export default function Navbar() {
               </ul>
             </div>
             {/* Download CV Button */}
-            <motion.button
+            <motion.a
+              href="/gamal-ahmed-resume.pdf"
+              download="Gamal_Ahmed_Resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="group relative px-6 py-3 bg-linear-to-r from-green-600 to-emerald-700 text-white font-medium rounded-lg overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-green-500/25 hidden lg:block"
-              onClick={() => {
-                const link = document.createElement("a");
-                link.href = "/Gamal_Ahmed_Front End_Developer_resume.pdf";
-                link.download = "Gamal-CV.pdf";
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-              }}
+              className="group relative px-6 py-3 bg-linear-to-r from-teal-500 to-emerald-600 text-white font-medium rounded-lg overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-teal-500/25 hidden lg:inline-flex items-center gap-2"
             >
-              <div className="absolute inset-0 bg-linear-to-r from-green-500 to-emerald-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="absolute inset-0 bg-linear-to-r from-teal-400 to-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               <div className="relative flex items-center gap-2">
                 <FiDownload className="text-lg" />
                 <span>Download CV</span>
               </div>
-            </motion.button>
+            </motion.a>
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -204,20 +200,16 @@ export default function Navbar() {
                 transition={{ delay: 0.3 }}
                 className="mt-6 px-4"
               >
-                <button
-                  onClick={() => {
-                    const link = document.createElement("a");
-                    link.href = "/Gamal_Ahmed_Front End_Developer_resume.pdf";
-                    link.download = "Gamal-CV.pdf";
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-                  }}
-                  className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-linear-to-r from-green-600 to-emerald-700 text-white font-medium rounded-lg hover:from-green-700 hover:to-emerald-800 transition-all duration-300"
+                <a
+                  href="/gamal-ahmed-resume.pdf"
+                  download="Gamal_Ahmed_Resume.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-linear-to-r from-teal-500 to-emerald-600 text-white font-medium rounded-lg hover:from-teal-600 hover:to-emerald-700 transition-all duration-300"
                 >
                   <FiDownload className="text-lg" />
                   <span>Download CV</span>
-                </button>
+                </a>
               </motion.div>
             </div>
           </motion.div>

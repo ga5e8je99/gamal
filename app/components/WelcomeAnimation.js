@@ -198,9 +198,9 @@ export default function WelcomeAnimation({ onComplete }) {
         >
           <div className="flex items-center justify-center gap-3">
             <span className="w-8 h-[2px] bg-gradient-to-r from-transparent to-teal-400" />
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-[0.25em] text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-cyan-200 to-emerald-400 uppercase drop-shadow-[0_0_15px_rgba(20,184,166,0.5)]">
+            <div className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-[0.25em] text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-cyan-200 to-emerald-400 uppercase drop-shadow-[0_0_15px_rgba(20,184,166,0.5)]">
               Welcome
-            </h1>
+            </div>
             <span className="w-8 h-[2px] bg-gradient-to-l from-transparent to-teal-400" />
           </div>
 

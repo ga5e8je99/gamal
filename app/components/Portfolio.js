@@ -27,7 +27,7 @@ export default function Portfolio() {
   const { projects } = useSiteData();
   const [selectedCategory, setSelectedCategory] = useState("All");
 
-  const categories = ["All", "VR/3D", "Web Apps", "Mobile"];
+  const categories = ["All", "Web Apps", "Frontend", "Full-Stack"];
 
   const filteredProjects = projects.filter((project) => {
     if (selectedCategory === "All") return true;
@@ -175,7 +175,7 @@ export default function Portfolio() {
                   alt={project.title}
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-700"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   loading="lazy"
                 />
                 
@@ -186,13 +186,43 @@ export default function Portfolio() {
               {/* Project Content */}
               <div className="p-6 flex-1 flex flex-col justify-between">
                 <div>
-                  <h3 className="text-xl font-bold text-white mb-3 group-hover:text-teal-300 transition-colors">
+                  <h3 className="text-xl font-bold text-white mb-2 group-hover:text-teal-300 transition-colors">
                     {project.title}
                   </h3>
                   
-                  <p className="text-gray-400 text-sm mb-5 leading-relaxed line-clamp-3">
+                  <p className="text-gray-400 text-sm mb-4 leading-relaxed">
                     {project.description}
                   </p>
+
+                  {/* Problem, Role, Impact Breakdown */}
+                  {(project.problem || project.role || project.impact) && (
+                    <div className="mb-4 p-3.5 rounded-xl bg-gray-950/70 border border-gray-800/80 space-y-2 text-xs">
+                      {project.problem && (
+                        <div className="flex items-start gap-2">
+                          <span className="text-amber-400 font-mono text-[11px] font-semibold shrink-0 uppercase tracking-wider">
+                            Challenge:
+                          </span>
+                          <span className="text-gray-300 leading-snug">{project.problem}</span>
+                        </div>
+                      )}
+                      {project.role && (
+                        <div className="flex items-start gap-2">
+                          <span className="text-teal-400 font-mono text-[11px] font-semibold shrink-0 uppercase tracking-wider">
+                            My Role:
+                          </span>
+                          <span className="text-gray-300 leading-snug">{project.role}</span>
+                        </div>
+                      )}
+                      {project.impact && (
+                        <div className="flex items-start gap-2">
+                          <span className="text-emerald-400 font-mono text-[11px] font-semibold shrink-0 uppercase tracking-wider">
+                            Outcome:
+                          </span>
+                          <span className="text-emerald-300/90 font-medium leading-snug">{project.impact}</span>
+                        </div>
+                      )}
+                    </div>
+                  )}
 
                   {/* Technologies */}
                   <div className="mb-6">

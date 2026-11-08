@@ -323,9 +323,15 @@ export default function ExperienceEducation() {
               <p className="text-gray-400 mb-6 max-w-lg mx-auto">
                 Download my complete resume with detailed experience, skills, and achievements
               </p>
-              <button className="px-8 py-3 bg-linear-to-r from-yellow-600 to-orange-600 text-white font-medium rounded-lg hover:from-yellow-700 hover:to-orange-700 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl hover:shadow-yellow-500/25">
+              <a
+                href="/gamal-ahmed-resume.pdf"
+                download="Gamal_Ahmed_Resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-8 py-3 bg-linear-to-r from-teal-500 to-emerald-600 text-white font-medium rounded-lg hover:from-teal-600 hover:to-emerald-700 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl hover:shadow-teal-500/25"
+              >
                 Download CV (PDF)
-              </button>
+              </a>
             </div>
           </div>
         </motion.div>
