@@ -5,22 +5,286 @@
   --foreground: #171717;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
   }
 }
-
+html {
+  scroll-behavior: smooth;
+}
 body {
-  background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+@font-face {
+  font-family: "Name";
+  src: url("/font/Yellowtail-Regular.ttf");
+}
+.logo {
+  font-family: "Name", cursive !important;
+}
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes float-delayed {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+@keyframes pulse-slow {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 1s ease-out;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float-delayed 4s ease-in-out infinite;
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 4s ease-in-out infinite;
+}
+
+.animate-scroll {
+  animation: scroll 2s ease-in-out infinite;
+}
+@keyframes pulse-slow {
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 4s ease-in-out infinite;
+}
+
+.MuiPickersLayout-root {
+  background-color: transparent !important;
+  max-width: 100% !important;
+}
+.MuiDialog-paper {
+  background-color: #0d131f !important;
+  color: #ffffff !important;
+}
+.MuiPickersDay-root {
+  color: #f1f5f9 !important;
+}
+.MuiDayCalendar-weekDayLabel {
+  color: #38bdf8 !important;
+}
+.MuiMultiSectionDigitalClockSection-root {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+@keyframes animate {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+    border-radius: 0;
+  }
+  100% {
+    transform: translateY(-1000px) rotate(720deg);
+    opacity: 0;
+    border-radius: 50%;
+  }
+}
+
+.background {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  background: rgba(252, 252, 252, 0);
+  overflow: hidden;
+  z-index: 1;
+}
+.background li {
+  position: absolute;
+  display: block;
+  list-style: none;
+  width: 20px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  animation: animate 12s linear infinite;
+}
+
+.background li:nth-child(0) {
+  left: 26%;
+  width: 174px;
+  height: 174px;
+  bottom: -174px;
+  animation-delay: 1s;
+}
+.background li:nth-child(1) {
+  left: 34%;
+  width: 100px;
+  height: 100px;
+  bottom: -100px;
+  animation-delay: 4s;
+}
+.background li:nth-child(2) {
+  left: 15%;
+  width: 163px;
+  height: 163px;
+  bottom: -163px;
+  animation-delay: 1s;
+}
+.background li:nth-child(3) {
+  left: 11%;
+  width: 170px;
+  height: 170px;
+  bottom: -170px;
+  animation-delay: 12s;
+}
+.background li:nth-child(4) {
+  left: 43%;
+  width: 151px;
+  height: 151px;
+  bottom: -151px;
+  animation-delay: 15s;
+}
+.background li:nth-child(5) {
+  left: 51%;
+  width: 105px;
+  height: 105px;
+  bottom: -105px;
+  animation-delay: 23s;
+}
+.background li:nth-child(6) {
+  left: 70%;
+  width: 179px;
+  height: 179px;
+  bottom: -179px;
+  animation-delay: 4s;
+}
+.background li:nth-child(7) {
+  left: 74%;
+  width: 147px;
+  height: 147px;
+  bottom: -147px;
+  animation-delay: 9s;
+}
+.background li:nth-child(8) {
+  left: 18%;
+  width: 168px;
+  height: 168px;
+  bottom: -168px;
+  animation-delay: 14s;
+}
+.background li:nth-child(9) {
+  left: 57%;
+  width: 130px;
+  height: 130px;
+  bottom: -130px;
+  animation-delay: 43s;
+}
+.background li:nth-child(10) {
+  left: 28%;
+  width: 218px;
+  height: 218px;
+  bottom: -218px;
+  animation-delay: 17s;
+}
+.background li:nth-child(11) {
+  left: 55%;
+  width: 184px;
+  height: 184px;
+  bottom: -184px;
+  animation-delay: 43s;
+}
+.background li:nth-child(12) {
+  left: 45%;
+  width: 153px;
+  height: 153px;
+  bottom: -153px;
+  animation-delay: 22s;
+}
+.background li:nth-child(13) {
+  left: 61%;
+  width: 149px;
+  height: 149px;
+  bottom: -149px;
+  animation-delay: 7s;
+}
+.background li:nth-child(14) {
+  left: 6%;
+  width: 126px;
+  height: 126px;
+  bottom: -126px;
+  animation-delay: 64s;
+}
+.background li:nth-child(15) {
+  left: 23%;
+  width: 188px;
+  height: 188px;
+  bottom: -188px;
+  animation-delay: 31s;
+}
+.background li {
+  -webkit-border-radius: 50% !important;
+  -moz-border-radius: 50% !important;
+  -ms-border-radius: 50% !important;
+  -o-border-radius: 50% !important;
+  border-radius: 50% !important;
+}
+
+.css-8cn20p-MuiButtonBase-root-MuiTab-root {
+  color: #ffffff !important;
+}
+
