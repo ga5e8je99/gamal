@@ -8,3 +8,4 @@ export default function robots() {
     sitemap: "https://gamalahmed.dev/sitemap.xml",
   };
 }
+

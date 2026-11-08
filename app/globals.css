@@ -18,12 +18,39 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
-@font-face {
-  font-family: "Name";
-  src: url("/font/Yellowtail-Regular.ttf");
+/* Handwriting Welcome Animation (Replaces Welcome.gif) */
+.welcome-handwrite {
+  font-family: var(--font-sacramento), "Sacramento", "Brush Script MT", cursive;
+  font-size: clamp(64px, 18vw, 180px);
+  line-height: 1.2;
+  padding: 0 0.15em;
+  color: #c4c4c4;
+  white-space: nowrap;
+  clip-path: inset(0 100% 0 0);
+  animation: handwrite 8.2s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  text-shadow: 0 0 20px rgba(196, 196, 196, 0.35);
 }
-.logo {
-  font-family: "Name", cursive !important;
+
+@keyframes handwrite {
+  0%, 4% {
+    clip-path: inset(0 100% 0 0);
+  }
+  40% {
+    clip-path: inset(0 0 0 0);
+  }
+  65% {
+    clip-path: inset(0 0 0 0);
+  }
+  95%, 100% {
+    clip-path: inset(0 0 0 100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .welcome-handwrite {
+    animation: none;
+    clip-path: none;
+  }
 }
 @keyframes fade-in-up {
   from {
