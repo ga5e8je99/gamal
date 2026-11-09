@@ -112,8 +112,7 @@ export default function RootLayout({ children }) {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
         />
-        {children}
-        <ul className="background ">
+        <ul className="background" aria-hidden="true">
           <li></li>
           <li></li>
           <li></li>
@@ -131,6 +130,7 @@ export default function RootLayout({ children }) {
           <li></li>
           <li></li>
         </ul>
+        {children}
       </body>
     </html>
   );

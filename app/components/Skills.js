@@ -191,7 +191,7 @@ export default function SkillsSection() {
   return (
     <section
       id="skills"
-      className="py-20 bg-linear-to-b from-black via-gray-900 to-black"
+      className="py-20 bg-transparent relative z-20"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
         {/* Section Header */}

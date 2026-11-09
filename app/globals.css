@@ -15,8 +15,10 @@ html {
   scroll-behavior: smooth;
 }
 body {
-  color: var(--foreground);
+  color: #ededed;
+  background-color: #07090e;
   font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
 }
 /* Handwriting Welcome Animation (Replaces Welcome.gif) */
 .welcome-handwrite {
@@ -156,159 +158,177 @@ body {
 .MuiMultiSectionDigitalClockSection-root {
   border-color: rgba(255, 255, 255, 0.1) !important;
 }
-@keyframes animate {
+@keyframes floatBubble {
   0% {
     transform: translateY(0) rotate(0deg);
-    opacity: 1;
-    border-radius: 0;
+    opacity: 0;
+  }
+  12% {
+    opacity: 0.85;
+  }
+  88% {
+    opacity: 0.8;
   }
   100% {
-    transform: translateY(-1000px) rotate(720deg);
+    transform: translateY(-118vh) rotate(360deg);
     opacity: 0;
-    border-radius: 50%;
   }
 }
 
 .background {
   position: fixed;
+  inset: 0;
   width: 100vw;
   height: 100vh;
-  top: 0;
-  left: 0;
   margin: 0;
   padding: 0;
-  background: rgba(252, 252, 252, 0);
   overflow: hidden;
-  z-index: 1;
+  z-index: 0;
+  pointer-events: none;
+  background: transparent;
 }
+
 .background li {
   position: absolute;
   display: block;
   list-style: none;
-  width: 20px;
-  height: 20px;
-  background: rgba(255, 255, 255, 0.05);
-  animation: animate 12s linear infinite;
+  border-radius: 50% !important;
+  background: radial-gradient(circle at 32% 32%, rgba(20, 184, 166, 0.3), rgba(6, 182, 212, 0.12) 50%, rgba(255, 255, 255, 0.05) 100%);
+  border: 1px solid rgba(45, 212, 191, 0.25);
+  box-shadow: 0 0 20px rgba(20, 184, 166, 0.15), inset 0 0 14px rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(1px);
+  animation: floatBubble 16s linear infinite;
+  will-change: transform, opacity;
+  pointer-events: none;
 }
 
-.background li:nth-child(0) {
-  left: 26%;
-  width: 174px;
-  height: 174px;
-  bottom: -174px;
-  animation-delay: 1s;
-}
 .background li:nth-child(1) {
-  left: 34%;
-  width: 100px;
-  height: 100px;
-  bottom: -100px;
-  animation-delay: 4s;
+  left: 6%;
+  width: 52px;
+  height: 52px;
+  bottom: -60px;
+  animation-duration: 15s;
+  animation-delay: 0s;
 }
 .background li:nth-child(2) {
-  left: 15%;
-  width: 163px;
-  height: 163px;
-  bottom: -163px;
-  animation-delay: 1s;
+  left: 16%;
+  width: 86px;
+  height: 86px;
+  bottom: -95px;
+  animation-duration: 19s;
+  animation-delay: -3s;
 }
 .background li:nth-child(3) {
-  left: 11%;
-  width: 170px;
-  height: 170px;
-  bottom: -170px;
-  animation-delay: 12s;
+  left: 26%;
+  width: 42px;
+  height: 42px;
+  bottom: -50px;
+  animation-duration: 13s;
+  animation-delay: -7s;
 }
 .background li:nth-child(4) {
-  left: 43%;
-  width: 151px;
-  height: 151px;
-  bottom: -151px;
-  animation-delay: 15s;
+  left: 36%;
+  width: 110px;
+  height: 110px;
+  bottom: -120px;
+  animation-duration: 23s;
+  animation-delay: -11s;
 }
 .background li:nth-child(5) {
-  left: 51%;
-  width: 105px;
-  height: 105px;
-  bottom: -105px;
-  animation-delay: 23s;
+  left: 46%;
+  width: 64px;
+  height: 64px;
+  bottom: -75px;
+  animation-duration: 17s;
+  animation-delay: -2s;
 }
 .background li:nth-child(6) {
-  left: 70%;
-  width: 179px;
-  height: 179px;
-  bottom: -179px;
-  animation-delay: 4s;
+  left: 56%;
+  width: 88px;
+  height: 88px;
+  bottom: -100px;
+  animation-duration: 20s;
+  animation-delay: -13s;
 }
 .background li:nth-child(7) {
-  left: 74%;
-  width: 147px;
-  height: 147px;
-  bottom: -147px;
-  animation-delay: 9s;
+  left: 66%;
+  width: 36px;
+  height: 36px;
+  bottom: -45px;
+  animation-duration: 12s;
+  animation-delay: -5s;
 }
 .background li:nth-child(8) {
-  left: 18%;
-  width: 168px;
-  height: 168px;
-  bottom: -168px;
-  animation-delay: 14s;
+  left: 76%;
+  width: 118px;
+  height: 118px;
+  bottom: -130px;
+  animation-duration: 25s;
+  animation-delay: -15s;
 }
 .background li:nth-child(9) {
-  left: 57%;
-  width: 130px;
-  height: 130px;
-  bottom: -130px;
-  animation-delay: 43s;
+  left: 86%;
+  width: 56px;
+  height: 56px;
+  bottom: -65px;
+  animation-duration: 16s;
+  animation-delay: -8s;
 }
 .background li:nth-child(10) {
-  left: 28%;
-  width: 218px;
-  height: 218px;
-  bottom: -218px;
-  animation-delay: 17s;
+  left: 11%;
+  width: 74px;
+  height: 74px;
+  bottom: -85px;
+  animation-duration: 18s;
+  animation-delay: -10s;
 }
 .background li:nth-child(11) {
-  left: 55%;
-  width: 184px;
-  height: 184px;
-  bottom: -184px;
-  animation-delay: 43s;
+  left: 22%;
+  width: 98px;
+  height: 98px;
+  bottom: -110px;
+  animation-duration: 21s;
+  animation-delay: -16s;
 }
 .background li:nth-child(12) {
-  left: 45%;
-  width: 153px;
-  height: 153px;
-  bottom: -153px;
-  animation-delay: 22s;
+  left: 41%;
+  width: 46px;
+  height: 46px;
+  bottom: -55px;
+  animation-duration: 14s;
+  animation-delay: -9s;
 }
 .background li:nth-child(13) {
   left: 61%;
-  width: 149px;
-  height: 149px;
-  bottom: -149px;
-  animation-delay: 7s;
+  width: 92px;
+  height: 92px;
+  bottom: -105px;
+  animation-duration: 22s;
+  animation-delay: -4s;
 }
 .background li:nth-child(14) {
-  left: 6%;
-  width: 126px;
-  height: 126px;
-  bottom: -126px;
-  animation-delay: 64s;
+  left: 71%;
+  width: 62px;
+  height: 62px;
+  bottom: -70px;
+  animation-duration: 17s;
+  animation-delay: -12s;
 }
 .background li:nth-child(15) {
-  left: 23%;
-  width: 188px;
-  height: 188px;
-  bottom: -188px;
-  animation-delay: 31s;
+  left: 81%;
+  width: 78px;
+  height: 78px;
+  bottom: -90px;
+  animation-duration: 19s;
+  animation-delay: -1s;
 }
-.background li {
-  -webkit-border-radius: 50% !important;
-  -moz-border-radius: 50% !important;
-  -ms-border-radius: 50% !important;
-  -o-border-radius: 50% !important;
-  border-radius: 50% !important;
+.background li:nth-child(16) {
+  left: 92%;
+  width: 44px;
+  height: 44px;
+  bottom: -50px;
+  animation-duration: 13s;
+  animation-delay: -10s;
 }
 
 .css-8cn20p-MuiButtonBase-root-MuiTab-root {

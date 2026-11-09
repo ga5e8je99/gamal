@@ -16,7 +16,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
 
   return (
-    <div className="bg-gradient-to-br from-gray-900 via-black to-gray-900 min-h-screen text-white selection:bg-teal-500/30 selection:text-teal-200">
+    <div className="bg-transparent min-h-screen text-white selection:bg-teal-500/30 selection:text-teal-200">
       <AnimatePresence mode="wait">
         {loading && (
           <WelcomeAnimation
