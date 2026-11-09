@@ -5,15 +5,24 @@ import { useState, useEffect } from "react";
 import { FiDownload, FiMenu, FiX } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
 import { label } from "framer-motion/client";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 
 export default function Navbar() {
-  const router= useRouter()
+  const router = useRouter();
+  const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("home");
+  const [activeSection, setActiveSection] = useState(
+    pathname?.startsWith("/projects") ? "portfolio" : "home"
+  );
   
+  useEffect(() => {
+    if (pathname?.startsWith("/projects")) {
+      setActiveSection("portfolio");
+    }
+  }, [pathname]);
+
   useEffect(() => {
     let ticking = false;
     const handleScroll = () => {
@@ -21,24 +30,26 @@ export default function Navbar() {
         window.requestAnimationFrame(() => {
           setIsScrolled(window.scrollY > 20);
 
-          const sections = [
-            "home",
-            "about",
-            "services",
-            "skills",
-            "portfolio",
-            "experience",
-            "contact",
-          ];
-          const current = sections.find((section) => {
-            const element = document.getElementById(section);
-            if (element) {
-              const rect = element.getBoundingClientRect();
-              return rect.top <= 120 && rect.bottom >= 120;
-            }
-            return false;
-          });
-          if (current) setActiveSection(current);
+          if (pathname === "/") {
+            const sections = [
+              "home",
+              "about",
+              "services",
+              "skills",
+              "portfolio",
+              "experience",
+              "contact",
+            ];
+            const current = sections.find((section) => {
+              const element = document.getElementById(section);
+              if (element) {
+                const rect = element.getBoundingClientRect();
+                return rect.top <= 120 && rect.bottom >= 120;
+              }
+              return false;
+            });
+            if (current) setActiveSection(current);
+          }
           ticking = false;
         });
         ticking = true;
@@ -47,7 +58,7 @@ export default function Navbar() {
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [pathname]);
 
   const navItems = [
     { id: "home", label: "Home" },
@@ -82,7 +93,7 @@ export default function Navbar() {
               <div className="relative">
                 <div className="absolute inset-0 bg-linear-to-r from-green-500 to-emerald-600 rounded-lg blur opacity-75 animate-pulse-slow"></div>
                 <Link
-                  href="#home"
+                  href="/#home"
                   className="relative text-3xl font-bold bg-linear-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent"
                 >
                   Gamal
@@ -99,7 +110,7 @@ export default function Navbar() {
                 {navItems.map((item) => (
                   <li key={item.id}>
                     <Link
-                      href={`#${item.id}`}
+                      href={`/#${item.id}`}
                       className={`relative px-3 py-2 text-sm font-medium transition-all duration-300 ${
                         activeSection === item.id
                           ? "text-green-400"
@@ -174,7 +185,7 @@ export default function Navbar() {
                     transition={{ delay: item.id.charCodeAt(0) * 0.01 }}
                   >
                     <Link
-                      href={`#${item.id}`}
+                      href={`/#${item.id}`}
                       className={`flex items-center justify-between px-4 py-3 rounded-lg transition-all duration-300 ${
                         activeSection === item.id
                           ? "bg-gray-800/50 text-green-400"

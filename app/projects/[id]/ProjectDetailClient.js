@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { motion } from "framer-motion";
+import Navbar from "@/app/components/Navbar";
 import {
   FiArrowLeft,
   FiArrowRight,
@@ -79,61 +80,55 @@ export default function ProjectDetailClient({ project, prevProject, nextProject 
 
   return (
     <div className="min-h-screen bg-[#070b14] text-white selection:bg-teal-500/30 selection:text-teal-200">
-      {/* Top Floating Navigation */}
-      <header className="sticky top-0 z-40 bg-[#070b14]/90 backdrop-blur-md border-b border-gray-800/80">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <Link
-            href="/#portfolio"
-            className="inline-flex items-center gap-2 text-sm font-medium text-gray-300 hover:text-teal-400 transition-colors group"
-          >
-            <FiArrowLeft className="group-hover:-translate-x-1 transition-transform" />
-            <span>Back to Projects</span>
-          </Link>
+      {/* Exact Site Navbar */}
+      <Navbar />
+
+      {/* Main Project Container */}
+      <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
+        {/* Top Action Toolbar (Breadcrumb + Back + Share) */}
+        <div className="flex flex-wrap items-center justify-between gap-4 mb-8 pb-4 border-b border-gray-800/80">
+          {/* Breadcrumb */}
+          <nav className="flex items-center gap-2 text-xs font-mono text-gray-400" aria-label="Breadcrumb">
+            <Link href="/#home" className="hover:text-teal-400 transition-colors flex items-center gap-1">
+              <FiHome /> Home
+            </Link>
+            <span>/</span>
+            <Link href="/#portfolio" className="hover:text-teal-400 transition-colors">
+              Portfolio
+            </Link>
+            <span>/</span>
+            <span className="text-teal-300 truncate max-w-[200px] sm:max-w-none">{project.title}</span>
+          </nav>
 
           <div className="flex items-center gap-3">
+            <Link
+              href="/#portfolio"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-gray-900/90 hover:bg-gray-800 text-gray-300 hover:text-white border border-gray-800 hover:border-gray-700 text-xs font-medium transition-all group"
+            >
+              <FiArrowLeft className="group-hover:-translate-x-1 transition-transform" />
+              <span>Back to Projects</span>
+            </Link>
+
             <button
               onClick={handleShare}
               type="button"
-              className="px-3.5 py-1.5 text-xs font-mono rounded-lg bg-gray-800/80 hover:bg-gray-700 text-gray-300 border border-gray-700 flex items-center gap-2 transition-all cursor-pointer"
+              className="px-3.5 py-1.5 text-xs font-mono rounded-lg bg-gray-900/90 hover:bg-gray-800 text-gray-300 hover:text-white border border-gray-800 hover:border-gray-700 flex items-center gap-1.5 transition-all cursor-pointer"
               title="Share Project URL"
             >
               {copied ? (
                 <>
-                  <FiCheck className="text-teal-400 text-sm" />
+                  <FiCheck className="text-teal-400 text-xs" />
                   <span className="text-teal-300">Link Copied!</span>
                 </>
               ) : (
                 <>
-                  <FiShare2 className="text-sm" />
+                  <FiShare2 className="text-xs" />
                   <span>Share</span>
                 </>
               )}
             </button>
-
-            <Link
-              href="/#contact"
-              className="px-4 py-1.5 text-xs font-semibold rounded-lg bg-gradient-to-r from-teal-500 to-cyan-600 text-white hover:from-teal-600 hover:to-cyan-700 shadow-md shadow-teal-500/20 transition-all"
-            >
-              Hire Me
-            </Link>
           </div>
         </div>
-      </header>
-
-      {/* Main Project Container */}
-      <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-16">
-        {/* Breadcrumb */}
-        <nav className="flex items-center gap-2 text-xs font-mono text-gray-400 mb-6" aria-label="Breadcrumb">
-          <Link href="/" className="hover:text-teal-400 transition-colors flex items-center gap-1">
-            <FiHome /> Home
-          </Link>
-          <span>/</span>
-          <Link href="/#portfolio" className="hover:text-teal-400 transition-colors">
-            Portfolio
-          </Link>
-          <span>/</span>
-          <span className="text-teal-300 truncate max-w-[200px] sm:max-w-none">{project.title}</span>
-        </nav>
 
         {/* Project Header */}
         <div className="space-y-4 mb-8">
@@ -389,3 +384,4 @@ export default function ProjectDetailClient({ project, prevProject, nextProject 
     </div>
   );
 }
+
