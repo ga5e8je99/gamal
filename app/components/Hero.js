@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import Wave from "./Wave";
 import { useSiteData } from "@/lib/useSiteData";
 
 export default function Hero() {
@@ -114,9 +113,6 @@ export default function Hero() {
             <div className="w-1 h-3 bg-teal-400 rounded-full mt-2 animate-scroll"></div>
           </div>
         </div>
-      </div>
-      <div className="w-full absolute -bottom-5 left-0 right-0">
-        <Wave />
       </div>
     </section>
   );
