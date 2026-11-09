@@ -150,11 +150,10 @@ export default function ContactSection() {
       },
     },
   };
-  const [open, setOpen] = useState(true);
   return (
     <section
       id="contact"
-      className="py-20 bg-transparent relative z-20"
+      className="py-20 bg-[#060913] relative transition-colors duration-500"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
         {/* Section Header */}

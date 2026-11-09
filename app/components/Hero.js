@@ -12,7 +12,7 @@ export default function Hero() {
   const lastName = nameParts.slice(1).join(" ") || "Ahmed";
 
   return (
-    <section className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 pb-12 border-b-2 border-b-emerald-200/10 relative" id="home">
+    <section className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 pb-12 relative bg-[#080c16] transition-colors duration-500" id="home">
       <div className="max-w-7xl mx-auto w-full relative z-20 lg:mb-80">
         <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-20">
           {/* Text Content */}
