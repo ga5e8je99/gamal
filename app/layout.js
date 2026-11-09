@@ -1,21 +1,25 @@
-import { Geist, Geist_Mono, Sacramento } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
-const geistSans = Geist({
+const geistSans = localFont({
+  src: "../public/fonts/geist.woff2",
   variable: "--font-geist-sans",
-  subsets: ["latin"],
+  display: "swap",
+  fallback: ["system-ui", "sans-serif"],
 });
 
-const geistMono = Geist_Mono({
+const geistMono = localFont({
+  src: "../public/fonts/geist-mono.woff2",
   variable: "--font-geist-mono",
-  subsets: ["latin"],
+  display: "swap",
+  fallback: ["monospace"],
 });
 
-const sacramento = Sacramento({
-  weight: "400",
-  subsets: ["latin"],
+const sacramento = localFont({
+  src: "../public/font/Yellowtail-Regular.ttf",
   variable: "--font-sacramento",
   display: "swap",
+  fallback: ["cursive"],
 });
 
 export const metadata = {

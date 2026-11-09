@@ -1,7 +1,9 @@
+import { INITIAL_PROJECTS } from "@/lib/siteData";
+
 export default function sitemap() {
   const baseUrl = "https://gamalahmed.dev";
 
-  return [
+  const staticRoutes = [
     {
       url: baseUrl,
       lastModified: new Date(),
@@ -39,5 +41,13 @@ export default function sitemap() {
       priority: 0.7,
     },
   ];
-}
 
+  const projectRoutes = INITIAL_PROJECTS.map((proj) => ({
+    url: `${baseUrl}/projects/${proj.slug || proj.id}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly",
+    priority: 0.85,
+  }));
+
+  return [...staticRoutes, ...projectRoutes];
+}

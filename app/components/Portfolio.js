@@ -2,8 +2,9 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
-import { FiExternalLink, FiGithub, FiEye, FiCode, FiLayers } from "react-icons/fi";
+import { FiExternalLink, FiGithub, FiEye, FiCode, FiLayers, FiArrowRight } from "react-icons/fi";
 import { 
   SiReact, 
   SiNextdotjs, 
@@ -168,26 +169,31 @@ export default function Portfolio() {
               </div>
 
               {/* Project Image */}
-              <div className="relative h-60 md:h-64 overflow-hidden bg-gray-950">
+              <Link
+                href={`/projects/${project.slug || project.id}`}
+                className="relative h-60 md:h-64 overflow-hidden bg-gray-950 block group/img"
+              >
                 <div className="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-transparent z-10"></div>
                 <Image
                   src={project.image || "/projectImage/image.webp"}
                   alt={project.title}
                   fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-700"
+                  className="object-cover group-hover/img:scale-105 transition-transform duration-700"
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   loading="lazy"
                 />
                 
                 {/* Hover Overlay */}
-                <div className="absolute inset-0 bg-teal-900/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"></div>
-              </div>
+                <div className="absolute inset-0 bg-teal-900/10 via-transparent to-transparent opacity-0 group-hover/img:opacity-100 transition-opacity duration-300 z-10"></div>
+              </Link>
 
               {/* Project Content */}
               <div className="p-6 flex-1 flex flex-col justify-between">
                 <div>
                   <h3 className="text-xl font-bold text-white mb-2 group-hover:text-teal-300 transition-colors">
-                    {project.title}
+                    <Link href={`/projects/${project.slug || project.id}`} className="hover:underline decoration-teal-400/40">
+                      {project.title}
+                    </Link>
                   </h3>
                   
                   <p className="text-gray-400 text-sm mb-4 leading-relaxed">
@@ -236,19 +242,19 @@ export default function Portfolio() {
                 </div>
 
                 {/* Project Links */}
-                <div className="flex items-center justify-between pt-4 border-t border-gray-800/80 mt-auto">
-                  <div className="flex items-center gap-4">
+                <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-gray-800/80 mt-auto">
+                  <div className="flex items-center gap-3">
                     {project.liveLink && (
                       <a
                         href={project.liveLink}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-2 text-gray-300 hover:text-teal-300 transition-colors group/link"
+                        className="flex items-center gap-1.5 text-xs text-gray-300 hover:text-teal-300 transition-colors group/link"
                       >
                         <div className="p-1.5 rounded-lg bg-gray-800 group-hover/link:bg-teal-500/20 transition-colors">
-                          <FiExternalLink className="text-sm" />
+                          <FiExternalLink className="text-xs" />
                         </div>
-                        <span className="text-sm">Live Demo</span>
+                        <span>Demo</span>
                       </a>
                     )}
                     {project.githubLink && (
@@ -256,15 +262,23 @@ export default function Portfolio() {
                         href={project.githubLink}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-2 text-gray-300 hover:text-white transition-colors group/link"
+                        className="flex items-center gap-1.5 text-xs text-gray-300 hover:text-white transition-colors group/link"
                       >
                         <div className="p-1.5 rounded-lg bg-gray-800 group-hover/link:bg-gray-700 transition-colors">
-                          <FiGithub className="text-sm" />
+                          <FiGithub className="text-xs" />
                         </div>
-                        <span className="text-sm">Code</span>
+                        <span>Code</span>
                       </a>
                     )}
                   </div>
+
+                  <Link
+                    href={`/projects/${project.slug || project.id}`}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-teal-500/10 hover:bg-teal-500/20 text-teal-300 border border-teal-500/30 text-xs font-medium transition-all group/btn hover:border-teal-400/50"
+                  >
+                    <span>Case Study</span>
+                    <FiArrowRight className="text-xs group-hover/btn:translate-x-1 transition-transform" />
+                  </Link>
                 </div>
               </div>
             </motion.div>
