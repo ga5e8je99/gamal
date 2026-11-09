@@ -30,17 +30,17 @@ export default function Home() {
       <main className="relative z-10">
         <Navbar />
         <Hero />
-        <Wave variant={1} />
+        <Wave />
         <About />
-        <Wave variant={2} flip />
+        <Wave flip />
         <SkillsSection />
-        <Wave variant={3} />
+        <Wave />
         <ExperienceEducation />
-        <Wave variant={4} flip />
+        <Wave flip />
         <Portfolio />
-        <Wave variant={5} />
+        <Wave />
         <Services />
-        <Wave variant={6} flip />
+        <Wave flip />
         <ContactSection />
       </main>
     </div>
