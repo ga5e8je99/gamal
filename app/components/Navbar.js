@@ -140,7 +140,7 @@ export default function Navbar() {
             </div>
             {/* Download CV Button */}
             <motion.a
-              href="/gamal-ahmed-resume.pdf"
+              href="/Gamal_Ahmed_Resume.pdf"
               download="Gamal_Ahmed_Resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
@@ -212,7 +212,7 @@ export default function Navbar() {
                 className="mt-6 px-4"
               >
                 <a
-                  href="/gamal-ahmed-resume.pdf"
+                  href="/Gamal_Ahmed_Resume.pdf"
                   download="Gamal_Ahmed_Resume.pdf"
                   target="_blank"
                   rel="noopener noreferrer"

@@ -324,7 +324,7 @@ export default function ExperienceEducation() {
                 Download my complete resume with detailed experience, skills, and achievements
               </p>
               <a
-                href="/gamal-ahmed-resume.pdf"
+                href="/Gamal_Ahmed_Resume.pdf"
                 download="Gamal_Ahmed_Resume.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
