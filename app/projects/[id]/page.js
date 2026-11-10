@@ -7,6 +7,9 @@ export async function generateStaticParams() {
   INITIAL_PROJECTS.forEach((proj) => {
     if (proj.id) params.push({ id: proj.id });
     if (proj.slug) params.push({ id: proj.slug });
+    if (Array.isArray(proj.aliases)) {
+      proj.aliases.forEach((alias) => params.push({ id: alias }));
+    }
   });
   return params;
 }
@@ -14,7 +17,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }) {
   const { id } = await params;
   const project = INITIAL_PROJECTS.find(
-    (p) => p.id === id || p.slug === id
+    (p) => p.id === id || p.slug === id || (Array.isArray(p.aliases) && p.aliases.includes(id))
   );
 
   if (!project) {
@@ -59,7 +62,7 @@ export async function generateMetadata({ params }) {
 export default async function ProjectPage({ params }) {
   const { id } = await params;
   const projectIndex = INITIAL_PROJECTS.findIndex(
-    (p) => p.id === id || p.slug === id
+    (p) => p.id === id || p.slug === id || (Array.isArray(p.aliases) && p.aliases.includes(id))
   );
 
   if (projectIndex === -1) {
