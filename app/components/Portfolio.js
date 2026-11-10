@@ -28,10 +28,29 @@ export default function Portfolio() {
   const { projects } = useSiteData();
   const [selectedCategory, setSelectedCategory] = useState("All");
 
-  const categories = ["All", "Web Apps", "Frontend", "Full-Stack"];
+  const categories = ["All", "Full-Stack", "Frontend / 3D"];
 
   const filteredProjects = projects.filter((project) => {
     if (selectedCategory === "All") return true;
+    if (selectedCategory === "Full-Stack") {
+      return (
+        project.category?.toLowerCase().includes("full-stack") ||
+        project.technologies?.some((t) => {
+          const str = typeof t === "string" ? t : t?.name || "";
+          return ["Node.js", "Express.js", "MongoDB", "Redux"].includes(str);
+        })
+      );
+    }
+    if (selectedCategory === "Frontend / 3D") {
+      return (
+        project.category?.toLowerCase().includes("3d") ||
+        project.category?.toLowerCase().includes("frontend") ||
+        project.technologies?.some((t) => {
+          const str = typeof t === "string" ? t : t?.name || "";
+          return ["Three.js", "WebGL"].includes(str);
+        })
+      );
+    }
     return project.category?.toLowerCase() === selectedCategory.toLowerCase();
   });
 
@@ -64,7 +83,7 @@ export default function Portfolio() {
 
     const techName = String(tech);
     let Icon = FiCode;
-    let colorClass = "border-teal-500/40";
+    let colorClass = "border-teal-500/40 text-teal-300";
 
     const lower = techName.toLowerCase();
     if (lower.includes("react")) { Icon = SiReact; colorClass = "border-cyan-500/50 text-cyan-300"; }
@@ -72,6 +91,7 @@ export default function Portfolio() {
     else if (lower.includes("type")) { Icon = SiTypescript; colorClass = "border-blue-500/50 text-blue-300"; }
     else if (lower.includes("java")) { Icon = SiJavascript; colorClass = "border-yellow-500/50 text-yellow-300"; }
     else if (lower.includes("three")) { Icon = SiThreedotjs; colorClass = "border-gray-400 text-gray-200"; }
+    else if (lower.includes("redux")) { Icon = SiRedux; colorClass = "border-purple-500/50 text-purple-300"; }
     else if (lower.includes("node")) { Icon = SiNodedotjs; colorClass = "border-emerald-500/50 text-emerald-300"; }
     else if (lower.includes("mongo")) { Icon = SiMongodb; colorClass = "border-green-600/50 text-green-300"; }
     else if (lower.includes("tailwind")) { Icon = SiTailwindcss; colorClass = "border-teal-400/50 text-teal-300"; }
@@ -142,21 +162,19 @@ export default function Portfolio() {
           whileInView="animate"
           viewport={{ once: true }}
           variants={staggerContainer}
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto"
         >
           {filteredProjects.map((project) => (
             <motion.div
               key={project.id}
               variants={fadeInUp}
-              whileHover={{ y: -8 }}
-              className={`group relative bg-gradient-to-b from-gray-900/70 to-gray-950/90 border border-gray-800 rounded-2xl overflow-hidden hover:border-teal-500/50 transition-all duration-300 flex flex-col justify-between ${
-                project.featured ? "lg:col-span-2" : "lg:col-span-1"
-              }`}
+              whileHover={{ y: -6 }}
+              className="group relative bg-gradient-to-b from-gray-900/85 via-gray-900/60 to-gray-950/95 border border-gray-800 rounded-2xl overflow-hidden hover:border-teal-500/50 hover:shadow-[0_10px_35px_-10px_rgba(20,184,166,0.2)] transition-all duration-300 flex flex-col justify-between"
             >
               {/* Top Badges */}
               <div className="absolute top-4 left-4 z-20 flex gap-2">
                 {project.featured && (
-                  <span className="px-3 py-1 bg-gradient-to-r from-teal-500 to-cyan-600 text-white text-xs font-bold rounded-full flex items-center gap-1 shadow-md">
+                  <span className="px-3 py-1 bg-gradient-to-r from-teal-500 to-cyan-600 text-white text-xs font-bold rounded-full flex items-center gap-1 shadow-md shadow-teal-500/20">
                     <FiEye className="text-xs" /> FEATURED
                   </span>
                 )}
@@ -171,15 +189,15 @@ export default function Portfolio() {
               {/* Project Image */}
               <Link
                 href={`/projects/${project.slug || project.id}`}
-                className="relative h-60 md:h-64 overflow-hidden bg-gray-950 block group/img"
+                className="relative h-60 sm:h-64 overflow-hidden bg-gray-950 block group/img"
               >
-                <div className="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-transparent z-10"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-gray-950 via-gray-950/20 to-transparent z-10"></div>
                 <Image
                   src={project.image || "/projectImage/image.webp"}
                   alt={project.title}
                   fill
                   className="object-cover group-hover/img:scale-105 transition-transform duration-700"
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 50vw"
                   loading="lazy"
                 />
                 
@@ -188,27 +206,27 @@ export default function Portfolio() {
               </Link>
 
               {/* Project Content */}
-              <div className="p-6 flex-1 flex flex-col justify-between">
+              <div className="p-6 sm:p-7 flex-1 flex flex-col justify-between">
                 <div>
-                  <h3 className="text-xl font-bold text-white mb-2 group-hover:text-teal-300 transition-colors">
+                  <h3 className="text-xl sm:text-2xl font-bold text-white mb-2.5 group-hover:text-teal-300 transition-colors">
                     <Link href={`/projects/${project.slug || project.id}`} className="hover:underline decoration-teal-400/40">
                       {project.title}
                     </Link>
                   </h3>
                   
-                  <p className="text-gray-400 text-sm mb-4 leading-relaxed">
+                  <p className="text-gray-400 text-sm mb-4 leading-relaxed line-clamp-2">
                     {project.description}
                   </p>
 
                   {/* Problem, Role, Impact Breakdown */}
                   {(project.problem || project.role || project.impact) && (
-                    <div className="mb-4 p-3.5 rounded-xl bg-gray-950/70 border border-gray-800/80 space-y-2 text-xs">
+                    <div className="mb-5 p-3.5 rounded-xl bg-gray-950/70 border border-gray-800/80 space-y-2 text-xs">
                       {project.problem && (
                         <div className="flex items-start gap-2">
                           <span className="text-amber-400 font-mono text-[11px] font-semibold shrink-0 uppercase tracking-wider">
                             Challenge:
                           </span>
-                          <span className="text-gray-300 leading-snug">{project.problem}</span>
+                          <span className="text-gray-300 leading-snug line-clamp-2">{project.problem}</span>
                         </div>
                       )}
                       {project.role && (
@@ -216,7 +234,7 @@ export default function Portfolio() {
                           <span className="text-teal-400 font-mono text-[11px] font-semibold shrink-0 uppercase tracking-wider">
                             My Role:
                           </span>
-                          <span className="text-gray-300 leading-snug">{project.role}</span>
+                          <span className="text-gray-300 leading-snug line-clamp-2">{project.role}</span>
                         </div>
                       )}
                       {project.impact && (
@@ -224,7 +242,7 @@ export default function Portfolio() {
                           <span className="text-emerald-400 font-mono text-[11px] font-semibold shrink-0 uppercase tracking-wider">
                             Outcome:
                           </span>
-                          <span className="text-emerald-300/90 font-medium leading-snug">{project.impact}</span>
+                          <span className="text-emerald-300/90 font-medium leading-snug line-clamp-2">{project.impact}</span>
                         </div>
                       )}
                     </div>
@@ -254,7 +272,7 @@ export default function Portfolio() {
                         <div className="p-1.5 rounded-lg bg-gray-800 group-hover/link:bg-teal-500/20 transition-colors">
                           <FiExternalLink className="text-xs" />
                         </div>
-                        <span>Demo</span>
+                        <span>Live Demo</span>
                       </a>
                     )}
                     {project.githubLink && (
@@ -274,9 +292,9 @@ export default function Portfolio() {
 
                   <Link
                     href={`/projects/${project.slug || project.id}`}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-teal-500/10 hover:bg-teal-500/20 text-teal-300 border border-teal-500/30 text-xs font-medium transition-all group/btn hover:border-teal-400/50"
+                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-teal-500/10 hover:bg-teal-500/20 text-teal-300 border border-teal-500/30 text-xs font-medium transition-all group/btn hover:border-teal-400/50"
                   >
-                    <span>Case Study</span>
+                    <span>تفاصيل المشروع</span>
                     <FiArrowRight className="text-xs group-hover/btn:translate-x-1 transition-transform" />
                   </Link>
                 </div>
