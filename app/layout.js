@@ -83,6 +83,9 @@ export const metadata = {
       "max-snippet": -1,
     },
   },
+  other: {
+    google: "notranslate",
+  },
 };
 
 const personJsonLd = {
@@ -108,7 +111,7 @@ const personJsonLd = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className="notranslate" translate="no" suppressHydrationWarning>
       <body
         suppressHydrationWarning
         className={`${geistSans.variable} ${geistMono.variable} ${sacramento.variable} antialiased`}

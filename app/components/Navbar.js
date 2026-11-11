@@ -120,7 +120,7 @@ export default function Navbar() {
                         }`}
                         onClick={() => setActiveSection(item.id)}
                       >
-                        <span className="relative z-10">{item.label}</span>
+                        <span className="relative z-10" suppressHydrationWarning>{item.label}</span>
                         {isActive && (
                           <span className="absolute -bottom-1 left-2 right-2 h-0.5 bg-linear-to-r from-green-500 to-emerald-500 rounded-full" />
                         )}
@@ -136,12 +136,12 @@ export default function Navbar() {
               {/* Language Switch Button */}
               <button
                 onClick={toggleLanguage}
-                className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-gray-800/60 hover:bg-gray-750/80 border border-gray-700/70 hover:border-teal-500/50 text-gray-200 text-xs font-semibold transition-all duration-300 shadow-sm"
+                className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-gray-800/60 hover:bg-gray-750/80 border border-gray-700/70 hover:border-teal-500/50 text-gray-200 text-xs font-semibold transition-all duration-300 shadow-sm cursor-pointer"
                 title={language === "en" ? "التبديل إلى العربية" : "Switch to English"}
                 aria-label="Toggle language"
               >
                 <FiGlobe className="text-teal-400 text-sm" />
-                <span>{dict.nav.langSwitch}</span>
+                <span suppressHydrationWarning>{dict.nav.langSwitch}</span>
               </button>
 
               {/* Download CV Button */}
@@ -157,7 +157,7 @@ export default function Navbar() {
                 <div className="absolute inset-0 bg-linear-to-r from-teal-400 to-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 <div className="relative flex items-center gap-2">
                   <FiDownload className="text-base" />
-                  <span>{dict.nav.downloadCv}</span>
+                  <span suppressHydrationWarning>{dict.nav.downloadCv}</span>
                 </div>
               </motion.a>
             </div>
@@ -166,11 +166,11 @@ export default function Navbar() {
             <div className="flex items-center gap-2 lg:hidden">
               <button
                 onClick={toggleLanguage}
-                className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-gray-800/60 border border-gray-700 text-gray-200 text-xs font-medium"
+                className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-gray-800/60 border border-gray-700 text-gray-200 text-xs font-medium cursor-pointer"
                 aria-label="Toggle language"
               >
                 <FiGlobe className="text-teal-400" />
-                <span>{dict.nav.langSwitch}</span>
+                <span suppressHydrationWarning>{dict.nav.langSwitch}</span>
               </button>
 
               <button
@@ -215,7 +215,7 @@ export default function Navbar() {
                         setIsMobileMenuOpen(false);
                       }}
                     >
-                      <span className="font-medium">{item.label}</span>
+                      <span className="font-medium" suppressHydrationWarning>{item.label}</span>
                       {activeSection === item.id && (
                         <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
                       )}
@@ -238,7 +238,7 @@ export default function Navbar() {
                   className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-linear-to-r from-teal-500 to-emerald-600 text-white font-medium rounded-lg hover:from-teal-600 hover:to-emerald-700 transition-all duration-300"
                 >
                   <FiDownload className="text-lg" />
-                  <span>{dict.nav.downloadCv}</span>
+                  <span suppressHydrationWarning>{dict.nav.downloadCv}</span>
                 </a>
               </motion.div>
             </div>
