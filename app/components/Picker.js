@@ -19,6 +19,7 @@ import {
 } from "react-icons/fi";
 import { SiWhatsapp } from "react-icons/si";
 import { useSiteData } from "@/lib/useSiteData";
+import { useLanguage } from "@/lib/LanguageContext";
 
 const PRESET_TIME_SLOTS = [
   "09:00 AM",
@@ -34,6 +35,8 @@ const PRESET_TIME_SLOTS = [
 export default function Picker({ openProp, onClose }) {
   const [internalOpen, setInternalOpen] = React.useState(false);
   const { addAppointment } = useSiteData();
+  const { dict, isRTL } = useLanguage();
+  const t = dict?.picker || {};
 
   // Calendar State
   const [currentMonth, setCurrentMonth] = React.useState(dayjs());
@@ -234,13 +237,13 @@ export default function Picker({ openProp, onClose }) {
             </div>
             <div>
               <h3 className="text-base sm:text-lg font-bold text-white tracking-wide flex items-center gap-2">
-                Schedule a Consultation
+                {t.title || "Schedule a Consultation"}
                 <span className="hidden sm:inline-block px-2.5 py-0.5 rounded-full text-[11px] font-mono bg-teal-500/20 text-teal-300 border border-teal-500/30">
-                  Free 30-Min Call
+                  {isRTL ? "مكالمة مجانية 30 دقيقة" : "Free 30-Min Call"}
                 </span>
               </h3>
               <p className="text-xs text-gray-400">
-                Choose a suitable date and time to discuss your project
+                {t.subtitle || "Choose a suitable date and time to discuss your project"}
               </p>
             </div>
           </div>
@@ -496,7 +499,7 @@ export default function Picker({ openProp, onClose }) {
                   <form onSubmit={handleConfirmBooking} className="space-y-3.5">
                     <div>
                       <label className="block text-xs font-medium text-gray-300 mb-1 flex items-center gap-1.5">
-                        <FiUser className="text-teal-400" /> Full Name *
+                        <FiUser className="text-teal-400" /> {t.nameLabel || "Full Name"} *
                       </label>
                       <input
                         type="text"
@@ -504,14 +507,14 @@ export default function Picker({ openProp, onClose }) {
                         required
                         value={clientData.name}
                         onChange={handleInputChange}
-                        placeholder="e.g. Alex Morgan"
+                        placeholder={isRTL ? "مثال: أحمد محمد" : "e.g. Alex Morgan"}
                         className="w-full px-3.5 py-2.5 bg-gray-900/90 border border-gray-800 rounded-xl text-white text-xs sm:text-sm focus:border-teal-500 focus:ring-1 focus:ring-teal-500 outline-none transition-all placeholder:text-gray-500"
                       />
                     </div>
 
                     <div>
                       <label className="block text-xs font-medium text-gray-300 mb-1 flex items-center gap-1.5">
-                        <FiPhone className="text-teal-400" /> Phone or WhatsApp *
+                        <FiPhone className="text-teal-400" /> {t.phoneLabel || "Phone or WhatsApp"} *
                       </label>
                       <input
                         type="text"
@@ -519,13 +522,14 @@ export default function Picker({ openProp, onClose }) {
                         value={clientData.phone}
                         onChange={handleInputChange}
                         placeholder="+20 123 456 7890"
+                        dir="ltr"
                         className="w-full px-3.5 py-2.5 bg-gray-900/90 border border-gray-800 rounded-xl text-white text-xs sm:text-sm focus:border-teal-500 focus:ring-1 focus:ring-teal-500 outline-none transition-all placeholder:text-gray-500"
                       />
                     </div>
 
                     <div>
                       <label className="block text-xs font-medium text-gray-300 mb-1 flex items-center gap-1.5">
-                        <FiMail className="text-teal-400" /> Email (Optional)
+                        <FiMail className="text-teal-400" /> {t.emailLabel || "Email (Optional)"}
                       </label>
                       <input
                         type="email"
@@ -533,13 +537,14 @@ export default function Picker({ openProp, onClose }) {
                         value={clientData.email}
                         onChange={handleInputChange}
                         placeholder="alex@company.com"
+                        dir="ltr"
                         className="w-full px-3.5 py-2.5 bg-gray-900/90 border border-gray-800 rounded-xl text-white text-xs sm:text-sm focus:border-teal-500 focus:ring-1 focus:ring-teal-500 outline-none transition-all placeholder:text-gray-500"
                       />
                     </div>
 
                     <div>
                       <label className="block text-xs font-medium text-gray-300 mb-1">
-                        Topic / Service
+                        {t.serviceLabel || "Topic / Service"}
                       </label>
                       <select
                         name="service"
@@ -548,16 +553,16 @@ export default function Picker({ openProp, onClose }) {
                         className="w-full px-3.5 py-2.5 bg-gray-900/90 border border-gray-800 rounded-xl text-white text-xs sm:text-sm focus:border-teal-500 outline-none transition-all"
                       >
                         <option value="Web Development (React / Next.js)">
-                          Web Development (React / Next.js)
+                          {isRTL ? "تطوير ويب (React / Next.js)" : "Web Development (React / Next.js)"}
                         </option>
                         <option value="UI/UX Design & Prototyping">
-                          UI/UX Design & Prototyping
+                          {isRTL ? "تصميم وتطوير UI/UX" : "UI/UX Design & Prototyping"}
                         </option>
                         <option value="Full Stack & Backend API">
-                          Full Stack & Backend API
+                          {isRTL ? "تطوير متكامل وواجهات برمجية API" : "Full Stack & Backend API"}
                         </option>
                         <option value="General Consultation">
-                          General Consultation
+                          {isRTL ? "استشارة تقنية عامة" : "General Consultation"}
                         </option>
                       </select>
                     </div>
@@ -572,7 +577,7 @@ export default function Picker({ openProp, onClose }) {
                         type="submit"
                         className="w-full py-2.5 px-4 bg-gradient-to-r from-teal-500 to-cyan-600 hover:from-teal-600 hover:to-cyan-700 text-white text-xs sm:text-sm font-semibold rounded-xl shadow-lg shadow-teal-500/20 transition-all flex items-center justify-center gap-2 cursor-pointer"
                       >
-                        <FiCalendar className="w-4 h-4" /> Confirm Appointment
+                        <FiCalendar className="w-4 h-4" /> {t.confirmBtn || "Confirm Appointment"}
                       </button>
 
                       <button
@@ -580,7 +585,7 @@ export default function Picker({ openProp, onClose }) {
                         onClick={handleWhatsAppBooking}
                         className="w-full py-2.5 px-4 bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-300 border border-emerald-500/40 text-xs sm:text-sm font-medium rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer"
                       >
-                        <SiWhatsapp className="w-4 h-4" /> Book Directly via WhatsApp
+                        <SiWhatsapp className="w-4 h-4" /> {isRTL ? "الحجز المباشر عبر واتساب" : "Book Directly via WhatsApp"}
                       </button>
                     </div>
                   </form>

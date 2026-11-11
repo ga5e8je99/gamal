@@ -23,16 +23,22 @@ import {
   SiExpress
 } from "react-icons/si";
 import { useSiteData } from "@/lib/useSiteData";
+import { useLanguage } from "@/lib/LanguageContext";
 
 export default function Portfolio() {
   const { projects } = useSiteData();
-  const [selectedCategory, setSelectedCategory] = useState("All");
+  const { dict, language } = useLanguage();
+  const [selectedCategory, setSelectedCategory] = useState("all");
 
-  const categories = ["All", "Full-Stack", "Frontend / 3D"];
+  const categories = [
+    { key: "all", label: dict.portfolio.all },
+    { key: "fullstack", label: dict.portfolio.fullstack },
+    { key: "frontend3d", label: dict.portfolio.frontend3d }
+  ];
 
   const filteredProjects = projects.filter((project) => {
-    if (selectedCategory === "All") return true;
-    if (selectedCategory === "Full-Stack") {
+    if (selectedCategory === "all") return true;
+    if (selectedCategory === "fullstack") {
       return (
         project.category?.toLowerCase().includes("full-stack") ||
         project.technologies?.some((t) => {
@@ -41,7 +47,7 @@ export default function Portfolio() {
         })
       );
     }
-    if (selectedCategory === "Frontend / 3D") {
+    if (selectedCategory === "frontend3d") {
       return (
         project.category?.toLowerCase().includes("3d") ||
         project.category?.toLowerCase().includes("frontend") ||
@@ -51,7 +57,7 @@ export default function Portfolio() {
         })
       );
     }
-    return project.category?.toLowerCase() === selectedCategory.toLowerCase();
+    return true;
   });
 
   const fadeInUp = {
@@ -123,14 +129,14 @@ export default function Portfolio() {
         >
           <div className="inline-flex items-center gap-3 mb-4">
             <div className="w-12 h-0.5 bg-gradient-to-r from-transparent via-teal-500 to-transparent"></div>
-            <span className="text-teal-400 font-mono text-sm tracking-wider">MY PORTFOLIO</span>
+            <span className="text-teal-400 font-mono text-sm tracking-wider">{dict.portfolio.sectionBadge}</span>
             <div className="w-12 h-0.5 bg-gradient-to-r from-transparent via-teal-500 to-transparent"></div>
           </div>
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            Featured <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 via-cyan-400 to-blue-500">Projects</span>
+            {dict.portfolio.sectionTitle} <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 via-cyan-400 to-blue-500">{dict.portfolio.sectionTitleHighlight}</span>
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto">
-            A showcase of modern web applications, interactive interfaces, and scalable full-stack architectures.
+            {dict.portfolio.sectionSubtitle}
           </p>
         </motion.div>
 
@@ -141,17 +147,17 @@ export default function Portfolio() {
           viewport={{ once: true }}
           className="flex flex-wrap justify-center gap-3 mb-12"
         >
-          {categories.map((category) => (
+          {categories.map((cat) => (
             <button
-              key={category}
-              onClick={() => setSelectedCategory(category)}
+              key={cat.key}
+              onClick={() => setSelectedCategory(cat.key)}
               className={`px-5 py-2 rounded-full font-medium transition-all duration-300 text-sm ${
-                selectedCategory === category 
+                selectedCategory === cat.key 
                   ? "bg-gradient-to-r from-teal-500 to-cyan-600 text-white shadow-lg shadow-teal-500/25 scale-105"
                   : "bg-gray-900/90 text-gray-300 hover:bg-gray-800 hover:text-white border border-gray-800"
               }`}
             >
-              {category}
+              {cat.label}
             </button>
           ))}
         </motion.div>
@@ -164,148 +170,157 @@ export default function Portfolio() {
           variants={staggerContainer}
           className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto"
         >
-          {filteredProjects.map((project) => (
-            <motion.div
-              key={project.id}
-              variants={fadeInUp}
-              whileHover={{ y: -6 }}
-              className="group relative bg-gradient-to-b from-gray-900/85 via-gray-900/60 to-gray-950/95 border border-gray-800 rounded-2xl overflow-hidden hover:border-teal-500/50 hover:shadow-[0_10px_35px_-10px_rgba(20,184,166,0.2)] transition-all duration-300 flex flex-col justify-between"
-            >
-              {/* Top Badges */}
-              <div className="absolute top-4 left-4 z-20 flex gap-2">
-                {project.featured && (
-                  <span className="px-3 py-1 bg-gradient-to-r from-teal-500 to-cyan-600 text-white text-xs font-bold rounded-full flex items-center gap-1 shadow-md shadow-teal-500/20">
-                    <FiEye className="text-xs" /> FEATURED
-                  </span>
-                )}
-              </div>
+          {filteredProjects.map((project) => {
+            const projectData = (dict.projectsData && dict.projectsData[project.id]) || {};
+            const title = projectData.title || project.title;
+            const description = projectData.description || project.description;
+            const problem = projectData.problem || project.problem;
+            const role = projectData.role || project.role;
+            const impact = projectData.impact || project.impact;
 
-              <div className="absolute top-4 right-4 z-20">
-                <span className="px-3 py-1 bg-gray-950/80 backdrop-blur-md text-teal-300 text-xs font-mono font-medium rounded-full border border-teal-500/30">
-                  {project.category}
-                </span>
-              </div>
-
-              {/* Project Image */}
-              <Link
-                href={`/projects/${project.slug || project.id}`}
-                className="relative h-60 sm:h-64 overflow-hidden bg-gray-950 block group/img"
+            return (
+              <motion.div
+                key={project.id}
+                variants={fadeInUp}
+                whileHover={{ y: -6 }}
+                className="group relative bg-gradient-to-b from-gray-900/85 via-gray-900/60 to-gray-950/95 border border-gray-800 rounded-2xl overflow-hidden hover:border-teal-500/50 hover:shadow-[0_10px_35px_-10px_rgba(20,184,166,0.2)] transition-all duration-300 flex flex-col justify-between"
               >
-                <div className="absolute inset-0 bg-gradient-to-t from-gray-950 via-gray-950/20 to-transparent z-10"></div>
-                <Image
-                  src={project.image || "/projectImage/image.webp"}
-                  alt={project.title}
-                  fill
-                  className="object-cover group-hover/img:scale-105 transition-transform duration-700"
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 50vw"
-                  loading="lazy"
-                />
-                
-                {/* Hover Overlay */}
-                <div className="absolute inset-0 bg-teal-900/10 via-transparent to-transparent opacity-0 group-hover/img:opacity-100 transition-opacity duration-300 z-10"></div>
-              </Link>
-
-              {/* Project Content */}
-              <div className="p-6 sm:p-7 flex-1 flex flex-col justify-between">
-                <div>
-                  <h3 className="text-xl sm:text-2xl font-bold text-white mb-2.5 group-hover:text-teal-300 transition-colors">
-                    <Link href={`/projects/${project.slug || project.id}`} className="hover:underline decoration-teal-400/40">
-                      {project.title}
-                    </Link>
-                  </h3>
-                  
-                  <p className="text-gray-400 text-sm mb-4 leading-relaxed line-clamp-2">
-                    {project.description}
-                  </p>
-
-                  {/* Problem, Role, Impact Breakdown */}
-                  {(project.problem || project.role || project.impact) && (
-                    <div className="mb-5 p-3.5 rounded-xl bg-gray-950/70 border border-gray-800/80 space-y-2 text-xs">
-                      {project.problem && (
-                        <div className="flex items-start gap-2">
-                          <span className="text-amber-400 font-mono text-[11px] font-semibold shrink-0 uppercase tracking-wider">
-                            Challenge:
-                          </span>
-                          <span className="text-gray-300 leading-snug line-clamp-2">{project.problem}</span>
-                        </div>
-                      )}
-                      {project.role && (
-                        <div className="flex items-start gap-2">
-                          <span className="text-teal-400 font-mono text-[11px] font-semibold shrink-0 uppercase tracking-wider">
-                            My Role:
-                          </span>
-                          <span className="text-gray-300 leading-snug line-clamp-2">{project.role}</span>
-                        </div>
-                      )}
-                      {project.impact && (
-                        <div className="flex items-start gap-2">
-                          <span className="text-emerald-400 font-mono text-[11px] font-semibold shrink-0 uppercase tracking-wider">
-                            Outcome:
-                          </span>
-                          <span className="text-emerald-300/90 font-medium leading-snug line-clamp-2">{project.impact}</span>
-                        </div>
-                      )}
-                    </div>
+                {/* Top Badges */}
+                <div className="absolute top-4 left-4 z-20 flex gap-2">
+                  {project.featured && (
+                    <span className="px-3 py-1 bg-gradient-to-r from-teal-500 to-cyan-600 text-white text-xs font-bold rounded-full flex items-center gap-1 shadow-md shadow-teal-500/20">
+                      <FiEye className="text-xs" /> {dict.portfolio.featuredBadge}
+                    </span>
                   )}
+                </div>
 
-                  {/* Technologies */}
-                  <div className="mb-6">
-                    <p className="text-gray-500 text-xs font-mono mb-2.5">TECHNOLOGIES USED</p>
-                    <div className="flex flex-wrap gap-2">
-                      {project.technologies?.map((tech, techIndex) =>
-                        getTechBadge(tech, techIndex)
-                      )}
+                <div className="absolute top-4 right-4 z-20">
+                  <span className="px-3 py-1 bg-gray-950/80 backdrop-blur-md text-teal-300 text-xs font-mono font-medium rounded-full border border-teal-500/30">
+                    {project.category}
+                  </span>
+                </div>
+
+                {/* Project Image */}
+                <Link
+                  href={`/projects/${project.slug || project.id}`}
+                  className="relative h-60 sm:h-64 overflow-hidden bg-gray-950 block group/img"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-t from-gray-950 via-gray-950/20 to-transparent z-10"></div>
+                  <Image
+                    src={project.image || "/projectImage/image.webp"}
+                    alt={title}
+                    fill
+                    className="object-cover group-hover/img:scale-105 transition-transform duration-700"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 50vw"
+                    loading="lazy"
+                  />
+                  
+                  {/* Hover Overlay */}
+                  <div className="absolute inset-0 bg-teal-900/10 via-transparent to-transparent opacity-0 group-hover/img:opacity-100 transition-opacity duration-300 z-10"></div>
+                </Link>
+
+                {/* Project Content */}
+                <div className="p-6 sm:p-7 flex-1 flex flex-col justify-between">
+                  <div>
+                    <h3 className="text-xl sm:text-2xl font-bold text-white mb-2.5 group-hover:text-teal-300 transition-colors">
+                      <Link href={`/projects/${project.slug || project.id}`} className="hover:underline decoration-teal-400/40">
+                        {title}
+                      </Link>
+                    </h3>
+                    
+                    <p className="text-gray-400 text-sm mb-4 leading-relaxed line-clamp-2">
+                      {description}
+                    </p>
+
+                    {/* Problem, Role, Impact Breakdown */}
+                    {(problem || role || impact) && (
+                      <div className="mb-5 p-3.5 rounded-xl bg-gray-950/70 border border-gray-800/80 space-y-2 text-xs">
+                        {problem && (
+                          <div className="flex items-start gap-2">
+                            <span className="text-amber-400 font-mono text-[11px] font-semibold shrink-0 uppercase tracking-wider">
+                              {dict.portfolio.challengeLabel}
+                            </span>
+                            <span className="text-gray-300 leading-snug line-clamp-2">{problem}</span>
+                          </div>
+                        )}
+                        {role && (
+                          <div className="flex items-start gap-2">
+                            <span className="text-teal-400 font-mono text-[11px] font-semibold shrink-0 uppercase tracking-wider">
+                              {dict.portfolio.roleLabel}
+                            </span>
+                            <span className="text-gray-300 leading-snug line-clamp-2">{role}</span>
+                          </div>
+                        )}
+                        {impact && (
+                          <div className="flex items-start gap-2">
+                            <span className="text-emerald-400 font-mono text-[11px] font-semibold shrink-0 uppercase tracking-wider">
+                              {dict.portfolio.outcomeLabel}
+                            </span>
+                            <span className="text-emerald-300/90 font-medium leading-snug line-clamp-2">{impact}</span>
+                          </div>
+                        )}
+                      </div>
+                    )}
+
+                    {/* Technologies */}
+                    <div className="mb-6">
+                      <p className="text-gray-500 text-xs font-mono mb-2.5">{dict.portfolio.techUsed}</p>
+                      <div className="flex flex-wrap gap-2">
+                        {project.technologies?.map((tech, techIndex) =>
+                          getTechBadge(tech, techIndex)
+                        )}
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                {/* Project Links */}
-                <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-gray-800/80 mt-auto">
-                  <div className="flex items-center gap-3">
-                    {project.liveLink && (
-                      <a
-                        href={project.liveLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-1.5 text-xs text-gray-300 hover:text-teal-300 transition-colors group/link"
-                      >
-                        <div className="p-1.5 rounded-lg bg-gray-800 group-hover/link:bg-teal-500/20 transition-colors">
-                          <FiExternalLink className="text-xs" />
-                        </div>
-                        <span>Live Demo</span>
-                      </a>
-                    )}
-                    {project.githubLink && (
-                      <a
-                        href={project.githubLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-1.5 text-xs text-gray-300 hover:text-white transition-colors group/link"
-                      >
-                        <div className="p-1.5 rounded-lg bg-gray-800 group-hover/link:bg-gray-700 transition-colors">
-                          <FiGithub className="text-xs" />
-                        </div>
-                        <span>Code</span>
-                      </a>
-                    )}
+                  {/* Project Links */}
+                  <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-gray-800/80 mt-auto">
+                    <div className="flex items-center gap-3">
+                      {project.liveLink && (
+                        <a
+                          href={project.liveLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-1.5 text-xs text-gray-300 hover:text-teal-300 transition-colors group/link"
+                        >
+                          <div className="p-1.5 rounded-lg bg-gray-800 group-hover/link:bg-teal-500/20 transition-colors">
+                            <FiExternalLink className="text-xs" />
+                          </div>
+                          <span>{dict.portfolio.liveDemo}</span>
+                        </a>
+                      )}
+                      {project.githubLink && (
+                        <a
+                          href={project.githubLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-1.5 text-xs text-gray-300 hover:text-white transition-colors group/link"
+                        >
+                          <div className="p-1.5 rounded-lg bg-gray-800 group-hover/link:bg-gray-700 transition-colors">
+                            <FiGithub className="text-xs" />
+                          </div>
+                          <span>{dict.portfolio.code}</span>
+                        </a>
+                      )}
+                    </div>
+
+                    <Link
+                      href={`/projects/${project.slug || project.id}`}
+                      className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-teal-500/10 hover:bg-teal-500/20 text-teal-300 border border-teal-500/30 text-xs font-medium transition-all group/btn hover:border-teal-400/50"
+                    >
+                      <span>{dict.portfolio.caseStudy}</span>
+                      <FiArrowRight className="text-xs group-hover/btn:translate-x-1 transition-transform rtl:rotate-180" />
+                    </Link>
                   </div>
-
-                  <Link
-                    href={`/projects/${project.slug || project.id}`}
-                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-teal-500/10 hover:bg-teal-500/20 text-teal-300 border border-teal-500/30 text-xs font-medium transition-all group/btn hover:border-teal-400/50"
-                  >
-                    <span>تفاصيل المشروع</span>
-                    <FiArrowRight className="text-xs group-hover/btn:translate-x-1 transition-transform" />
-                  </Link>
                 </div>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            );
+          })}
         </motion.div>
 
         {filteredProjects.length === 0 && (
           <div className="text-center py-16 text-gray-500 font-mono">
-            No projects found in this category.
+            {dict.portfolio.noProjects}
           </div>
         )}
 

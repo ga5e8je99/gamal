@@ -32,8 +32,10 @@ import {
 } from "react-icons/si";
 import { BiLogoVisualStudio } from "react-icons/bi";
 import Link from "next/link";
+import { useLanguage } from "@/lib/LanguageContext";
 
 export default function SkillsSection() {
+  const { dict, language } = useLanguage();
   const frontendSkills = [
     {
       name: "React.js",
@@ -205,18 +207,18 @@ export default function SkillsSection() {
           <div className="inline-flex items-center gap-3 mb-4">
             <div className="w-12 h-0.5 bg-gradient-to-r from-transparent via-teal-500 to-transparent"></div>
             <span className="text-teal-400 font-mono text-sm tracking-wider">
-              TECHNICAL EXPERTISE
+              {dict.skills.sectionBadge}
             </span>
             <div className="w-12 h-0.5 bg-gradient-to-r from-transparent via-teal-500 to-transparent"></div>
           </div>
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            Skills &{" "}
+            {dict.skills.sectionTitle}{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 via-cyan-400 to-blue-500">
-              Stack
+              {dict.skills.sectionTitleHighlight}
             </span>
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto">
-            Practical competencies backed by real-world applications — no arbitrary percentage bars, only proven engineering experience.
+            {dict.skills.sectionSubtitle}
           </p>
         </motion.div>
 
@@ -237,10 +239,10 @@ export default function SkillsSection() {
             </div>
             <div>
               <h3 className="text-2xl font-bold text-white">
-                Frontend Architecture
+                {language === "ar" ? "معمارية الواجهات الأمامية" : "Frontend Architecture"}
               </h3>
               <p className="text-gray-400 text-sm">
-                Fast, responsive, and accessible user interfaces
+                {language === "ar" ? "واجهات مستخدم سريعة، متجاوبة، وسهلة الوصول" : "Fast, responsive, and accessible user interfaces"}
               </p>
             </div>
           </motion.div>
@@ -312,10 +314,10 @@ export default function SkillsSection() {
             </div>
             <div>
               <h3 className="text-2xl font-bold text-white">
-                Backend & Database Architecture
+                {language === "ar" ? "الواجهة الخلفية وقواعد البيانات" : "Backend & Database Architecture"}
               </h3>
               <p className="text-gray-400 text-sm">
-                Scalable APIs, database modeling, and authentication
+                {language === "ar" ? "واجهات برمجة قابلة للتوسع، نمذجة قواعد البيانات، وأنظمة التوثيق" : "Scalable APIs, database modeling, and authentication"}
               </p>
             </div>
           </motion.div>
@@ -386,10 +388,10 @@ export default function SkillsSection() {
             </div>
             <div>
               <h3 className="text-2xl font-bold text-white">
-                Tools & Daily Workflow
+                {language === "ar" ? "الأدوات وبيئة التطوير السحابية" : "Tools & Daily Workflow"}
               </h3>
               <p className="text-gray-400 text-sm">
-                Ecosystem utilities for testing, version control, and cloud deployment
+                {language === "ar" ? "أدوات متكاملة للاختبار، التحكم في الإصدارات، والاستضافة السحابية" : "Ecosystem utilities for testing, version control, and cloud deployment"}
               </p>
             </div>
           </motion.div>

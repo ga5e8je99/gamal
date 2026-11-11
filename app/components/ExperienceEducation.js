@@ -12,8 +12,10 @@ import {
   FiStar,
   FiTarget
 } from "react-icons/fi";
+import { useLanguage } from "@/lib/LanguageContext";
 
 export default function ExperienceEducation() {
+  const { dict, language } = useLanguage();
   const experiences = [
     {
       type: "freelancer",
@@ -110,14 +112,14 @@ export default function ExperienceEducation() {
         >
           <div className="inline-flex items-center gap-3 mb-4">
             <div className="w-12 h-0.5 bg-linear-to-r from-transparent via-yellow-500 to-transparent"></div>
-            <span className="text-yellow-400 font-mono text-sm tracking-wider">MY JOURNEY</span>
+            <span className="text-yellow-400 font-mono text-sm tracking-wider">{dict.experience.sectionBadge}</span>
             <div className="w-12 h-0.5 bg-linear-to-r from-transparent via-yellow-500 to-transparent"></div>
           </div>
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            Experience & <span className="text-transparent bg-clip-text bg-linear-to-r from-yellow-400 to-orange-500">Education</span>
+            {dict.experience.sectionTitle} <span className="text-transparent bg-clip-text bg-linear-to-r from-yellow-400 to-orange-500">{dict.experience.sectionTitleHighlight}</span>
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto">
-            My professional journey, education, and continuous learning path
+            {dict.experience.sectionSubtitle}
           </p>
         </motion.div>
 
@@ -136,8 +138,12 @@ export default function ExperienceEducation() {
                 <FiBriefcase className="text-white text-2xl" />
               </div>
               <div>
-                <h3 className="text-2xl font-bold text-white">Professional Experience</h3>
-                <p className="text-gray-400">Freelance & consulting work</p>
+                <h3 className="text-2xl font-bold text-white">
+                  {language === "ar" ? "الخبرة المهنية" : "Professional Experience"}
+                </h3>
+                <p className="text-gray-400">
+                  {language === "ar" ? "أعمال حرة وتطوير منتجات رقمية" : "Freelance & consulting work"}
+                </p>
               </div>
             </div>
 
@@ -319,9 +325,9 @@ export default function ExperienceEducation() {
           {/* Download CV CTA */}
           <div className="text-center">
             <div className="inline-block bg-linear-to-r from-gray-900/50 to-gray-900/30 border border-gray-800 rounded-2xl p-8">
-              <h3 className="text-2xl font-bold text-white mb-4">Want to See My Full CV?</h3>
+              <h3 className="text-2xl font-bold text-white mb-4">{dict.experience.downloadCtaTitle}</h3>
               <p className="text-gray-400 mb-6 max-w-lg mx-auto">
-                Download my complete resume with detailed experience, skills, and achievements
+                {dict.experience.downloadCtaDesc}
               </p>
               <a
                 href="/Gamal_Ahmed_Resume.pdf"
@@ -330,7 +336,7 @@ export default function ExperienceEducation() {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-8 py-3 bg-linear-to-r from-teal-500 to-emerald-600 text-white font-medium rounded-lg hover:from-teal-600 hover:to-emerald-700 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl hover:shadow-teal-500/25"
               >
-                Download CV (PDF)
+                {dict.experience.downloadCtaBtn}
               </a>
             </div>
           </div>

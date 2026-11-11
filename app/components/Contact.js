@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 import Picker from "./Picker";
 import { useSiteData } from "@/lib/useSiteData";
+import { useLanguage } from "@/lib/LanguageContext";
 import {
   FiMail,
   FiPhone,
@@ -20,6 +21,9 @@ import { SiLinkedin, SiGithub, SiCodepen } from "react-icons/si";
 
 export default function ContactSection() {
   const { addMessage } = useSiteData();
+  const { dict, isRTL } = useLanguage();
+  const t = dict?.contact || {};
+
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -87,22 +91,25 @@ export default function ContactSection() {
   const contactInfo = [
     {
       icon: <FiMail />,
-      title: "Email",
+      key: "email",
+      title: t.emailCard || "Email",
       value: "gamal.ahmed.dev@gmail.com",
       color: "from-red-500 to-pink-500",
       link: "mailto:gamal.ahmed.dev@gmail.com",
     },
     {
       icon: <FiPhone />,
-      title: "Phone",
+      key: "phone",
+      title: t.phoneCard || "Phone",
       value: "+20 128 564 5073",
       color: "from-green-500 to-emerald-500",
       link: "tel:+201285645073",
     },
     {
       icon: <FiMapPin />,
-      title: "Location",
-      value: "Cairo, Egypt",
+      key: "location",
+      title: t.locationCard || "Location",
+      value: t.locationVal || "Cairo, Egypt",
       color: "from-blue-500 to-cyan-500",
       link: "#",
     },
@@ -125,14 +132,14 @@ export default function ContactSection() {
     {
       name: "Twitter",
       icon: <FiTwitter />,
-      url: "https://twitter.com/yourusername",
+      url: "https://twitter.com/gamalahmed",
       color:
         "hover:bg-sky-500 hover:border-sky-500 hover:text-white text-sky-400",
     },
     {
       name: "CodePen",
       icon: <SiCodepen />,
-      url: "https://codepen.io/yourusername",
+      url: "https://codepen.io",
       color: "hover:bg-black hover:border-black text-gray-300",
     },
   ];
@@ -150,6 +157,7 @@ export default function ContactSection() {
       },
     },
   };
+
   return (
     <section
       id="contact"
@@ -167,19 +175,18 @@ export default function ContactSection() {
           <div className="inline-flex items-center gap-3 mb-4">
             <div className="w-12 h-0.5 bg-linear-to-r from-transparent via-teal-500 to-transparent"></div>
             <span className="text-teal-400 font-mono text-sm tracking-wider">
-              GET IN TOUCH
+              {t.sectionBadge || "GET IN TOUCH"}
             </span>
             <div className="w-12 h-0.5 bg-linear-to-r from-transparent via-teal-500 to-transparent"></div>
           </div>
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            Let&apos;s{" "}
+            {t.sectionTitle}{" "}
             <span className="text-transparent bg-clip-text bg-linear-to-r from-teal-400 to-cyan-500">
-              Connect
+              {t.sectionTitleHighlight}
             </span>
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto">
-            Have a project in mind? Let&apos;s discuss how we can work together
-            to bring your ideas to life
+            {t.sectionSubtitle}
           </p>
         </motion.div>
 
@@ -196,7 +203,7 @@ export default function ContactSection() {
             <motion.div variants={fadeInUp}>
               <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
                 <FiMessageSquare className="text-teal-500" />
-                Contact Information
+                {t.infoTitle || "Contact Information"}
               </h3>
 
               <div className="space-y-4">
@@ -218,18 +225,18 @@ export default function ContactSection() {
                         <div className="text-gray-400 text-sm">
                           {info.title}
                         </div>
-                        <div className="text-white font-medium group-hover:text-teal-300 transition-colors">
+                        <div className="text-white font-medium group-hover:text-teal-300 transition-colors" dir="ltr">
                           {info.value}
                         </div>
                       </div>
                     </a>
-                    {info.title !== "Location" && (
+                    {info.key !== "location" && (
                       <button
                         type="button"
-                        onClick={() => handleCopy(info.value, info.title)}
-                        className="px-3 py-1.5 text-xs font-mono rounded-lg bg-gray-800 text-gray-300 hover:bg-teal-500/20 hover:text-teal-300 border border-gray-700 transition-all shrink-0 ml-3"
+                        onClick={() => handleCopy(info.value, info.key)}
+                        className="px-3 py-1.5 text-xs font-mono rounded-lg bg-gray-800 text-gray-300 hover:bg-teal-500/20 hover:text-teal-300 border border-gray-700 transition-all shrink-0 ml-3 cursor-pointer"
                       >
-                        {copiedKey === info.title ? "Copied!" : "Copy"}
+                        {copiedKey === info.key ? (t.copiedBtn || "Copied!") : (t.copyBtn || "Copy")}
                       </button>
                     )}
                   </div>
@@ -241,7 +248,7 @@ export default function ContactSection() {
             <motion.div variants={fadeInUp}>
               <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
                 <FiUser className="text-teal-500" />
-                Connect With Me
+                {t.socialsTitle || "Connect With Me"}
               </h3>
 
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
@@ -271,31 +278,31 @@ export default function ContactSection() {
                   </div>
                   <div>
                     <h4 className="text-white font-bold mb-1">
-                      Current Availability
+                      {t.availTitle || "Current Availability"}
                     </h4>
                     <p className="text-gray-400 text-sm">
-                      Taking on new projects
+                      {t.availSubtitle || "Taking on new projects"}
                     </p>
                   </div>
                 </div>
 
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <span className="text-gray-300">Response Time</span>
+                    <span className="text-gray-300">{t.responseTime || "Response Time"}</span>
                     <span className="text-teal-400 font-medium">
-                      Within 24 hours
+                      {t.responseTimeVal || "Within 24 hours"}
                     </span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-gray-300">Project Types</span>
+                    <span className="text-gray-300">{t.projectTypes || "Project Types"}</span>
                     <span className="text-teal-400 font-medium">
-                      Web Applications
+                      {t.projectTypesVal || "Web Applications"}
                     </span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-gray-300">Timezone</span>
+                    <span className="text-gray-300">{t.timezone || "Timezone"}</span>
                     <span className="text-teal-400 font-medium">
-                      GMT+2 (Cairo)
+                      {t.timezoneVal || "GMT+2 (Cairo)"}
                     </span>
                   </div>
                 </div>
@@ -312,11 +319,10 @@ export default function ContactSection() {
           >
             <div className="bg-linear-to-b from-gray-900/50 to-transparent border border-gray-800 rounded-2xl p-6 md:p-8">
               <h3 className="text-2xl font-bold text-white mb-2">
-                Send me a message
+                {t.formTitle || "Send me a message"}
               </h3>
               <p className="text-gray-400 mb-8">
-                Fill out the form below and I&apos;ll get back to you as soon as
-                possible
+                {t.formSubtitle || "Fill out the form below and I'll get back to you as soon as possible"}
               </p>
 
               {isSubmitted ? (
@@ -329,17 +335,16 @@ export default function ContactSection() {
                     <FiCheckCircle className="text-white text-3xl" />
                   </div>
                   <h4 className="text-2xl font-bold text-white mb-2">
-                    Message Sent!
+                    {t.msgSentTitle || "Message Sent!"}
                   </h4>
                   <p className="text-gray-400 mb-6">
-                    Thank you for your message. I&apos;ll get back to you within
-                    24 hours.
+                    {t.msgSentDesc || "Thank you for your message. I'll get back to you within 24 hours."}
                   </p>
                   <button
                     onClick={() => setIsSubmitted(false)}
-                    className="text-teal-400 hover:text-teal-300 transition-colors"
+                    className="text-teal-400 hover:text-teal-300 transition-colors cursor-pointer"
                   >
-                    Send another message
+                    {t.sendAnother || "Send another message"}
                   </button>
                 </motion.div>
               ) : (
@@ -349,7 +354,7 @@ export default function ContactSection() {
                       <label className="block text-gray-300 text-sm font-medium mb-2">
                         <span className="flex items-center gap-1">
                           <FiUser className="text-teal-500" />
-                          Your Name
+                          {t.nameLabel || "Your Name"}
                         </span>
                       </label>
                       <input
@@ -359,7 +364,7 @@ export default function ContactSection() {
                         onChange={handleChange}
                         required
                         className="w-full px-4 py-3 bg-gray-900/50 border border-gray-800 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500 transition-all duration-300"
-                        placeholder="John Doe"
+                        placeholder={t.namePlaceholder || "John Doe"}
                       />
                     </div>
 
@@ -367,7 +372,7 @@ export default function ContactSection() {
                       <label className="block text-gray-300 text-sm font-medium mb-2">
                         <span className="flex items-center gap-1">
                           <FiMail className="text-teal-500" />
-                          Email Address
+                          {t.emailLabel || "Email Address"}
                         </span>
                       </label>
                       <input
@@ -377,7 +382,8 @@ export default function ContactSection() {
                         onChange={handleChange}
                         required
                         className="w-full px-4 py-3 bg-gray-900/50 border border-gray-800 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500 transition-all duration-300"
-                        placeholder="john@example.com"
+                        placeholder={t.emailPlaceholder || "john@example.com"}
+                        dir="ltr"
                       />
                     </div>
                   </div>
@@ -386,7 +392,7 @@ export default function ContactSection() {
                     <label className="block text-gray-300 text-sm font-medium mb-2">
                       <span className="flex items-center gap-1">
                         <FiFileText className="text-teal-500" />
-                        Subject
+                        {t.subjectLabel || "Subject"}
                       </span>
                     </label>
                     <input
@@ -396,7 +402,7 @@ export default function ContactSection() {
                       onChange={handleChange}
                       required
                       className="w-full px-4 py-3 bg-gray-900/50 border border-gray-800 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500 transition-all duration-300"
-                      placeholder="Project Inquiry"
+                      placeholder={t.subjectPlaceholder || "Project Inquiry"}
                     />
                   </div>
 
@@ -404,7 +410,7 @@ export default function ContactSection() {
                     <label className="block text-gray-300 text-sm font-medium mb-2">
                       <span className="flex items-center gap-1">
                         <FiMessageSquare className="text-teal-500" />
-                        Message
+                        {t.messageLabel || "Message"}
                       </span>
                     </label>
                     <textarea
@@ -414,28 +420,28 @@ export default function ContactSection() {
                       required
                       rows={5}
                       className="w-full px-4 py-3 bg-gray-900/50 border border-gray-800 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500 transition-all duration-300 resize-none"
-                      placeholder="Tell me about your project..."
+                      placeholder={t.messagePlaceholder || "Tell me about your project..."}
                     />
                   </div>
 
                   <div className="flex items-center justify-between pt-4">
                     <div className="text-gray-400 text-sm">
-                      <p>Typically replies within 24 hours</p>
+                      <p>{t.repliesWithin || "Typically replies within 24 hours"}</p>
                     </div>
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="group px-8 py-3 bg-linear-to-r from-teal-600 to-cyan-600 text-white font-medium rounded-lg hover:from-teal-700 hover:to-cyan-700 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                      className="group px-8 py-3 bg-linear-to-r from-teal-600 to-cyan-600 text-white font-medium rounded-lg hover:from-teal-700 hover:to-cyan-700 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 cursor-pointer"
                     >
                       {isSubmitting ? (
                         <>
                           <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                          Sending...
+                          {t.sending || "Sending..."}
                         </>
                       ) : (
                         <>
-                          Send Message
-                          <FiSend className="group-hover:translate-x-1 transition-transform duration-300" />
+                          <span>{t.sendBtn || "Send Message"}</span>
+                          <FiSend className={`${isRTL ? "rotate-180 group-hover:-translate-x-1" : "group-hover:translate-x-1"} transition-transform duration-300`} />
                         </>
                       )}
                     </button>
@@ -464,10 +470,10 @@ export default function ContactSection() {
                       <FiMapPin className="text-white text-2xl" />
                     </div>
                     <h4 className="text-white font-bold text-xl mb-2">
-                      Based in Cairo, Egypt
+                      {t.basedInTitle || "Based in Cairo, Egypt"}
                     </h4>
                     <p className="text-gray-400">
-                      Working with clients worldwide
+                      {t.basedInSubtitle || "Working with clients worldwide"}
                     </p>
                   </div>
                 </div>
@@ -476,18 +482,18 @@ export default function ContactSection() {
               {/* Quick Contact CTA */}
               <div className="p-8 md:p-12">
                 <h3 className="text-2xl font-bold text-white mb-4">
-                  Prefer a quick chat?
+                  {t.quickChatTitle || "Prefer a quick chat?"}
                 </h3>
                 <p className="text-gray-400 mb-6">
-                  Schedule a call to discuss your project in detail
+                  {t.quickChatDesc || "Schedule a call to discuss your project in detail"}
                 </p>
                 <div className="space-y-4">
                   <button
                     type="button"
                     onClick={() => setIsCalendarOpen(true)}
-                    className="block w-full text-center px-6 py-3 bg-gradient-to-r from-teal-600 to-cyan-600 text-white font-medium rounded-lg hover:from-teal-700 hover:to-cyan-700 transition-all duration-300 shadow-lg shadow-teal-500/20"
+                    className="block w-full text-center px-6 py-3 bg-gradient-to-r from-teal-600 to-cyan-600 text-white font-medium rounded-lg hover:from-teal-700 hover:to-cyan-700 transition-all duration-300 shadow-lg shadow-teal-500/20 cursor-pointer"
                   >
-                    Schedule a Call
+                    {t.scheduleCall || "Schedule a Call"}
                   </button>
                   <Link
                     href="https://wa.me/201285645073"
@@ -495,7 +501,7 @@ export default function ContactSection() {
                     rel="noopener noreferrer"
                     className="block w-full text-center px-6 py-3 border-2 border-gray-700 text-gray-300 font-medium rounded-lg hover:border-teal-500 hover:text-teal-400 transition-all duration-300"
                   >
-                    WhatsApp Chat
+                    {t.whatsappChat || "WhatsApp Chat"}
                   </Link>
                 </div>
               </div>

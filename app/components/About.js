@@ -35,11 +35,32 @@ import {
 import Link from "next/link"; 
 import { BiLogoVisualStudio } from "react-icons/bi";
 import { useSiteData } from "@/lib/useSiteData";
+import { useLanguage } from "@/lib/LanguageContext";
 
 export default function AboutMe() {
   const { profile } = useSiteData();
+  const { dict, language } = useLanguage();
 
-  const engineeringPillars = [
+  const engineeringPillars = language === "ar" ? [
+    {
+      title: "معمارية برمجية نظيفة وقابلة للتوسع",
+      description: "بناء تطبيقات Next.js و React احترافية بهيكل تركيبي منظم، كود نظيف، وإدارة حالة مرنة وسهلة الصيانة.",
+      icon: <FiCode className="text-teal-400" />,
+      tag: "جودة الكود"
+    },
+    {
+      title: "الأداء وسرعة التحميل (Core Web Vitals)",
+      description: "تحسين حجم الملفات، تسريع تحميل الأصول، الرندرة بالسيرفر (SSR/SSG)، وتجاوب كامل لتحقيق سرعات قياسية.",
+      icon: <FiZap className="text-amber-400" />,
+      tag: "السرعة"
+    },
+    {
+      title: "واجهات برمجة وقواعد بيانات آمنة",
+      description: "تطوير واجهات برمجة Node.js/Express متينة مع توثيق JWT، نمذجة بيانات دقيقة، وحماية ضد الضغط الزائد.",
+      icon: <FiShield className="text-blue-400" />,
+      tag: "الباك إند"
+    }
+  ] : [
     {
       title: "Clean, Scalable Architecture",
       description: "Building production-grade Next.js & React apps with modular structure, reusability, and maintainable state.",
@@ -122,18 +143,18 @@ export default function AboutMe() {
           <div className="inline-flex items-center gap-3 mb-4">
             <div className="w-8 h-0.5 bg-linear-to-r from-transparent via-green-500 to-transparent"></div>
             <span className="text-green-400 font-mono text-sm tracking-wider">
-              GET TO KNOW ME
+              {dict.about.sectionBadge}
             </span>
             <div className="w-8 h-0.5 bg-linear-to-r from-transparent via-green-500 to-transparent"></div>
           </div>
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            About{" "}
+            {dict.about.sectionTitle}{" "}
             <span className="text-transparent bg-clip-text bg-linear-to-r from-green-400 to-blue-500">
-              Me
+              {dict.about.sectionTitleHighlight}
             </span>
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto">
-            Passionate Full-Stack Developer creating scalable web applications and engaging digital experiences
+            {dict.about.sectionSubtitle}
           </p>
         </motion.div>
 
@@ -172,7 +193,7 @@ export default function AboutMe() {
               <div className="absolute -bottom-3 left-1/2 transform -translate-x-1/2 bg-gray-900/90 backdrop-blur-sm px-4 py-2 rounded-full border border-gray-700 flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
                 <span className="text-green-400 text-sm font-mono">
-                  Available for work
+                  {dict.hero.badge}
                 </span>
               </div>
             </motion.div>
@@ -181,76 +202,34 @@ export default function AboutMe() {
             <motion.div variants={fadeInUp} className="space-y-6">
               <div className="flex items-center gap-3">
                 <FiStar className="text-green-500 text-xl" />
-                <h3 className="text-2xl font-bold text-white">My Journey</h3>
+                <h3 className="text-2xl font-bold text-white">
+                  {language === "ar" ? "مسيرتي وشغفي" : "My Journey"}
+                </h3>
               </div>
 
               <div className="space-y-4 text-gray-300 leading-relaxed">
-                <p>
-                  Hello! I&apos;m{" "}
-                  <span className="text-teal-400 font-medium">
-                    {profile.name || "Gamal Ahmed"}
-                  </span>
-                  , a dedicated Full Stack Developer with over {profile.yearsExperience || "3+"} years of
-                  experience in building modern, scalable, and user-friendly web
-                  applications.
-                </p>
-
-                <p>
-                  I started my journey with front-end development, mastering
-                  HTML, CSS, JavaScript, and React. With time, I expanded my
-                  expertise to back-end technologies such as Node.js,
-                  Express.js, and MongoDB, which enabled me to build complete,
-                  end-to-end solutions that deliver real value to users.
-                </p>
-
-                <p>
-                  I’m passionate about writing clean, maintainable code and
-                  crafting seamless digital experiences. My goal is to develop
-                  applications that are fast, secure, easy to use, and optimized
-                  for performance. I enjoy working across the full development
-                  lifecycle — from planning and UI/UX design, to backend logic,
-                  database architecture, and deployment.
-                </p>
-
-                <p>
-                  Beyond coding, I love exploring new technologies, improving my
-                  skills, contributing to open-source projects, and helping
-                  other developers through blog posts, workshops, and community
-                  support.
-                </p>
-
-                <p>
-                  I believe in continuous learning and staying up-to-date with
-                  the latest industry standards to ensure the solutions I build
-                  remain modern, efficient, and impactful.
-                </p>
+                <p>{dict.about.bio1}</p>
+                <p>{dict.about.bio2}</p>
+                <p>{dict.about.bio3}</p>
               </div>
 
               {/* Key Points */}
               <div className="grid grid-cols-2 gap-4 pt-4">
                 <div className="flex items-center gap-3">
                   <FiCheckCircle className="text-teal-400" />
-                  <span className="text-gray-300">{profile.yearsExperience || "3+"} Years Experience</span>
+                  <span className="text-gray-300">{profile.yearsExperience || "3+"} {dict.about.yearsExp}</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <FiCheckCircle className="text-teal-400" />
-                  <span className="text-gray-300">{profile.projectsCompleted || "20+"} Projects</span>
+                  <span className="text-gray-300">{profile.projectsCompleted || "20+"} {dict.about.projectsCompleted}</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <FiCheckCircle className="text-green-500" />
-                  <span className="text-gray-300">Web App Specialist</span>
+                  <span className="text-gray-300">{profile.clientsSatisfied || "100%"} {dict.about.satisfactionRate}</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <FiCheckCircle className="text-green-500" />
-                  <span className="text-gray-300">Remote Work</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <FiCheckCircle className="text-green-500" />
-                  <span className="text-gray-300">On-site Availability</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <FiCheckCircle className="text-green-500" />
-                  <span className="text-gray-300">Hybrid Work Options</span>
+                  <span className="text-gray-300">{dict.about.statusVal}</span>
                 </div>
               </div>
             </motion.div>
@@ -414,17 +393,16 @@ export default function AboutMe() {
           className="mt-20 text-center"
         >
           <div className="inline-flex flex-col sm:flex-row items-center gap-6 bg-linear-to-r from-gray-900/50 to-gray-900/30 border border-gray-800 rounded-2xl p-8">
-            <div className="text-left">
+            <div className="text-left rtl:text-right">
               <h3 className="text-2xl font-bold text-white mb-2">
-                Let&apos;s Build Something Amazing
+                {dict.about.connectHeading}
               </h3>
               <p className="text-gray-400">
-                Have a project in mind? Let&apos;s discuss how we can bring it
-                to life.
+                {dict.about.connectText}
               </p>
             </div>
-            <Link href="#contact" className="px-8 py-3 bg-linear-to-r from-green-600 to-emerald-700 text-white font-medium rounded-lg hover:from-green-700 hover:to-emerald-800 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl hover:shadow-green-500/25">
-              Contact Me
+            <Link href="#contact" className="px-8 py-3 bg-linear-to-r from-green-600 to-emerald-700 text-white font-medium rounded-lg hover:from-green-700 hover:to-emerald-800 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl hover:shadow-green-500/25 shrink-0">
+              {dict.about.hireMe}
             </Link>
           </div>
         </motion.div>

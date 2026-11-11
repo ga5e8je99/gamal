@@ -3,13 +3,15 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useSiteData } from "@/lib/useSiteData";
+import { useLanguage } from "@/lib/LanguageContext";
 
 export default function Hero() {
   const { profile } = useSiteData();
-  const fullName = profile.name || "Gamal Ahmed";
+  const { dict, isRTL, language } = useLanguage();
+  const fullName = language === "ar" ? dict.hero.name : (profile.name || "Gamal Ahmed");
   const nameParts = fullName.split(" ");
-  const firstName = nameParts[0] || "Gamal";
-  const lastName = nameParts.slice(1).join(" ") || "Ahmed";
+  const firstName = nameParts[0] || fullName;
+  const lastName = nameParts.slice(1).join(" ") || "";
 
   return (
     <section className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 pb-12 relative bg-[#080c16] transition-colors duration-500" id="home">
@@ -21,50 +23,47 @@ export default function Hero() {
               <div className="flex items-center gap-3">
                 <div className="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></div>
                 <p className="text-teal-400 font-mono text-sm tracking-wider">
-                  Hi, my name is
+                  {dict.hero.greeting}
                 </p>
               </div>
               
               <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold text-white leading-tight">
                 <span>{firstName}</span>{" "}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 via-cyan-400 to-blue-500">
-                  {lastName}
-                </span>
+                {lastName && (
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 via-cyan-400 to-blue-500">
+                    {lastName}
+                  </span>
+                )}
               </h1>
               
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-gray-300 mt-4">
-                {profile.roleTitle || "Full-Stack Web Developer"}
+                {language === "ar" ? dict.hero.role : (profile.roleTitle || dict.hero.role)}
               </h2>
             </div>
 
             <p className="text-gray-400 text-lg leading-relaxed max-w-2xl">
-              {profile.shortBio || (
-                <>
-                  I&apos;m passionate about modern web technologies. I dedicate my time to creating{" "}
-                  <span className="text-teal-300 font-medium">fast</span>,{" "}
-                  <span className="text-blue-300 font-medium">seamless</span>, and{" "}
-                  <span className="text-purple-300 font-medium">advanced</span> web applications for a superior user experience.
-                </>
-              )}
+              {language === "ar" ? dict.hero.shortBio : (profile.shortBio || dict.hero.shortBio)}
             </p>
 
             <div className="flex flex-wrap gap-4 pt-6">
               <Link href="#portfolio" className="px-8 py-3 bg-gradient-to-r from-teal-500 to-emerald-600 text-white font-medium rounded-lg hover:from-teal-600 hover:to-emerald-700 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl hover:shadow-teal-500/25">
-                View Projects
+                {dict.hero.viewWork}
               </Link>
               <Link href="#contact" className="px-8 py-3 border-2 border-gray-700 text-gray-300 font-medium rounded-lg hover:border-teal-500 hover:text-teal-400 transition-all duration-300 hover:shadow-lg hover:shadow-teal-500/10">
-                Contact Me
+                {dict.hero.contactMe}
               </Link>
             </div>
 
             {/* Tech Stack */}
             <div className="pt-8">
-              <p className="text-gray-500 text-sm font-mono mb-4">TECH I WORK WITH</p>
+              <p className="text-gray-500 text-sm font-mono mb-4">
+                {language === "ar" ? "التقنيات الأساسية التي أعمل بها" : "TECH I WORK WITH"}
+              </p>
               <div className="flex flex-wrap gap-3">
                 {['React', 'Next.js', 'Node.js', 'Tailwind CSS', 'MongoDB', 'JavaScript'].map((tech) => (
                   <span 
                     key={tech}
-                    className="px-4 py-2 bg-gray-800/50 backdrop-blur-sm rounded-full text-gray-300 text-sm border border-gray-700 hover:border-teal-500/50 hover:text-teal-300 transition-all duration-300"
+                    className="px-4 py-2 bg-gray-800/50 backdrop-blur-sm rounded-full text-gray-300 text-sm border border-gray-700 hover:border-teal-500/50 hover:text-teal-300 transition-all duration-300 font-mono"
                   >
                     {tech}
                   </span>
@@ -90,7 +89,7 @@ export default function Hero() {
                   priority
                 />
                 
-                {/* VR Glasses Overlay */}
+                {/* Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
                 
                 {/* Floating Elements */}
@@ -101,7 +100,7 @@ export default function Hero() {
               {/* Status Indicator */}
               <div className="absolute -bottom-2 -right-2 sm:bottom-4 sm:right-4 bg-gray-900/90 backdrop-blur-sm px-4 py-2 rounded-full border border-gray-700 flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full bg-teal-400 animate-pulse"></div>
-                <span className="text-teal-300 text-sm font-mono">Available for Full-Stack Projects</span>
+                <span className="text-teal-300 text-sm font-mono">{dict.hero.badge}</span>
               </div>
             </div>
           </div>
