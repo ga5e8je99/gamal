@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { FiDownload, FiMenu, FiX } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
-import { label } from "framer-motion/client";
 import { useRouter, usePathname } from "next/navigation";
 
 
@@ -106,36 +105,28 @@ export default function Navbar() {
 
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center space-x-8">
-              <ul className="flex items-center space-x-8">
-                {navItems.map((item) => (
-                  <li key={item.id}>
-                    <Link
-                      href={`/#${item.id}`}
-                      className={`relative px-3 py-2 text-sm font-medium transition-all duration-300 ${
-                        activeSection === item.id
-                          ? "text-green-400"
-                          : "text-gray-300 hover:text-white"
-                      }`}
-                      onClick={() => setActiveSection(item.id)}
-                    >
-                      {activeSection === item.id && (
-                        <motion.div
-                          layoutId="activeSection"
-                          className={`absolute inset-0 bg-gray-800/50 rounded-lg -z-10`}
-                          transition={{
-                            type: "spring",
-                            stiffness: 380,
-                            damping: 30,
-                          }}
-                        />
-                      )}
-                      {item.label}
-                      {activeSection === item.id && (
-                        <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-linear-to-r from-green-500 to-emerald-500 rounded-full"></div>
-                      )}
-                    </Link>
-                  </li>
-                ))}
+              <ul className="flex items-center space-x-6">
+                {navItems.map((item) => {
+                  const isActive = activeSection === item.id;
+                  return (
+                    <li key={item.id}>
+                      <Link
+                        href={`/#${item.id}`}
+                        className={`relative px-3.5 py-2 text-sm font-medium transition-all duration-300 rounded-lg block ${
+                          isActive
+                            ? "text-green-400 bg-gray-800/60 shadow-xs"
+                            : "text-gray-300 hover:text-white hover:bg-gray-800/30"
+                        }`}
+                        onClick={() => setActiveSection(item.id)}
+                      >
+                        <span className="relative z-10">{item.label}</span>
+                        {isActive && (
+                          <span className="absolute -bottom-1 left-2 right-2 h-0.5 bg-linear-to-r from-green-500 to-emerald-500 rounded-full" />
+                        )}
+                      </Link>
+                    </li>
+                  );
+                })}
               </ul>
             </div>
             {/* Download CV Button */}
