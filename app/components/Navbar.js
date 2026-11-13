@@ -1,14 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import Image from "next/image";
+import { useState, useEffect, useRef } from "react";
 import { FiDownload, FiMenu, FiX, FiGlobe } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
-import { useRouter, usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useLanguage } from "@/lib/LanguageContext";
 
 export default function Navbar() {
-  const router = useRouter();
   const pathname = usePathname();
   const { language, toggleLanguage, dict, isRTL } = useLanguage();
   const [isScrolled, setIsScrolled] = useState(false);
@@ -16,39 +16,66 @@ export default function Navbar() {
   const [activeSection, setActiveSection] = useState(
     pathname?.startsWith("/projects") ? "portfolio" : "home"
   );
-  
+  const mobileMenuRef = useRef(null);
+
+  // Sync active section on project pages
   useEffect(() => {
     if (pathname?.startsWith("/projects")) {
       setActiveSection("portfolio");
     }
   }, [pathname]);
 
+  // Robust, throttled scroll spy for section highlighting
   useEffect(() => {
     let ticking = false;
+
     const handleScroll = () => {
       if (!ticking) {
         window.requestAnimationFrame(() => {
-          setIsScrolled(window.scrollY > 20);
+          const scrollY = window.scrollY;
+          setIsScrolled(scrollY > 20);
 
           if (pathname === "/") {
+            // Check top of page
+            if (scrollY < 100) {
+              setActiveSection("home");
+              ticking = false;
+              return;
+            }
+
+            // Check bottom of page
+            if (
+              window.innerHeight + scrollY >=
+              document.documentElement.scrollHeight - 100
+            ) {
+              setActiveSection("contact");
+              ticking = false;
+              return;
+            }
+
+            // Exact DOM order of sections
             const sections = [
               "home",
               "about",
-              "services",
               "skills",
-              "portfolio",
               "experience",
+              "portfolio",
+              "services",
               "contact",
             ];
-            const current = sections.find((section) => {
-              const element = document.getElementById(section);
-              if (element) {
-                const rect = element.getBoundingClientRect();
-                return rect.top <= 120 && rect.bottom >= 120;
+
+            for (let i = sections.length - 1; i >= 0; i--) {
+              const sectionId = sections[i];
+              const el = document.getElementById(sectionId);
+              if (el) {
+                const rect = el.getBoundingClientRect();
+                // Trigger when section top enters upper viewport
+                if (rect.top <= window.innerHeight * 0.35) {
+                  setActiveSection(sectionId);
+                  break;
+                }
               }
-              return false;
-            });
-            if (current) setActiveSection(current);
+            }
           }
           ticking = false;
         });
@@ -57,91 +84,121 @@ export default function Navbar() {
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll(); // Initial run
+
     return () => window.removeEventListener("scroll", handleScroll);
   }, [pathname]);
 
+  // Close mobile menu on Escape key press or outside click
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    const handleClickOutside = (e) => {
+      if (
+        isMobileMenuOpen &&
+        mobileMenuRef.current &&
+        !mobileMenuRef.current.contains(e.target) &&
+        !e.target.closest("button[data-mobile-toggle]")
+      ) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isMobileMenuOpen]);
+
+  // Navigation Items
   const navItems = [
-    { id: "home", label: dict.nav.home },
-    { id: "about", label: dict.nav.about },
-    { id: "skills", label: dict.nav.skills },
-    { id: "experience", label: dict.nav.experience },
-    { id: "portfolio", label: dict.nav.portfolio },
-    { id: "services", label: dict.nav.services },
-    { id: "contact", label: dict.nav.contact },
+    { id: "home", label: dict?.nav?.home || "Home" },
+    { id: "about", label: dict?.nav?.about || "About" },
+    { id: "skills", label: dict?.nav?.skills || "Skills" },
+    { id: "experience", label: dict?.nav?.experience || "Experience" },
+    { id: "portfolio", label: dict?.nav?.portfolio || "Portfolio" },
+    { id: "services", label: dict?.nav?.services || "Services" },
+    { id: "contact", label: dict?.nav?.contact || "Contact" },
   ];
 
   return (
     <>
-      <motion.nav
-        initial={{ y: -90 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.5 }}
+      <header
         className={`sticky top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled
-            ? "bg-gray-900/95 backdrop-blur-md border-b border-gray-800/50 py-4"
-            : "bg-transparent py-6"
+            ? "bg-[#060913]/90 backdrop-blur-md border-b border-gray-800/80 shadow-lg shadow-black/30 py-3"
+            : "bg-transparent py-5"
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between">
-            {/* Logo */}
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="flex items-center gap-2"
+          <div className="flex items-center justify-between gap-4">
+            {/* Brand Logo */}
+            <Link
+              href="/#home"
+              className="flex items-center gap-2 group transition-transform duration-200 hover:scale-102"
+              aria-label="Gamal Ahmed - Home"
             >
-              <div className="relative">
-                <div className="absolute inset-0 bg-linear-to-r from-green-500 to-emerald-600 rounded-lg blur opacity-75 animate-pulse-slow"></div>
-                <Link
-                  href="/#home"
-                  className="relative text-3xl font-bold bg-linear-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent"
-                >
-                  Gamal
-                </Link>
+              <div className="relative flex items-center">
+                {/* Subtle emerald ambient aura on hover */}
+                <div className="absolute -inset-1 bg-gradient-to-r from-teal-500/20 to-emerald-500/20 rounded-full blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                
+                {/* Official Logo */}
+                <Image
+                  src="/logo-full.png"
+                  alt="Gamal Ahmed - Full-Stack Developer"
+                  width={180}
+                  height={52}
+                  priority
+                  className="h-9 sm:h-10 w-auto object-contain select-none"
+                />
               </div>
-              <span className="hidden xl:inline text-xs font-mono px-2 py-1 bg-gray-800/50 rounded text-gray-400">
-                /dev
-              </span>
-            </motion.div>
+            </Link>
 
-            {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center space-x-8">
-              <ul className="flex items-center space-x-6">
+            {/* Desktop Navigation Links */}
+            <nav className="hidden lg:flex items-center" aria-label="Main Navigation">
+              <ul className="flex items-center gap-1 bg-gray-950/70 p-1 rounded-full border border-gray-800/80 backdrop-blur-sm shadow-inner">
                 {navItems.map((item) => {
                   const isActive = activeSection === item.id;
                   return (
                     <li key={item.id}>
                       <Link
                         href={`/#${item.id}`}
-                        className={`relative px-3.5 py-2 text-sm font-medium transition-all duration-300 rounded-lg block ${
-                          isActive
-                            ? "text-green-400 bg-gray-800/60 shadow-xs"
-                            : "text-gray-300 hover:text-white hover:bg-gray-800/30"
-                        }`}
                         onClick={() => setActiveSection(item.id)}
+                        className={`relative px-3.5 py-1.5 text-xs font-medium rounded-full transition-all duration-200 block ${
+                          isActive
+                            ? "text-teal-300 bg-teal-500/15 border border-teal-500/30 shadow-xs"
+                            : "text-gray-300 hover:text-white hover:bg-gray-800/50"
+                        }`}
                       >
-                        <span className="relative z-10" suppressHydrationWarning>{item.label}</span>
-                        {isActive && (
-                          <span className="absolute -bottom-1 left-2 right-2 h-0.5 bg-linear-to-r from-green-500 to-emerald-500 rounded-full" />
-                        )}
+                        <span className="relative z-10" suppressHydrationWarning>
+                          {item.label}
+                        </span>
                       </Link>
                     </li>
                   );
                 })}
               </ul>
-            </div>
+            </nav>
 
             {/* Right Action Group */}
             <div className="hidden lg:flex items-center gap-3">
               {/* Language Switch Button */}
               <button
+                type="button"
                 onClick={toggleLanguage}
-                className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-gray-800/60 hover:bg-gray-750/80 border border-gray-700/70 hover:border-teal-500/50 text-gray-200 text-xs font-semibold transition-all duration-300 shadow-sm cursor-pointer"
+                className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-gray-900/80 hover:bg-gray-800 border border-gray-800 hover:border-teal-500/50 text-gray-200 text-xs font-semibold transition-all duration-300 cursor-pointer shadow-sm"
                 title={language === "en" ? "التبديل إلى العربية" : "Switch to English"}
                 aria-label="Toggle language"
               >
                 <FiGlobe className="text-teal-400 text-sm" />
-                <span suppressHydrationWarning>{dict.nav.langSwitch}</span>
+                <span suppressHydrationWarning>{dict?.nav?.langSwitch || "العربية"}</span>
               </button>
 
               {/* Download CV Button */}
@@ -150,97 +207,99 @@ export default function Navbar() {
                 download="Gamal_Ahmed_Resume.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="group relative px-5 py-2.5 bg-linear-to-r from-teal-500 to-emerald-600 text-white font-medium text-sm rounded-lg overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-teal-500/25 inline-flex items-center gap-2"
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                className="group relative px-4 py-2 bg-gradient-to-r from-teal-500 to-emerald-600 text-white font-medium text-xs rounded-xl overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-teal-500/25 inline-flex items-center gap-2"
               >
-                <div className="absolute inset-0 bg-linear-to-r from-teal-400 to-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <div className="relative flex items-center gap-2">
-                  <FiDownload className="text-base" />
-                  <span suppressHydrationWarning>{dict.nav.downloadCv}</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-teal-400 to-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="relative flex items-center gap-1.5">
+                  <FiDownload className="text-sm" />
+                  <span suppressHydrationWarning>{dict?.nav?.downloadCv || "Download CV"}</span>
                 </div>
               </motion.a>
             </div>
 
-            {/* Mobile Actions (Lang + Hamburger) */}
+            {/* Mobile Actions (Language + Hamburger) */}
             <div className="flex items-center gap-2 lg:hidden">
               <button
+                type="button"
                 onClick={toggleLanguage}
-                className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-gray-800/60 border border-gray-700 text-gray-200 text-xs font-medium cursor-pointer"
+                className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-gray-900/80 border border-gray-800 text-gray-200 text-xs font-medium cursor-pointer"
                 aria-label="Toggle language"
               >
                 <FiGlobe className="text-teal-400" />
-                <span suppressHydrationWarning>{dict.nav.langSwitch}</span>
+                <span suppressHydrationWarning>{dict?.nav?.langSwitch || "العربية"}</span>
               </button>
 
               <button
+                type="button"
+                data-mobile-toggle="true"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="p-2 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700 text-gray-300 hover:text-white hover:border-green-500/50 transition-all duration-300"
+                className="p-2 rounded-lg bg-gray-900/80 border border-gray-800 text-gray-300 hover:text-white hover:border-teal-500/50 transition-all duration-300 cursor-pointer"
+                aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+                aria-expanded={isMobileMenuOpen}
               >
-                {isMobileMenuOpen ? <FiX size={22} /> : <FiMenu size={22} />}
+                {isMobileMenuOpen ? <FiX size={20} /> : <FiMenu size={20} />}
               </button>
             </div>
           </div>
         </div>
-      </motion.nav>
+      </header>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu Drawer */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed top-20 left-0 right-0 z-40 bg-gray-900/95 backdrop-blur-md border-b border-gray-800/50 lg:hidden overflow-hidden"
+            ref={mobileMenuRef}
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
+            className="fixed top-[65px] left-0 right-0 z-40 bg-[#060913]/95 backdrop-blur-xl border-b border-gray-800/80 shadow-2xl lg:hidden overflow-hidden"
           >
-            <div className="px-4 py-6">
-              <ul className="space-y-4">
-                {navItems.map((item) => (
-                  <motion.li
-                    key={item.id}
-                    initial={{ x: -20, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ delay: item.id.charCodeAt(0) * 0.01 }}
-                  >
-                    <Link
-                      href={`/#${item.id}`}
-                      className={`flex items-center justify-between px-4 py-3 rounded-lg transition-all duration-300 ${
-                        activeSection === item.id
-                          ? "bg-gray-800/50 text-green-400"
-                          : "text-gray-300 hover:bg-gray-800/30 hover:text-white"
-                      }`}
-                      onClick={() => {
-                        setActiveSection(item.id);
-                        setIsMobileMenuOpen(false);
-                      }}
-                    >
-                      <span className="font-medium" suppressHydrationWarning>{item.label}</span>
-                      {activeSection === item.id && (
-                        <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-                      )}
-                    </Link>
-                  </motion.li>
-                ))}
+            <div className="max-w-7xl mx-auto px-4 py-5 space-y-4">
+              <ul className="space-y-1">
+                {navItems.map((item) => {
+                  const isActive = activeSection === item.id;
+                  return (
+                    <li key={item.id}>
+                      <Link
+                        href={`/#${item.id}`}
+                        onClick={() => {
+                          setActiveSection(item.id);
+                          setIsMobileMenuOpen(false);
+                        }}
+                        className={`flex items-center justify-between px-4 py-2.5 rounded-xl transition-all duration-200 ${
+                          isActive
+                            ? "bg-teal-500/15 text-teal-300 border border-teal-500/30"
+                            : "text-gray-300 hover:bg-gray-800/40 hover:text-white"
+                        }`}
+                      >
+                        <span className="font-medium text-sm" suppressHydrationWarning>
+                          {item.label}
+                        </span>
+                        {isActive && (
+                          <div className="w-1.5 h-1.5 rounded-full bg-teal-400 animate-pulse" />
+                        )}
+                      </Link>
+                    </li>
+                  );
+                })}
               </ul>
 
-              <motion.div
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.3 }}
-                className="mt-6 px-4"
-              >
+              <div className="pt-2 border-t border-gray-800/80">
                 <a
                   href="/Gamal_Ahmed_Resume.pdf"
                   download="Gamal_Ahmed_Resume.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-linear-to-r from-teal-500 to-emerald-600 text-white font-medium rounded-lg hover:from-teal-600 hover:to-emerald-700 transition-all duration-300"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="w-full flex items-center justify-center gap-2 px-5 py-2.5 bg-gradient-to-r from-teal-500 to-emerald-600 text-white font-medium text-sm rounded-xl hover:from-teal-600 hover:to-emerald-700 transition-all duration-300 shadow-md shadow-teal-500/20"
                 >
-                  <FiDownload className="text-lg" />
-                  <span suppressHydrationWarning>{dict.nav.downloadCv}</span>
+                  <FiDownload className="text-base" />
+                  <span suppressHydrationWarning>{dict?.nav?.downloadCv || "Download CV"}</span>
                 </a>
-              </motion.div>
+              </div>
             </div>
           </motion.div>
         )}

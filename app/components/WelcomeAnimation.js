@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useEffect } from "react";
+import Image from "next/image";
 
 export default function WelcomeAnimation({ onComplete }) {
   useEffect(() => {
@@ -43,6 +44,23 @@ export default function WelcomeAnimation({ onComplete }) {
     >
       {/* Centered Handwriting Welcome Container */}
       <div className="relative z-10 flex flex-col items-center justify-center text-center">
+        <motion.div
+          initial={{ scale: 0.7, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="mb-4 relative"
+        >
+          <div className="absolute inset-0 bg-teal-500/25 blur-xl rounded-full" />
+          <Image
+            src="/logo-icon.png"
+            alt="Gamal Emblem"
+            width={72}
+            height={72}
+            priority
+            className="w-16 h-16 object-contain relative z-10 select-none drop-shadow-[0_0_20px_rgba(20,184,166,0.4)]"
+          />
+        </motion.div>
+
         <div className="welcome-handwrite">Welcome</div>
 
         {/* Minimal Subtitle */}
