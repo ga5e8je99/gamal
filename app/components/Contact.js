@@ -11,16 +11,15 @@ import {
   FiPhone,
   FiMapPin,
   FiSend,
-  FiTwitter,
   FiMessageSquare,
   FiUser,
   FiFileText,
   FiCheckCircle,
 } from "react-icons/fi";
-import { SiLinkedin, SiGithub, SiCodepen } from "react-icons/si";
+import { SiLinkedin, SiGithub, SiX, SiInstagram } from "react-icons/si";
 
 export default function ContactSection() {
-  const { addMessage } = useSiteData();
+  const { profile, addMessage } = useSiteData();
   const { dict, isRTL } = useLanguage();
   const t = dict?.contact || {};
 
@@ -119,28 +118,29 @@ export default function ContactSection() {
     {
       name: "LinkedIn",
       icon: <SiLinkedin />,
-      url: "https://linkedin.com/in/gamal-ahmed--",
+      url: profile?.socials?.linkedin || "https://linkedin.com/in/gamal-ahmed--",
       color:
         "hover:bg-blue-600 hover:border-blue-600 hover:text-white text-blue-400",
     },
     {
       name: "GitHub",
       icon: <SiGithub />,
-      url: "https://github.com/ga5e8je99",
+      url: profile?.socials?.github || "https://github.com/ga5e8je99",
       color: "hover:bg-gray-800 hover:border-gray-800 text-gray-300",
     },
     {
-      name: "Twitter",
-      icon: <FiTwitter />,
-      url: "https://twitter.com/gamalahmed",
+      name: "X",
+      icon: <SiX />,
+      url: profile?.socials?.x || "https://x.com/gamalahmed",
       color:
-        "hover:bg-sky-500 hover:border-sky-500 hover:text-white text-sky-400",
+        "hover:bg-black hover:border-white/40 hover:text-white text-gray-300",
     },
     {
-      name: "CodePen",
-      icon: <SiCodepen />,
-      url: "https://codepen.io",
-      color: "hover:bg-black hover:border-black text-gray-300",
+      name: "Instagram",
+      icon: <SiInstagram />,
+      url: profile?.socials?.instagram || "https://instagram.com",
+      color:
+        "hover:bg-gradient-to-tr hover:from-amber-500 hover:via-pink-500 hover:to-purple-600 hover:border-pink-500 hover:text-white text-pink-400",
     },
   ];
 
