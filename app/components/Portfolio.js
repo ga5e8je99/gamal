@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -31,34 +31,93 @@ export default function Portfolio() {
   const [selectedCategory, setSelectedCategory] = useState("all");
 
   const categories = [
-    { key: "all", label: dict.portfolio.all },
-    { key: "fullstack", label: dict.portfolio.fullstack },
-    { key: "frontend3d", label: dict.portfolio.frontend3d }
+    { key: "all", label: dict.portfolio.all || "All" },
+    { key: "fullstack", label: dict.portfolio.fullstack || "Full-Stack" },
+    { key: "ecommerce", label: dict.portfolio.ecommerce || "E-Commerce" },
+    { key: "ai", label: dict.portfolio.ai || "AI & ATS" },
+    { key: "frontend3d", label: dict.portfolio.frontend3d || "Frontend / 3D" }
   ];
 
-  const filteredProjects = projects.filter((project) => {
-    if (selectedCategory === "all") return true;
-    if (selectedCategory === "fullstack") {
+  const matchesCategory = (project, catKey) => {
+    if (catKey === "all") return true;
+
+    const cat = (project.category || "").toLowerCase();
+    const title = (project.title || "").toLowerCase();
+    const desc = (project.description || "").toLowerCase();
+    const overview = (project.overview || "").toLowerCase();
+    const techs = (project.technologies || []).map((t) =>
+      (typeof t === "string" ? t : t?.name || "").toLowerCase()
+    );
+
+    if (catKey === "fullstack") {
       return (
-        project.category?.toLowerCase().includes("full-stack") ||
-        project.technologies?.some((t) => {
-          const str = typeof t === "string" ? t : t?.name || "";
-          return ["Node.js", "Express.js", "MongoDB", "Redux"].includes(str);
-        })
+        cat.includes("full-stack") ||
+        cat.includes("fullstack") ||
+        techs.includes("node.js") ||
+        techs.includes("express.js") ||
+        techs.includes("mongodb") ||
+        techs.includes("jwt auth")
       );
     }
-    if (selectedCategory === "frontend3d") {
+
+    if (catKey === "ecommerce") {
       return (
-        project.category?.toLowerCase().includes("3d") ||
-        project.category?.toLowerCase().includes("frontend") ||
-        project.technologies?.some((t) => {
-          const str = typeof t === "string" ? t : t?.name || "";
-          return ["Three.js", "WebGL"].includes(str);
-        })
+        cat.includes("commerce") ||
+        cat.includes("store") ||
+        title.includes("pizza") ||
+        title.includes("book") ||
+        desc.includes("e-commerce") ||
+        desc.includes("ordering") ||
+        overview.includes("cart") ||
+        overview.includes("ordering")
       );
     }
+
+    if (catKey === "ai") {
+      return (
+        cat.includes("ai") ||
+        title.includes("ai") ||
+        title.includes("resume") ||
+        title.includes("jobmatch") ||
+        desc.includes("ai") ||
+        desc.includes("ats") ||
+        overview.includes("ats")
+      );
+    }
+
+    if (catKey === "frontend3d") {
+      return (
+        cat.includes("3d") ||
+        cat.includes("frontend") ||
+        techs.includes("three.js") ||
+        techs.includes("webgl") ||
+        title.includes("sky") ||
+        title.includes("3d")
+      );
+    }
+
     return true;
-  });
+  };
+
+  const filteredProjects = projects.filter((project) =>
+    matchesCategory(project, selectedCategory)
+  );
+
+  const getCategoryCount = (key) => {
+    if (key === "all") return projects.length;
+    return projects.filter((p) => matchesCategory(p, key)).length;
+  };
+
+  const getLocalizedCategory = (category) => {
+    if (!category) return "Full-Stack";
+    if (language === "ar") {
+      if (category.includes("3D") || category.includes("Frontend")) return "واجهات وثلاثي أبعاد (3D)";
+      if (category.includes("AI")) return "ذكاء اصطناعي (AI / Full-Stack)";
+      if (category.includes("E-Commerce")) return "متجر متكامل (E-Commerce)";
+      if (category.includes("Full-Stack")) return "تطبيق متكامل (Full-Stack)";
+    }
+    return category;
+  };
 
   const fadeInUp = {
     initial: { opacity: 0, y: 30 },
@@ -142,63 +201,80 @@ export default function Portfolio() {
 
         {/* Project Filters */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="flex flex-wrap justify-center gap-3 mb-12"
+          className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-12"
         >
-          {categories.map((cat) => (
-            <button
-              key={cat.key}
-              onClick={() => setSelectedCategory(cat.key)}
-              className={`px-5 py-2 rounded-full font-medium transition-all duration-300 text-sm ${
-                selectedCategory === cat.key 
-                  ? "bg-gradient-to-r from-teal-500 to-cyan-600 text-white shadow-lg shadow-teal-500/25 scale-105"
-                  : "bg-gray-900/90 text-gray-300 hover:bg-gray-800 hover:text-white border border-gray-800"
-              }`}
-            >
-              {cat.label}
-            </button>
-          ))}
+          {categories.map((cat) => {
+            const isSelected = selectedCategory === cat.key;
+            const count = getCategoryCount(cat.key);
+
+            return (
+              <button
+                key={cat.key}
+                type="button"
+                onClick={() => setSelectedCategory(cat.key)}
+                className={`relative px-4 py-2 sm:px-5 sm:py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 flex items-center gap-2 cursor-pointer ${
+                  isSelected
+                    ? "bg-gradient-to-r from-teal-500 to-cyan-600 text-white shadow-lg shadow-teal-500/25 scale-105 border border-teal-400/40"
+                    : "bg-gray-900/90 text-gray-300 hover:bg-gray-800 hover:text-white border border-gray-800 hover:border-gray-700"
+                }`}
+              >
+                <span>{cat.label}</span>
+                <span
+                  className={`px-2 py-0.5 rounded-full text-[11px] font-mono transition-colors ${
+                    isSelected
+                      ? "bg-white/20 text-white font-bold"
+                      : "bg-gray-800 text-gray-400 border border-gray-700/60"
+                  }`}
+                >
+                  {count}
+                </span>
+              </button>
+            );
+          })}
         </motion.div>
 
         {/* Projects Grid */}
         <motion.div
-          initial="initial"
-          whileInView="animate"
-          viewport={{ once: true }}
-          variants={staggerContainer}
+          layout
           className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto"
         >
-          {filteredProjects.map((project) => {
-            const projectData = (dict.projectsData && dict.projectsData[project.id]) || {};
-            const title = projectData.title || project.title;
-            const description = projectData.description || project.description;
-            const problem = projectData.problem || project.problem;
-            const role = projectData.role || project.role;
-            const impact = projectData.impact || project.impact;
+          <AnimatePresence mode="popLayout">
+            {filteredProjects.map((project) => {
+              const projectData = (dict.projectsData && dict.projectsData[project.id]) || {};
+              const title = projectData.title || project.title;
+              const description = projectData.description || project.description;
+              const problem = projectData.problem || project.problem;
+              const role = projectData.role || project.role;
+              const impact = projectData.impact || project.impact;
 
-            return (
-              <motion.div
-                key={project.id}
-                variants={fadeInUp}
-                whileHover={{ y: -6 }}
-                className="group relative bg-gradient-to-b from-gray-900/85 via-gray-900/60 to-gray-950/95 border border-gray-800 rounded-2xl overflow-hidden hover:border-teal-500/50 hover:shadow-[0_10px_35px_-10px_rgba(20,184,166,0.2)] transition-all duration-300 flex flex-col justify-between"
-              >
-                {/* Top Badges */}
-                <div className="absolute top-4 left-4 z-20 flex gap-2">
-                  {project.featured && (
-                    <span className="px-3 py-1 bg-gradient-to-r from-teal-500 to-cyan-600 text-white text-xs font-bold rounded-full flex items-center gap-1 shadow-md shadow-teal-500/20">
-                      <FiEye className="text-xs" /> {dict.portfolio.featuredBadge}
+              return (
+                <motion.div
+                  layout
+                  key={project.id}
+                  initial={{ opacity: 0, scale: 0.94 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.94 }}
+                  transition={{ duration: 0.3 }}
+                  whileHover={{ y: -6 }}
+                  className="group relative bg-gradient-to-b from-gray-900/85 via-gray-900/60 to-gray-950/95 border border-gray-800 rounded-2xl overflow-hidden hover:border-teal-500/50 hover:shadow-[0_10px_35px_-10px_rgba(20,184,166,0.2)] transition-all duration-300 flex flex-col justify-between"
+                >
+                  {/* Top Badges */}
+                  <div className="absolute top-4 left-4 z-20 flex gap-2">
+                    {project.featured && (
+                      <span className="px-3 py-1 bg-gradient-to-r from-teal-500 to-cyan-600 text-white text-xs font-bold rounded-full flex items-center gap-1 shadow-md shadow-teal-500/20">
+                        <FiEye className="text-xs" /> {dict.portfolio.featuredBadge}
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="absolute top-4 right-4 z-20">
+                    <span className="px-3 py-1 bg-gray-950/80 backdrop-blur-md text-teal-300 text-xs font-mono font-medium rounded-full border border-teal-500/30">
+                      {getLocalizedCategory(project.category)}
                     </span>
-                  )}
-                </div>
-
-                <div className="absolute top-4 right-4 z-20">
-                  <span className="px-3 py-1 bg-gray-950/80 backdrop-blur-md text-teal-300 text-xs font-mono font-medium rounded-full border border-teal-500/30">
-                    {project.category}
-                  </span>
-                </div>
+                  </div>
 
                 {/* Project Image */}
                 <Link
@@ -316,13 +392,28 @@ export default function Portfolio() {
               </motion.div>
             );
           })}
+          </AnimatePresence>
         </motion.div>
 
-        {filteredProjects.length === 0 && (
-          <div className="text-center py-16 text-gray-500 font-mono">
-            {dict.portfolio.noProjects}
-          </div>
-        )}
+        <AnimatePresence>
+          {filteredProjects.length === 0 && (
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 15 }}
+              className="text-center py-16 text-gray-400 font-mono"
+            >
+              <p className="mb-4 text-base">{dict.portfolio.noProjects}</p>
+              <button
+                type="button"
+                onClick={() => setSelectedCategory("all")}
+                className="px-4 py-2 text-xs rounded-lg bg-teal-500/20 text-teal-300 border border-teal-500/40 hover:bg-teal-500/30 transition-colors cursor-pointer"
+              >
+                {dict.portfolio.viewAll}
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
       </div>
     </section>
