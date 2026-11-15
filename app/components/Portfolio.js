@@ -20,7 +20,10 @@ import {
   SiGraphql, 
   SiRedux,
   SiJavascript,
-  SiExpress
+  SiExpress,
+  SiMui,
+  SiVite,
+  SiGooglegemini
 } from "react-icons/si";
 import { useSiteData } from "@/lib/useSiteData";
 import { useLanguage } from "@/lib/LanguageContext";
@@ -79,9 +82,13 @@ export default function Portfolio() {
         title.includes("ai") ||
         title.includes("resume") ||
         title.includes("jobmatch") ||
+        title.includes("neo") ||
         desc.includes("ai") ||
         desc.includes("ats") ||
-        overview.includes("ats")
+        desc.includes("gemini") ||
+        overview.includes("ats") ||
+        overview.includes("gemini") ||
+        techs.some((t) => t.includes("gemini") || t.includes("ai"))
       );
     }
 
@@ -162,6 +169,9 @@ export default function Portfolio() {
     else if (lower.includes("tailwind")) { Icon = SiTailwindcss; colorClass = "border-teal-400/50 text-teal-300"; }
     else if (lower.includes("webgl")) { Icon = SiWebgl; colorClass = "border-blue-400/50 text-blue-300"; }
     else if (lower.includes("express")) { Icon = SiExpress; colorClass = "border-gray-500 text-gray-300"; }
+    else if (lower.includes("gemini")) { Icon = SiGooglegemini; colorClass = "border-blue-400/50 text-blue-300"; }
+    else if (lower.includes("mui") || lower.includes("material")) { Icon = SiMui; colorClass = "border-sky-500/50 text-sky-300"; }
+    else if (lower.includes("vite")) { Icon = SiVite; colorClass = "border-purple-400/50 text-purple-300"; }
 
     return (
       <div
