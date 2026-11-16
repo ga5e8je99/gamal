@@ -1,6 +1,7 @@
 import localFont from "next/font/local";
 import "./globals.css";
 import { LanguageProvider } from "@/lib/LanguageContext";
+import CustomCursor from "./components/CustomCursor";
 
 const geistSans = localFont({
   src: "../public/fonts/geist.woff2",
@@ -148,7 +149,10 @@ export default function RootLayout({ children }) {
           <li></li>
           <li></li>
         </ul>
-        <LanguageProvider>{children}</LanguageProvider>
+        <LanguageProvider>
+          <CustomCursor />
+          {children}
+        </LanguageProvider>
       </body>
     </html>
   );
