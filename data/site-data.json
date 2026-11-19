@@ -28,6 +28,45 @@
   },
   "projects": [
     {
+      "id": "proj-0",
+      "slug": "masar-erp",
+      "aliases": ["masar-erp-system", "erp-system", "masar"],
+      "title": "Masar ERP – Enterprise Resource Planning & Financial Platform",
+      "tagline": "Production Multi-Tenant ERP System with Real-Time Accounting, Inventory Control, Sales, HR & Executive Analytics",
+      "description": "Comprehensive full-stack enterprise ERP system featuring double-entry accounting, real-time inventory management, complete sales & purchasing lifecycles, HR payroll, and real-time executive dashboard analytics.",
+      "overview": "Masar ERP (مسار) is a high-performance, production-grade Enterprise Resource Planning system engineered with Next.js 15 App Router, TypeScript, Prisma ORM, PostgreSQL, and Auth.js v5. Built to meet rigorous accounting standards, it unifies double-entry bookkeeping, warehouse inventory tracking with optimistic locking and concurrency protection, multi-currency invoicing, vendor management, HR payroll calculation, and bilingual RTL/LTR reporting with interactive data visualizations.",
+      "problem": "SMEs and enterprise distributors struggle with fragmented spreadsheets, siloed sales and inventory systems, and race conditions during high-volume order fulfillment that lead to negative stock, unaligned financial ledgers, and compliance risks.",
+      "solution": "Architected a unified, transactional multi-tenant ERP platform with ACID-compliant database operations, row-level concurrency locking for stock deductions, automated double-entry journal posting, granular role-based access control (RBAC), and bilingual Arabic/English dashboards with real-time financial telemetry.",
+      "role": "Lead Full-Stack Architect & Engineer. Designed database schemas and transactional flows with Prisma and PostgreSQL, implemented Auth.js v5 with session hardening and persistent rate limiting, developed bilingual RTL/LTR interface with Next.js 15 and Tailwind CSS, and optimized interactive analytics charts with Recharts.",
+      "impact": "Engineered for sub-100ms API response times, 100% data consistency across concurrent stock operations, automated double-entry reconciliations, and seamless Vercel production deployment with automated database migrations.",
+      "duration": "8 Weeks",
+      "client": "Enterprise / Commercial Distribution",
+      "image": "/projectImage/masar-erp.webp",
+      "technologies": ["Next.js 15", "TypeScript", "Prisma ORM", "PostgreSQL", "Auth.js v5", "Tailwind CSS", "next-intl", "Recharts"],
+      "features": [
+        {
+          "title": "Double-Entry Financial Accounting & General Ledger",
+          "desc": "Automated journal entries, multi-currency chart of accounts, balance sheets, cash flow statements, and real-time tax calculation."
+        },
+        {
+          "title": "Real-Time Inventory & Concurrency Protection",
+          "desc": "Multi-warehouse stock tracking with row-level locks (SELECT FOR UPDATE) to eliminate race conditions and prevent negative stock."
+        },
+        {
+          "title": "Sales, Quotations & Purchasing Lifecycle",
+          "desc": "End-to-end order processing from RFQ and quotations to delivered invoices, vendor payables, and customer receivables."
+        },
+        {
+          "title": "Executive Analytics & Bilingual RTL/LTR UI",
+          "desc": "Interactive financial telemetry dashboards, cash flow charts, top product revenue trends, and complete Arabic/English localization."
+        }
+      ],
+      "liveLink": "https://erp-system-one-alpha.vercel.app/",
+      "githubLink": "https://github.com/ga5e8je99/erp-system.git",
+      "featured": true,
+      "category": "Full-Stack / ERP"
+    },
+    {
       "id": "proj-1",
       "slug": "sky-3d-weather",
       "aliases": ["3d-ecommerce-platform", "sky-weather-app"],

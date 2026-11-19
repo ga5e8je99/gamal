@@ -23,7 +23,9 @@ import {
   SiExpress,
   SiMui,
   SiVite,
-  SiGooglegemini
+  SiGooglegemini,
+  SiPrisma,
+  SiPostgresql
 } from "react-icons/si";
 import { useSiteData } from "@/lib/useSiteData";
 import { useLanguage } from "@/lib/LanguageContext";
@@ -56,6 +58,9 @@ export default function Portfolio() {
       return (
         cat.includes("full-stack") ||
         cat.includes("fullstack") ||
+        cat.includes("erp") ||
+        techs.includes("prisma orm") ||
+        techs.includes("postgresql") ||
         techs.includes("node.js") ||
         techs.includes("express.js") ||
         techs.includes("mongodb") ||
@@ -118,6 +123,7 @@ export default function Portfolio() {
   const getLocalizedCategory = (category) => {
     if (!category) return "Full-Stack";
     if (language === "ar") {
+      if (category.includes("ERP")) return "نظام مؤسسي متكامل (Enterprise ERP)";
       if (category.includes("3D") || category.includes("Frontend")) return "واجهات وثلاثي أبعاد (3D)";
       if (category.includes("AI")) return "ذكاء اصطناعي (AI / Full-Stack)";
       if (category.includes("E-Commerce")) return "متجر متكامل (E-Commerce)";
@@ -172,6 +178,8 @@ export default function Portfolio() {
     else if (lower.includes("gemini")) { Icon = SiGooglegemini; colorClass = "border-blue-400/50 text-blue-300"; }
     else if (lower.includes("mui") || lower.includes("material")) { Icon = SiMui; colorClass = "border-sky-500/50 text-sky-300"; }
     else if (lower.includes("vite")) { Icon = SiVite; colorClass = "border-purple-400/50 text-purple-300"; }
+    else if (lower.includes("prisma")) { Icon = SiPrisma; colorClass = "border-emerald-400/50 text-emerald-300"; }
+    else if (lower.includes("postgres")) { Icon = SiPostgresql; colorClass = "border-sky-400/50 text-sky-300"; }
 
     return (
       <div

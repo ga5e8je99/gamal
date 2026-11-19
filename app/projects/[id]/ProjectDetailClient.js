@@ -34,7 +34,9 @@ import {
   SiExpress,
   SiRedux,
   SiJavascript,
-  SiWebgl
+  SiWebgl,
+  SiPrisma,
+  SiPostgresql
 } from "react-icons/si";
 
 export default function ProjectDetailClient({ project, prevProject, nextProject }) {
@@ -64,6 +66,8 @@ export default function ProjectDetailClient({ project, prevProject, nextProject 
     if (lower.includes("webgl")) return SiWebgl;
     if (lower.includes("redux")) return SiRedux;
     if (lower.includes("express")) return SiExpress;
+    if (lower.includes("prisma")) return SiPrisma;
+    if (lower.includes("postgres")) return SiPostgresql;
     return FiLayers;
   };
 
