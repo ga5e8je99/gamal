@@ -190,62 +190,64 @@ export default function Hero() {
           </div>
 
           {/* Avatar & Floating Badges */}
-          <div className="w-full lg:w-5/12 flex justify-center relative">
-            <div className="relative w-72 h-72 sm:w-84 sm:h-84 lg:w-96 lg:h-96">
+          <div className="w-full lg:w-5/12 flex justify-center relative py-6">
+            <div className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-92 lg:h-92">
               
               {/* Outer pulsing neon glow */}
-              <div className="absolute inset-0 bg-gradient-to-r from-teal-500/25 via-cyan-500/20 to-blue-500/25 rounded-full blur-3xl animate-pulse" />
+              <div className="absolute -inset-4 bg-gradient-to-tr from-teal-500/25 via-cyan-500/20 to-blue-500/25 rounded-full blur-2xl animate-pulse pointer-events-none" />
 
-              {/* Main Avatar Circular Frame */}
-              <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-gray-800/80 shadow-[0_0_50px_rgba(20,184,166,0.25)] group">
-                <Image
-                  src="/gamalImage.webp"
-                  alt={`${fullName} - Full-Stack Web Developer`}
-                  fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-700"
-                  sizes="(max-width: 640px) 288px, (max-width: 1024px) 336px, 384px"
-                  priority
-                />
-                
-                {/* Subtle dark gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-gray-950/60 via-transparent to-transparent pointer-events-none" />
+              {/* Radiant Gradient Border Ring */}
+              <div className="relative p-1 rounded-full bg-gradient-to-tr from-teal-400 via-cyan-500 to-emerald-400 shadow-[0_0_50px_rgba(20,184,166,0.35)] w-full h-full">
+                {/* Main Avatar Circular Frame */}
+                <div className="relative w-full h-full rounded-full overflow-hidden bg-[#070b14] border-2 border-[#0d1627] group">
+                  <Image
+                    src="/gamalImage.webp"
+                    alt={`${fullName} - Full-Stack Web Developer`}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-700"
+                    sizes="(max-width: 640px) 256px, (max-width: 1024px) 320px, 368px"
+                    priority
+                  />
+                  {/* Subtle dark gradient overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#080c16]/50 via-transparent to-transparent pointer-events-none" />
+                </div>
               </div>
 
-              {/* Floating Glassmorphism Badge 1: Top-Right (Web Vitals) */}
+              {/* Floating Glassmorphism Badge 1: Top-Right (Above shoulder, clean of face) */}
               <motion.div
-                animate={{ y: [0, -8, 0] }}
+                animate={{ y: [0, -7, 0] }}
                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute -top-3 -right-2 sm:-top-5 sm:-right-4 bg-gray-900/90 backdrop-blur-md px-3.5 py-2 rounded-2xl border border-teal-500/35 shadow-xl shadow-teal-500/10 flex items-center gap-2 z-20"
+                className="absolute -top-3 -right-2 sm:-top-5 sm:-right-6 bg-gray-950/90 backdrop-blur-xl px-3.5 py-2 rounded-2xl border border-teal-500/35 shadow-2xl shadow-teal-500/10 flex items-center gap-2.5 z-20"
               >
-                <div className="p-1 rounded-lg bg-teal-500/15 text-teal-400">
+                <div className="p-1.5 rounded-xl bg-teal-500/15 text-teal-400">
                   <FiZap className="text-sm" />
                 </div>
                 <div>
-                  <div className="text-[11px] font-bold text-white font-mono">100% Performance</div>
-                  <div className="text-[9px] text-gray-400">{isArabic ? "سرعة واستجابة قياسية" : "Core Web Vitals"}</div>
+                  <div className="text-xs font-bold text-white font-mono">100% Performance</div>
+                  <div className="text-[10px] text-gray-400 font-sans">{isArabic ? "سرعة واستجابة قياسية" : "Core Web Vitals"}</div>
                 </div>
               </motion.div>
 
-              {/* Floating Glassmorphism Badge 2: Top-Left (Enterprise Architecture) */}
+              {/* Floating Glassmorphism Badge 2: Bottom-Left (Down by elbow/torso, NEVER over face) */}
               <motion.div
-                animate={{ y: [0, 8, 0] }}
+                animate={{ y: [0, 7, 0] }}
                 transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-                className="absolute top-1/4 -left-4 sm:top-1/4 sm:-left-8 bg-gray-900/90 backdrop-blur-md px-3.5 py-2 rounded-2xl border border-cyan-500/35 shadow-xl shadow-cyan-500/10 flex items-center gap-2 z-20"
+                className="absolute bottom-6 -left-3 sm:bottom-8 sm:-left-8 bg-gray-950/90 backdrop-blur-xl px-3.5 py-2 rounded-2xl border border-cyan-500/35 shadow-2xl shadow-cyan-500/10 flex items-center gap-2.5 z-20"
               >
-                <div className="p-1 rounded-lg bg-cyan-500/15 text-cyan-400">
+                <div className="p-1.5 rounded-xl bg-cyan-500/15 text-cyan-400">
                   <FiShield className="text-sm" />
                 </div>
                 <div>
-                  <div className="text-[11px] font-bold text-white font-mono">Clean Architecture</div>
-                  <div className="text-[9px] text-gray-400">{isArabic ? "معمارية نظيفة وقابلة للتوسع" : "ACID & Type-Safe"}</div>
+                  <div className="text-xs font-bold text-white font-mono">Clean Architecture</div>
+                  <div className="text-[10px] text-gray-400 font-sans">{isArabic ? "معمارية نظيفة وقابلة للتوسع" : "ACID & Concurrency"}</div>
                 </div>
               </motion.div>
 
-              {/* Floating Glassmorphism Badge 3: Bottom Status */}
+              {/* Floating Glassmorphism Badge 3: Bottom-Center Status Anchor */}
               <motion.div
-                animate={{ y: [0, -6, 0] }}
+                animate={{ y: [0, -5, 0] }}
                 transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                className="absolute -bottom-4 right-4 sm:-bottom-5 sm:right-6 bg-gray-950/95 backdrop-blur-md px-4 py-2 rounded-full border border-gray-700/80 shadow-2xl flex items-center gap-2.5 z-20"
+                className="absolute -bottom-5 left-1/2 -translate-x-1/2 bg-gray-950/95 backdrop-blur-xl px-4 py-2 rounded-full border border-gray-700/80 shadow-2xl shadow-black/80 flex items-center gap-2.5 z-20 whitespace-nowrap"
               >
                 <span className="relative flex h-2.5 w-2.5">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
