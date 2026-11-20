@@ -213,11 +213,11 @@ export default function Hero() {
                 </div>
               </div>
 
-              {/* Floating Glassmorphism Badge 1: Top-Right (Above shoulder, clean of face) */}
+              {/* Floating Glassmorphism Badge 1: Top-Right (2 o'clock, clean of face) */}
               <motion.div
-                animate={{ y: [0, -7, 0] }}
+                animate={{ y: [0, -6, 0] }}
                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute -top-3 -right-2 sm:-top-5 sm:-right-6 bg-gray-950/90 backdrop-blur-xl px-3.5 py-2 rounded-2xl border border-teal-500/35 shadow-2xl shadow-teal-500/10 flex items-center gap-2.5 z-20"
+                className="absolute top-1 -right-2 sm:top-2 sm:-right-6 bg-gray-950/90 backdrop-blur-xl px-3.5 py-2 rounded-2xl border border-teal-500/35 shadow-2xl shadow-teal-500/10 flex items-center gap-2.5 z-20"
               >
                 <div className="p-1.5 rounded-xl bg-teal-500/15 text-teal-400">
                   <FiZap className="text-sm" />
@@ -228,11 +228,11 @@ export default function Hero() {
                 </div>
               </motion.div>
 
-              {/* Floating Glassmorphism Badge 2: Bottom-Left (Down by elbow/torso, NEVER over face) */}
+              {/* Floating Glassmorphism Badge 2: Middle-Right (4 o'clock, vertically centered on same side as Badge 1) */}
               <motion.div
-                animate={{ y: [0, 7, 0] }}
-                transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-                className="absolute bottom-6 -left-3 sm:bottom-8 sm:-left-8 bg-gray-950/90 backdrop-blur-xl px-3.5 py-2 rounded-2xl border border-cyan-500/35 shadow-2xl shadow-cyan-500/10 flex items-center gap-2.5 z-20"
+                animate={{ y: [0, 6, 0] }}
+                transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 0.6 }}
+                className="absolute top-1/2 -translate-y-1/2 -right-3 sm:-right-8 bg-gray-950/90 backdrop-blur-xl px-3.5 py-2 rounded-2xl border border-cyan-500/35 shadow-2xl shadow-cyan-500/10 flex items-center gap-2.5 z-20"
               >
                 <div className="p-1.5 rounded-xl bg-cyan-500/15 text-cyan-400">
                   <FiShield className="text-sm" />
@@ -246,7 +246,7 @@ export default function Hero() {
               {/* Floating Glassmorphism Badge 3: Bottom-Center Status Anchor */}
               <motion.div
                 animate={{ y: [0, -5, 0] }}
-                transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
                 className="absolute -bottom-5 left-1/2 -translate-x-1/2 bg-gray-950/95 backdrop-blur-xl px-4 py-2 rounded-full border border-gray-700/80 shadow-2xl shadow-black/80 flex items-center gap-2.5 z-20 whitespace-nowrap"
               >
                 <span className="relative flex h-2.5 w-2.5">
