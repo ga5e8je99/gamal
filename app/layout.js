@@ -131,6 +131,18 @@ export default function RootLayout({ children }) {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
         />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var saved = localStorage.getItem('gamal_theme_accent') || 'emerald';
+                  document.documentElement.setAttribute('data-accent', saved);
+                } catch(e) {}
+              })();
+            `,
+          }}
+        />
         <ul className="background" aria-hidden="true">
           <li></li>
           <li></li>
