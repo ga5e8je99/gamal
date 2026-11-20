@@ -18,6 +18,30 @@ export default function ExperienceEducation() {
   const { dict, language } = useLanguage();
   const experiences = [
     {
+      type: "enterprise",
+      title: language === "ar" ? "مهندس معمارية برمجية ومطور متكامل — Masar ERP" : "Lead Full-Stack Architect — Masar ERP",
+      company: language === "ar" ? "نظام مسار للمؤسسات والشركات" : "Masar Enterprise Platform",
+      period: "2024 - Present",
+      location: language === "ar" ? "عن بعد" : "Remote",
+      description: language === "ar" 
+        ? "تصميم وبناء نظام ERP متكامل يشمل شجرة حسابات مزدوجة، قيود يومية، تتبع مستودعات بأقفال تزامن فورية (ACID Concurrency Locks)، فوترة إلكترونية متوافقة مع ZATCA المرحلة الثانية، ولوحات قياس أداء فورية."
+        : "Architected a production multi-tenant ERP platform featuring double-entry general ledger, inventory tracking with row-level concurrency locking (SELECT FOR UPDATE), ZATCA Phase 2 compliance, and real-time executive analytics.",
+      skills: ["Next.js 15", "TypeScript", "Prisma ORM", "PostgreSQL", "Auth.js v5", "Tailwind CSS"],
+      icon: <FiBriefcase />,
+      color: "from-teal-500 to-emerald-500",
+      highlights: language === "ar"
+        ? [
+            "تحقيق استجابة فائقة للـ APIs بأقل من 100ms",
+            "حماية كاملة من سباقات التزامن للطلبات والخصم الفوري من المستودعات",
+            "تطبيق نظام أمان وجلسات صارم مع معدل طلبات مستند لقاعدة البيانات (Rate-limiting)"
+          ]
+        : [
+            "Engineered sub-100ms API response times across accounting and inventory endpoints",
+            "Eliminated stock race conditions with row-level locks for zero negative stock",
+            "Implemented edge-compatible Auth.js v5 sessions and database-backed rate limiting"
+          ]
+    },
+    {
       type: "freelancer",
       title: "Freelance Full Stack Web Developer",
       company: "Self-Employed",

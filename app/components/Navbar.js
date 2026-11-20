@@ -7,6 +7,7 @@ import { FiDownload, FiMenu, FiX, FiGlobe } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { useLanguage } from "@/lib/LanguageContext";
+import ThemeAccentSwitcher from "./ThemeAccentSwitcher";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -189,6 +190,9 @@ export default function Navbar() {
 
             {/* Right Action Group */}
             <div className="hidden lg:flex items-center gap-3">
+              {/* Theme Accent Switcher */}
+              <ThemeAccentSwitcher />
+
               {/* Language Switch Button */}
               <button
                 type="button"
@@ -221,6 +225,8 @@ export default function Navbar() {
 
             {/* Mobile Actions (Language + Hamburger) */}
             <div className="flex items-center gap-2 lg:hidden">
+              <ThemeAccentSwitcher />
+
               <button
                 type="button"
                 onClick={toggleLanguage}

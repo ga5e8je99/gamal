@@ -29,6 +29,10 @@ import {
   SiNetlify,
   SiJsonwebtokens,
   SiMongoose,
+  SiPrisma,
+  SiPostgresql,
+  SiDocker,
+  SiVitest,
 } from "react-icons/si";
 import { BiLogoVisualStudio } from "react-icons/bi";
 import Link from "next/link";
@@ -104,6 +108,24 @@ export default function SkillsSection() {
 
   const backendSkills = [
     {
+      name: "PostgreSQL & Prisma ORM",
+      icon: <SiPostgresql className="text-sky-400" />,
+      tier: "Enterprise Relational DB",
+      experience: "2+ years",
+      usedIn: "Masar ERP & Financial Systems",
+      highlight: "Schema migrations, ACID transactions, Concurrency locks (SELECT FOR UPDATE), Indexes",
+      badgeColor: "border-sky-500/40 text-sky-300 bg-sky-500/10",
+    },
+    {
+      name: "Auth.js v5 (NextAuth)",
+      icon: <SiJsonwebtokens className="text-pink-400" />,
+      tier: "Authentication & RBAC",
+      experience: "2+ years",
+      usedIn: "Production Session Validation & Granular Permissions",
+      highlight: "JWT freshness, Edge-compatible middleware, DB-backed rate limiting, Secure cookies",
+      badgeColor: "border-pink-500/40 text-pink-300 bg-pink-500/10",
+    },
+    {
       name: "Node.js",
       icon: <SiNodedotjs className="text-emerald-400" />,
       tier: "Server Runtime",
@@ -158,13 +180,15 @@ export default function SkillsSection() {
         { name: "Git", icon: <SiGit className="text-orange-400 text-2xl" />, role: "Version Control" },
         { name: "GitHub", icon: <SiGithub className="text-gray-200 text-2xl" />, role: "Collaboration" },
         { name: "Postman", icon: <SiPostman className="text-orange-500 text-2xl" />, role: "API Testing" },
+        { name: "Vitest", icon: <SiVitest className="text-yellow-400 text-2xl" />, role: "Automated Unit Tests" },
       ],
     },
     {
       category: "Build & Cloud Deployment",
       items: [
-        { name: "Vite", icon: <SiVite className="text-purple-400 text-2xl" />, role: "Fast Bundler" },
+        { name: "Docker", icon: <SiDocker className="text-sky-400 text-2xl" />, role: "Containerization" },
         { name: "Vercel", icon: <SiVercel className="text-white text-2xl" />, role: "Serverless Host" },
+        { name: "Vite", icon: <SiVite className="text-purple-400 text-2xl" />, role: "Fast Bundler" },
         { name: "Netlify", icon: <SiNetlify className="text-teal-400 text-2xl" />, role: "Edge Hosting" },
       ],
     },

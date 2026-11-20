@@ -10,7 +10,7 @@ import Services from "./components/Services";
 import ContactSection from "./components/Contact";
 import WelcomeAnimation from "./components/WelcomeAnimation";
 import Wave from "./components/Wave";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 
 export default function Home() {
@@ -27,7 +27,12 @@ export default function Home() {
         )}
       </AnimatePresence>
 
-      <main className="relative z-10">
+      <motion.main
+        className="relative z-10"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: loading ? 0 : 1 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+      >
         <Navbar />
 
         {/* 1. Hero Section (#080c16) */}
@@ -95,7 +100,7 @@ export default function Home() {
 
         {/* 7. Contact Section (#060913) */}
         <ContactSection />
-      </main>
+      </motion.main>
     </div>
   );
 }
