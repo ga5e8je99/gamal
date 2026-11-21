@@ -161,8 +161,12 @@ export default function ContactSection() {
   return (
     <section
       id="contact"
-      className="py-20 bg-[#060913] relative transition-colors duration-500"
+      className="py-20 bg-[#060913] relative transition-colors duration-500 overflow-hidden"
     >
+      {/* Ambient Radial Lights */}
+      <div className="absolute top-1/4 -left-20 w-96 h-96 bg-teal-500/10 rounded-full blur-[130px] pointer-events-none" />
+      <div className="absolute bottom-10 -right-20 w-96 h-96 bg-cyan-500/10 rounded-full blur-[130px] pointer-events-none" />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
         {/* Section Header */}
         <motion.div
