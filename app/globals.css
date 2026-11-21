@@ -80,18 +80,19 @@ body {
   padding: 0;
   background: transparent;
   overflow: hidden;
-  z-index: 25;
+  z-index: 20;
   pointer-events: none;
+  opacity: 0.45;
 }
 
 .background li {
   position: absolute;
   display: block;
   list-style: none;
-  background: radial-gradient(circle at 35% 35%, rgba(52, 211, 153, 0.24) 0%, rgba(20, 184, 166, 0.1) 60%, transparent 100%);
-  border: 1.5px solid rgba(52, 211, 153, 0.4);
-  box-shadow: 0 0 35px rgba(16, 185, 129, 0.25), inset 0 0 20px rgba(52, 211, 153, 0.2);
-  animation: animate-bubble 18s linear infinite;
+  background: radial-gradient(circle at 35% 35%, rgba(52, 211, 153, 0.1) 0%, rgba(20, 184, 166, 0.03) 60%, transparent 100%);
+  border: 1px solid rgba(52, 211, 153, 0.18);
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.1), inset 0 0 10px rgba(52, 211, 153, 0.08);
+  animation: animate-bubble 20s linear infinite;
   border-radius: 50% !important;
   pointer-events: none;
 }
