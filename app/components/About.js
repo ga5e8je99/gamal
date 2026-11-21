@@ -11,6 +11,9 @@ import {
   FiZap,
   FiShield,
   FiMessageSquare,
+  FiLayers,
+  FiDatabase,
+  FiAward,
 } from "react-icons/fi";
 import {
   SiReact,
@@ -126,6 +129,13 @@ export default function AboutMe() {
     },
   };
 
+  const standardIcons = [
+    <FiLayers key="arch" className="text-teal-400 text-lg" />,
+    <FiZap key="perf" className="text-amber-400 text-lg" />,
+    <FiDatabase key="acid" className="text-cyan-400 text-lg" />,
+    <FiShield key="sec" className="text-emerald-400 text-lg" />,
+  ];
+
   return (
     <section
       id="about"
@@ -237,6 +247,60 @@ export default function AboutMe() {
                 </div>
               </div>
             </motion.div>
+
+            {/* Engineering & Quality Standards Card */}
+            {dict.about.qualityStandards && (
+              <motion.div
+                variants={fadeInUp}
+                className="bg-linear-to-b from-gray-900/60 to-gray-950/80 border border-gray-800 rounded-2xl p-6"
+              >
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="p-3 rounded-xl bg-linear-to-r from-emerald-500 to-teal-600 shadow-lg shadow-emerald-500/20">
+                    <FiShield className="text-white text-2xl" />
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold text-white">
+                      {dict.about.qualityStandards.title}
+                    </h3>
+                    <p className="text-gray-400 text-sm">
+                      {dict.about.qualityStandards.subtitle}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                  {dict.about.qualityStandards.items.map((item, idx) => (
+                    <div
+                      key={idx}
+                      className="p-3.5 rounded-xl bg-gray-900/50 border border-gray-800/80 hover:border-teal-500/40 hover:bg-gray-900/80 transition-all duration-300 group"
+                    >
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="p-1.5 rounded-lg bg-gray-800/80 group-hover:scale-110 transition-transform">
+                          {standardIcons[idx] || <FiCheckCircle className="text-teal-400 text-lg" />}
+                        </div>
+                        <span className="px-2 py-0.5 rounded-full text-[10px] font-mono bg-teal-500/10 text-teal-300 border border-teal-500/20">
+                          {item.tag}
+                        </span>
+                      </div>
+                      <h4 className="text-white font-semibold text-sm mb-1 group-hover:text-teal-300 transition-colors">
+                        {item.title}
+                      </h4>
+                      <p className="text-gray-400 text-xs leading-relaxed">
+                        {item.desc}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Footer Insight */}
+                <div className="mt-5 pt-4 border-t border-gray-800/80 flex items-start gap-3 text-gray-400">
+                  <FiAward className="text-teal-400 text-lg shrink-0 mt-0.5" />
+                  <p className="text-xs leading-relaxed text-gray-300">
+                    {dict.about.qualityStandards.footer}
+                  </p>
+                </div>
+              </motion.div>
+            )}
           </motion.div>
 
           {/* Right Column - Skills & Tools */}
