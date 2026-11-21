@@ -2,6 +2,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { LanguageProvider } from "@/lib/LanguageContext";
 import CustomCursor from "./components/CustomCursor";
+import InteractiveParticles from "./components/InteractiveParticles";
 
 const geistSans = localFont({
   src: "../public/fonts/geist.woff2",
@@ -131,18 +132,7 @@ export default function RootLayout({ children }) {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
         />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function() {
-                try {
-                  var saved = localStorage.getItem('gamal_theme_accent') || 'emerald';
-                  document.documentElement.setAttribute('data-accent', saved);
-                } catch(e) {}
-              })();
-            `,
-          }}
-        />
+        <InteractiveParticles />
         <ul className="background" aria-hidden="true">
           <li></li>
           <li></li>
