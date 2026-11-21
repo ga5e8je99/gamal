@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useSiteData } from "@/lib/useSiteData";
 import { useLanguage } from "@/lib/LanguageContext";
+import InteractiveParticles from "./InteractiveParticles";
 import {
   FiArrowDown,
   FiArrowRight,
@@ -66,9 +67,12 @@ export default function Hero() {
 
   return (
     <section
-      className="min-h-screen flex flex-col justify-center px-4 sm:px-6 lg:px-8 pt-28 pb-16 lg:pt-36 lg:pb-24 relative bg-transparent overflow-hidden"
+      className="min-h-screen flex flex-col justify-center px-4 sm:px-6 lg:px-8 pt-28 pb-16 lg:pt-36 lg:pb-24 relative bg-[#080c16] overflow-hidden"
       id="home"
     >
+      {/* 1. Interactive Ambient Particles Background */}
+      <InteractiveParticles />
+
       {/* Radial ambient lighting */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-teal-500/10 rounded-full blur-[140px] pointer-events-none" />
       <div className="absolute top-1/3 -right-20 w-[400px] h-[400px] bg-blue-500/10 rounded-full blur-[120px] pointer-events-none" />

@@ -2,7 +2,6 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { LanguageProvider } from "@/lib/LanguageContext";
 import CustomCursor from "./components/CustomCursor";
-import InteractiveParticles from "./components/InteractiveParticles";
 
 const geistSans = localFont({
   src: "../public/fonts/geist.woff2",
@@ -132,7 +131,6 @@ export default function RootLayout({ children }) {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
         />
-        <InteractiveParticles />
         <ul className="background" aria-hidden="true">
           <li></li>
           <li></li>
